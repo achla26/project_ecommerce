@@ -17,10 +17,7 @@ class Admin
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
     public function handle(Request $request, Closure $next ,...$guards)
-    {       
-        if(Auth::guard('admin')->check()){
-            return $next($request);
-        }
+    {    
         if(Auth::guard('user')->check()){
             return $next($request);
         }
