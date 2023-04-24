@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 
-use App\Models\Admin;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -29,7 +29,7 @@ class AdminController extends Controller
 
         $this->validate($request,$rules,$customMessages);
 
-        if(Auth::guard('admin')->attempt(['email'=>$data['email'],'password'=>$data['password']]) || Auth::guard('user')->attempt(['email'=>$data['email'],'password'=>$data['password']])){
+        if(Auth::guard('user')->attempt(['email'=>$data['email'],'password'=>$data['password']]) || Auth::guard('user')->attempt(['email'=>$data['email'],'password'=>$data['password']])){
             return redirect()->route('backend.dashboard');
         }else{
             Session::flash('error_message','Invalid Email or Password');
@@ -38,7 +38,7 @@ class AdminController extends Controller
     }
 
     public function updatePassword(){
-        $result = Admin::find(1);
+        $result = User::find(1);
         $result->password = Hash::make('1234');
         $result->save();
         dd("update");
@@ -52,7 +52,7 @@ class AdminController extends Controller
     }
 
     public function logout(){
-    	Auth::guard('admin')->logout();
+    	Auth::guard('web')->logout();
     	return redirect()
                 ->route('backend.login')
                 ->with('msg',__('app.msg.logout'));

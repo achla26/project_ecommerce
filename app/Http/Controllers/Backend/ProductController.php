@@ -101,8 +101,8 @@ class ProductController extends Controller
         $data = $request->except('images','attribute_set_id','tax_value','tax_id','tax_type','discount','varient_attribute_id','varient_price','varient_mrp','varient_sku','varient_qty','varient_image','attribute_id','discount_category','discount_value','discount_type','discount_start_dttm','discount_end_dttm');
 
         $data['slug'] =Str::slug($request->name, '_');
-        $data['added_by'] =Auth::guard('admin')->user()->id;
-        $data['role'] =Auth::guard('admin')->user()->role;
+        $data['added_by'] =Auth::guard('web')->user()->id;
+        $data['role'] =Auth::guard('web')->user()->role;
 
         if(isset($request->thumbnail) && !empty($request->thumbnail) && $request->hasfile('thumbnail')){
             $thumbnail =$request->file('thumbnail')->store('uploads/products', 'public');
