@@ -16,12 +16,15 @@ class Admin
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next)
-    {        
-        if(!Auth::guard('admin')->check()){
-            return redirect()->route('backend.login')
-                     ->with('error_message','Access Denied');
+    public function handle(Request $request, Closure $next ,...$guards)
+    {       
+        if(Auth::guard('admin')->check()){
+            return $next($request);
         }
-        return $next($request);
+        if(Auth::guard('user')->check()){
+            return $next($request);
+        }
+        return redirect()->route('backend.login')
+                     ->with('error_message','Access Denied');
     }
 }
