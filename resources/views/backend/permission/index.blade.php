@@ -33,7 +33,6 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Name</th>
-                                            <th width="280px">Action</th>
                                          </tr>
                                         </thead>
                                         <tbody>
@@ -41,16 +40,6 @@
                                            <tr>
                                                <td>{{ $loop->iteration }}</td>
                                                <td>{{ $permission->name }}</td>
-                                               <td>
-                                                   @can('permission-edit')
-                                                       <a class="btn btn-primary" href="{{ route('permissions.edit',$permission->id) }}">Edit</a>
-                                                   @endcan
-                                                   @can('permission-delete')
-                                                       {!! Form::open(['method' => 'DELETE','route' => ['permissions.destroy', $permission->id],'style'=>'display:inline']) !!}
-                                                           {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
-                                                       {!! Form::close() !!}
-                                                   @endcan
-                                               </td>
                                            </tr>
                                            @endforeach
                                         </tbody>

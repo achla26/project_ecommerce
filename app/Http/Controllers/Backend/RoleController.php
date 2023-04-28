@@ -118,7 +118,10 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        $role->delete();
+        if ($role->name != 'admin' && $role->name !='vendor')
+        {
+            $role->delete();
+        }
 
         return redirect()->route('backend.role.index')
             ->with('msg', __('app.crud.deleted',['attribute'=>'Role']));

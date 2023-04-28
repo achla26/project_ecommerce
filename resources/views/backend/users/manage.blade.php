@@ -65,9 +65,9 @@
                                         <div class="col-9">
                                             <label for="simpleinput" class="form-label">Role</label>
                                             @if(isset($userRole))
-                                                {!! Form::select('roles[]', $roles,$userRole, array('class' => 'form-control','multiple')) !!}
+                                                {!! Form::select('roles[]', $roles,$userRole, array('class' => 'form-control')) !!}
                                             @else
-                                                {!! Form::select('roles[]', $roles,[], array('class' => 'form-control','multiple')) !!}                                                
+                                                {!! Form::select('roles[]', $roles,[], array('class' => 'form-control')) !!}                                                
                                             @endif
                                            
                                         </div>

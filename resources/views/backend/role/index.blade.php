@@ -42,15 +42,20 @@
                                                <td>{{ $loop->iteration }}</td>
                                                <td>{{ $role->name }}</td>
                                                <td>
-                                                <form action="{{ route('backend.role.destroy',$role->id) }}" method="POST"  onsubmit="return confirm('Are you sure you want to delete this item')">
+                                                <a href="{{route('backend.role.edit',$role->id)}}"class="btn btn-primary btn-sm action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                @if ($role->name != 'admin' && $role->name !='vendor')
+                                                        
+                                                    <form action="{{ route('backend.role.destroy',$role->id) }}" method="POST"  onsubmit="return confirm('Are you sure you want to delete this item')">
 
-                                                    <a href="{{route('backend.role.edit',$role->id)}}"class="btn btn-primary btn-sm action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
-                                    
-                                                    @csrf
-                                                    @method('DELETE')
-                                      
-                                                    <button type="submit" class="btn btn-danger btn-sm action-icon"><i class="mdi mdi-delete"></i></button>
-                                                </form>
+                                                       
+                                        
+                                                        @csrf
+                                                        @method('DELETE')
+                                        
+                                                        <button type="submit" class="btn btn-danger btn-sm action-icon"><i class="mdi mdi-delete"></i></button>
+                                                    </form>
+                                                @endif
+
                                             </td>
                                            </tr>
                                            @endforeach
