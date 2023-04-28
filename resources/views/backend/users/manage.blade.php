@@ -52,7 +52,27 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+                                <div class="mb-3">
+                                    <div class="row">
+                                        <div class="col-9">
+                                            <label for="simpleinput" class="form-label">Password</label>
+                                            <input type="password" id="simpleinput" class="form-control" name="password" >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="row">
+                                        <div class="col-9">
+                                            <label for="simpleinput" class="form-label">Role</label>
+                                            @if(isset($userRole))
+                                                {!! Form::select('roles[]', $roles,$userRole, array('class' => 'form-control','multiple')) !!}
+                                            @else
+                                                {!! Form::select('roles[]', $roles,[], array('class' => 'form-control','multiple')) !!}                                                
+                                            @endif
+                                           
+                                        </div>
+                                    </div>
+                                </div>
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </form>
                         </div>             

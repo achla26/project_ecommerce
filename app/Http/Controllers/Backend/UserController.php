@@ -7,8 +7,10 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Str;
-use Session;
+use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\UserRequest;
+
 class UserController extends Controller
 {
      /**
@@ -29,8 +31,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        $users = User::all();
-        return view('backend.users.manage',compact('users'));
+        $roles = Role::pluck('name','name')->all();
+        return view('backend.users.manage',compact('roles'));
     }
   
     /**
@@ -39,11 +41,12 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
         $data = $request->all();
         $data['password'] =  Hash::make(Str::random(10));
-        User::create($data);
+        $user=User::create($data);
+        $user->assignRole($request->input('roles'));
      
         return redirect()->route('backend.user.index')
                         ->with('success_msg',__('app.added'));
@@ -68,7 +71,9 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return view('backend.users.manage',compact('user'));
+        $roles = Role::pluck('name','name')->all();
+        $userRole = $user->roles->pluck('name','name')->all();
+        return view('backend.users.manage',compact('user','roles','userRole'));
     }
   
     /**
@@ -78,12 +83,12 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(UserRequest $request, User $user)
     {
         $data = $request->all();
-        $data['categories'] = json_encode($request->categories) ?? '';
         $user->update($data);
-    
+
+        $user->syncRoles($request->input('roles'));
         return redirect()->route('backend.user.index')
                         ->with('success_msg',__('app.updated'));
     }

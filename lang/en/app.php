@@ -9,7 +9,8 @@ return [
         'invalid' => ':attribute is invalid'
     ],
     'errors'=>[
-        'denied'=>'Access Denied'
+        'denied'=>'Access Denied',
+        'invalid'=>'Invalid Email or Password',
     ],
     'msg'=>[
         'logout'=>'logout successfully'

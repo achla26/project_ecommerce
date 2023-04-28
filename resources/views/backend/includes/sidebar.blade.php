@@ -40,7 +40,7 @@
         <ul class="side-nav">
 
             <li class="side-nav-title side-nav-item">Navigation</li>
-
+            @can('dashboard')
             <li class="side-nav-item">
                 <a href="{{route('backend.dashboard')}}" 
                     aria-controls="sidebarDashboards" class="side-nav-link">
@@ -49,54 +49,75 @@
                     <span> Dashboards </span>
                 </a>
             </li>
+            @endcan
 
             <li class="side-nav-title side-nav-item">Apps</li>
+            @can('role_show')
+
             <li class="side-nav-item">
                 <a href="{{route('backend.role.index')}}" class="side-nav-link">
                     <i class="uil-calender"></i>
                     <span> Roles </span>
                 </a>
             </li>
+            @endcan
+
+            @can('permission_show')
+
             <li class="side-nav-item">
                 <a href="{{route('backend.permission.index')}}" class="side-nav-link">
                     <i class="uil-calender"></i>
                     <span> Permissions </span>
                 </a>
             </li>
-            <li class="side-nav-item">
-                <a data-bs-toggle="collapse" href="#sidebarCategory" aria-expanded="false"
-                    aria-controls="sidebarCategory" class="side-nav-link">
-                    <i class="uil-store"></i>
-                    <span> Category </span>
-                    <span class="menu-arrow"></span>
-                </a>
-                <div class="collapse" id="sidebarCategory">
-                    <ul class="side-nav-second-level">
-                        <li>
-                            <a href="{{route('backend.sections.index')}}" >
-                                <span> Sections </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{route('backend.category.index')}}" >
-                                <span> Categories </span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </li>            
-            <li class="side-nav-item">
-                <a href="{{route('backend.brand.index')}}" class="side-nav-link">
-                    <i class="uil-calender"></i>
-                    <span> Brands </span>
-                </a>
-            </li>
-            <li class="side-nav-item">
-                <a href="{{route('backend.coupon.index')}}" class="side-nav-link">
-                    <i class="uil-calender"></i>
-                    <span> Coupon </span>
-                </a>
-            </li>
+            
+            @endcan
+            @canany(['section_show' , 'category_show']) 
+
+                <li class="side-nav-item">
+                    <a data-bs-toggle="collapse" href="#sidebarCategory" aria-expanded="false"
+                        aria-controls="sidebarCategory" class="side-nav-link">
+                        <i class="uil-store"></i>
+                        <span> Category </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="sidebarCategory">
+                        <ul class="side-nav-second-level">
+                            @can('section_show')  
+                                <li>
+                                    <a href="{{route('backend.sections.index')}}" >
+                                        <span> Sections </span>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('category_show')  
+                                <li>
+                                    <a href="{{route('backend.category.index')}}" >
+                                        <span> Categories </span>
+                                    </a>
+                                </li>
+                            @endcan
+                        </ul>
+                    </div>
+                </li>           
+                <li class="side-nav-item">
+                    <a href="{{route('backend.brand.index')}}" class="side-nav-link">
+                        <i class="uil-calender"></i>
+                        <span> Brands </span>
+                    </a>
+                </li>
+            @endcanany
+
+                @can('coupon_show')
+                    <li class="side-nav-item">
+                        <a href="{{route('backend.coupon.index')}}" class="side-nav-link">
+                            <i class="uil-calender"></i>
+                            <span> Coupon </span>
+                        </a>
+                    </li>
+                @endcan
+                @canany(['product_show' , 'product_attribute_show'])   
+
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarAttributes" aria-expanded="false"
                     aria-controls="sidebarAttributes" class="side-nav-link">
@@ -106,44 +127,60 @@
                 </a>
                 <div class="collapse" id="sidebarAttributes">
                     <ul class="side-nav-second-level">
+                        @can('product_show')
                         <li>
                             <a href="{{route('backend.product.index')}}" >
                                 <span> Products </span>
                             </a>
                         </li>
+                        @endcan
+                        @can('product_attribute_show')
                         <li>
                             <a href="{{route('backend.attribute-set.index')}}" >
                                 <span> Attributes Set </span>
                             </a>
                         </li>
+                        @endcan
                     </ul>
                 </div>
             </li>
+            @endcanany
+            @can('tax_show')
+
             <li class="side-nav-item">
                 <a href="{{route('backend.tax.index')}}" class="side-nav-link">
                     <i class="uil-calender"></i>
                     <span> Taxes </span>
                 </a>
             </li>
+            @endcan
+            @can('user_show')
+
             <li class="side-nav-item">
                 <a href="{{route('backend.user.index')}}" class="side-nav-link">
                     <i class="uil-calender"></i>
                     <span> Users </span>
                 </a>
             </li>
+            @endcan
+            @can('slider_show')
+
             <li class="side-nav-item">
                 <a href="{{route('backend.slider.index')}}" class="side-nav-link">
                     <i class="uil-calender"></i>
                     <span> Slider </span>
                 </a>
             </li>
+            @endcan
+            @can('setting')
+
             <li class="side-nav-item">
                 <a href="{{route('backend.setting.index')}}" class="side-nav-link">
                     <i class="uil-comments-alt"></i>
                     <span> Settings </span>
                 </a>
             </li>
-
+            @endcan
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarCrm" aria-expanded="false" aria-controls="sidebarCrm"
                     class="side-nav-link">
@@ -325,7 +362,7 @@
                                         <a href="pages-register-2.html">Register 2</a>
                                     </li>
                                     <li>
-                                        <a href="pages-logout.html">Logout</a>
+                                        <a href="{{route('backend.logout')}}">Logout</a>
                                     </li>
                                     <li>
                                         <a href="pages-logout-2.html">Logout 2</a>

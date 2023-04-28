@@ -10,6 +10,13 @@ use Str;
 use Session;
 class TaxController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:tax_show|tax_create|tax_edit|tax_delete', ['only' => ['index','show']]);
+         $this->middleware('permission:tax_add', ['only' => ['create','store']]);
+         $this->middleware('permission:tax_edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:tax_delete', ['only' => ['destroy']]);
+    }
      /**
      * Display a listing of the resource.
      *

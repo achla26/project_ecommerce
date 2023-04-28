@@ -10,18 +10,14 @@ use DB;
     
 class RoleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    // function __construct()
-    // {
-    //      $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index','store']]);
-    //      $this->middleware('permission:role-create', ['only' => ['create','store']]);
-    //      $this->middleware('permission:role-edit', ['only' => ['edit','update']]);
-    //      $this->middleware('permission:role-delete', ['only' => ['destroy']]);
-    // }
+    function __construct()
+    {
+         $this->middleware('permission:role_show|role_create|role_edit|role_delete', ['only' => ['index','show']]);
+         $this->middleware('permission:role_add', ['only' => ['create','store']]);
+         $this->middleware('permission:role_edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:role_delete', ['only' => ['destroy']]);
+    }
+    
     
     public function index()
     {

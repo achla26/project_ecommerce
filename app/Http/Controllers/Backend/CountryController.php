@@ -10,6 +10,13 @@ use Str;
 use Session;
 class CountryController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:country_show|country_create|country_edit|country_delete', ['only' => ['index','show']]);
+         $this->middleware('permission:country_add', ['only' => ['create','store']]);
+         $this->middleware('permission:country_edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:country_delete', ['only' => ['destroy']]);
+    }
      /**
      * Display a listing of the resource.
      *

@@ -14,26 +14,18 @@ class AdminController extends Controller
 {
     public function login(Request $request)
     {
-        $data = $request->all();
-
-        $rules = [
-            'email' => 'required|email|max:255',
+        $request->validate([
+            'email' => 'required',
             'password' => 'required',
-        ];
+        ]);
 
-        $customMessages = [
-            'email.required' => 'Email is required',
-            'email.email' => 'Valid Email is required',
-            'password.required' => 'Password is required',
-        ];
+        $user = $request->only('email', 'password');
+        $remember_me = $request->has('remember_me');
 
-        $this->validate($request,$rules,$customMessages);
-
-        if(Auth::guard('user')->attempt(['email'=>$data['email'],'password'=>$data['password']]) || Auth::guard('user')->attempt(['email'=>$data['email'],'password'=>$data['password']])){
+        if(Auth::attempt($user,$remember_me)){
             return redirect()->route('backend.dashboard');
         }else{
-            Session::flash('error_message','Invalid Email or Password');
-            return redirect()->back()->withErrors(__('app.errors.denied'));
+            return redirect()->back()->withErrors(__('app.errors.invalid'));
         }
     }
 
@@ -51,8 +43,9 @@ class AdminController extends Controller
         return view('backend.login');
     }
 
+    
     public function logout(){
-    	Auth::guard('web')->logout();
+    	Auth::logout();
     	return redirect()
                 ->route('backend.login')
                 ->with('msg',__('app.msg.logout'));

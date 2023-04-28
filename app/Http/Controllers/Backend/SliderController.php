@@ -12,6 +12,13 @@ use App\Http\Requests\SliderRequest;
 
 class SliderController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:slider_show|slider_create|slider_edit|slider_delete', ['only' => ['index','show']]);
+         $this->middleware('permission:slider_add', ['only' => ['create','store']]);
+         $this->middleware('permission:slider_edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:slider_delete', ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *

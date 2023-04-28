@@ -10,6 +10,13 @@ use App\Models\Section;
 use App\Models\AttributeSet;
 class AttributeController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:product_attribute_show|product_attribute_create|product_attribute_edit|product_attribute_delete', ['only' => ['index','show']]);
+         $this->middleware('permission:product_attribute_add', ['only' => ['create','store']]);
+         $this->middleware('permission:product_attribute_edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:product_attribute_delete', ['only' => ['destroy']]);
+    }
      /**
      * Display a listing of the resource.
      *

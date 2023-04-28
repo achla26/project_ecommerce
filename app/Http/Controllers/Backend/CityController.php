@@ -13,6 +13,13 @@ use Session;
 use App\Http\Requests\CityRequest;
 class CityController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:city_show|city_create|city_edit|city_delete', ['only' => ['index','show']]);
+         $this->middleware('permission:city_add', ['only' => ['create','store']]);
+         $this->middleware('permission:city_edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:city_delete', ['only' => ['destroy']]);
+    }
      /**
      * Display a listing of the resource.
      *

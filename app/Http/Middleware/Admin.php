@@ -18,7 +18,7 @@ class Admin
      */
     public function handle(Request $request, Closure $next ,...$guards)
     {    
-        if(Auth::guard('user')->check()){
+        if(Auth::check()){
             return $next($request);
         }
         return redirect()->route('backend.login')

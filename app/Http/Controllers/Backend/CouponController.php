@@ -12,6 +12,13 @@ use Str;
 use Session;
 class CouponController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:coupon_show|coupon_create|coupon_edit|coupon_delete', ['only' => ['index','show']]);
+         $this->middleware('permission:coupon_add', ['only' => ['create','store']]);
+         $this->middleware('permission:coupon_edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:coupon_delete', ['only' => ['destroy']]);
+    }
      /**
      * Display a listing of the resource.
      *

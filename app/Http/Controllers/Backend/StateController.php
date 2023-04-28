@@ -11,6 +11,13 @@ use Str;
 use Session;
 class StateController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:state_show|state_create|state_edit|state_delete', ['only' => ['index','show']]);
+         $this->middleware('permission:state_add', ['only' => ['create','store']]);
+         $this->middleware('permission:state_edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:state_delete', ['only' => ['destroy']]);
+    }
      /**
      * Display a listing of the resource.
      *

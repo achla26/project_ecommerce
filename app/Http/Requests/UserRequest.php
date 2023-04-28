@@ -29,6 +29,9 @@ class UserRequest extends FormRequest
             'lname'=>"required",
             'email'=> $id ? 'required|email|unique:users,email,'.$id : 
             'required|unique:users|email',
+            'roles' => 'required',
+            'password' => $id ? 'nullable' : 
+            'required',
         ];
     }
 }

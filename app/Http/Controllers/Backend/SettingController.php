@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class SettingController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:setting', ['only' => ['edit','update']]);
+    }
+
     public function index(){
         $settings = collect(Setting::all())->pluck('value','key')->toArray();
         return view('backend.settings.index',compact('settings'));

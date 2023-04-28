@@ -10,6 +10,13 @@ use Str;
 use Session;
 class BrandController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:brand_show|brand_create|brand_edit|brand_delete', ['only' => ['index','show']]);
+         $this->middleware('permission:brand_add', ['only' => ['create','store']]);
+         $this->middleware('permission:brand_edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:brand_delete', ['only' => ['destroy']]);
+    }
      /**
      * Display a listing of the resource.
      *

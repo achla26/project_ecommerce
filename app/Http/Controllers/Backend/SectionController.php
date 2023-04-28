@@ -12,6 +12,13 @@ use App\Http\Requests\SectionRequest;
 
 class SectionController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:section_show|section_create|section_edit|section_delete', ['only' => ['index','show']]);
+         $this->middleware('permission:section_add', ['only' => ['create','store']]);
+         $this->middleware('permission:section_edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:section_delete', ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *

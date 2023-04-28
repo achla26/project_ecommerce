@@ -12,6 +12,13 @@ use App\Http\Requests\CategoryRequest;
 
 class CategoryController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:category_show|category_create|category_edit|category_delete', ['only' => ['index','show']]);
+         $this->middleware('permission:category_add', ['only' => ['create','store']]);
+         $this->middleware('permission:category_edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:category_delete', ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *

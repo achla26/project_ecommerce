@@ -24,6 +24,13 @@ use App\Http\Requests\ProductRequest;
 use Auth;
 class ProductController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:product_show|product_create|product_edit|product_delete', ['only' => ['index','show']]);
+         $this->middleware('permission:product_add', ['only' => ['create','store']]);
+         $this->middleware('permission:product_edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:product_delete', ['only' => ['destroy']]);
+    }
      /**
      * Display a listing of the resource.
      *

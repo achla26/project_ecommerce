@@ -32,6 +32,7 @@
                                                 <th>Sr No.</th>
                                                 <th>Name</th>
                                                 <th>Email</th>
+                                                <th>Roles</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
@@ -43,6 +44,13 @@
                                                     
                                                     <td>{{$user->fname}} {{$user->lname}}</td>
                                                     <td>{{$user->email}}</td>
+                                                    <td>
+                                                        @if(!empty($user->getRoleNames()))
+                                                          @foreach($user->getRoleNames() as $role)
+                                                          <span class="badge bg-primary me-2">{{ $role }}</span>  
+                                                          @endforeach
+                                                        @endif
+                                                      </td>
                                                     <td>
                                                         <div id="update-status{{$user->id}}">
                                                             @if($user->status == 'active')
