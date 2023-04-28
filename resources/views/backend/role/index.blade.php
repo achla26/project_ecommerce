@@ -1,7 +1,7 @@
 @extends('backend.layout')
 @section('title','Role')
 @section('css')
-@include('backend.includes.data-table-header')
+
 @endsection
 @section('content')
     <div class="content">
@@ -76,5 +76,5 @@
 @endsection
 
 @section('script')
-@include('backend.includes.data-table-footer')        
+      
 @endsection
