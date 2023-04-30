@@ -22,7 +22,8 @@
 
         <!-- Icons css -->
         <link href="{{asset('assets/backend/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
-        
+        {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
+        @stack('scripts')
     </head>
     <style>
         .error_msg{
@@ -30,3 +31,4 @@
         }
     </style>
     <body>
+        

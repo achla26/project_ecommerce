@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Models\Section;
 use App\Http\Requests\CategoryRequest;
+use App\Http\Resources\DataTableCollectionResource;
 
 class CategoryController extends Controller
 {
@@ -24,10 +25,14 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(){
+        return view('backend.categories.index');
+    }
+
+    public function getTableData()
     {
-        $categories = Category::all()->sortByDesc("id");
-        return view('backend.categories.index', compact('categories'));
+        $data = Category::latest()->paginate(5);
+        return new DataTableCollectionResource($data);
     }
 
     /**

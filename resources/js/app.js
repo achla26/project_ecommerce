@@ -1,10 +1,10 @@
 // require('./bootstrap')
 
 import { createApp } from 'vue'
-import Test from './components/Test.vue'
+import CustomTable from './components/CustomTable.vue'
 
 const app = createApp({})
 
-app.component('test', Test)
+app.component('custom-table', CustomTable)
 
 app.mount('#app')
