@@ -92,3 +92,11 @@ function encode($data){
 function decode($data){
     return Crypt::decryptString($data);
 }
+
+function js_response($result = null, $message = '', $success = true, $status_code = 200): \Illuminate\Http\JsonResponse {
+    return response()->json([
+        'success' => $success,
+        'result' => $result,
+        'message' => $message
+    ], $status_code);
+}

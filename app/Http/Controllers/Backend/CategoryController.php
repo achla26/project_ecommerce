@@ -29,9 +29,21 @@ class CategoryController extends Controller
         return view('backend.categories.index');
     }
 
-    public function getTableData()
+    public function getTableData(Request $request)
     {
-        $data = Category::latest()->paginate(5);
+        $length = $request->input('length');
+        $orderBy = $request->input('column');
+        $orderByDir = $request->input('dir');
+        $searchValue = $request->input('search');
+
+        $data = Category::query()->with(['section' , 'parent_category' , 'sub_categories'])
+            ->where(function ($query) use ($searchValue) {
+                $query->where("categories.name", "LIKE", "%$searchValue%");
+            });
+
+
+        $data = $data->orderBy($orderBy, $orderByDir)->paginate($length, 'categories.*');
+
         return new DataTableCollectionResource($data);
     }
 
@@ -50,7 +62,7 @@ class CategoryController extends Controller
                 ->get();
 
         $categories = Category::query()
-                ->with('subcategories')
+                ->with('sub_categories')
                 ->where(['parent_id' => 0])
                 ->get();
 
@@ -108,12 +120,12 @@ class CategoryController extends Controller
                 ->get();
 
         $categories = Category::query()
-                ->with('subcategories')
+                ->with('sub_categories')
                 ->where(['parent_id' => 0])
                 ->get();
 
         $getCategories = Category::query()
-                ->with('subcategories')
+                ->with('sub_categories')
                 ->where([
                     'section_id' => $category->section_id,
                     'parent_id' => 0, 'status' => 1
@@ -171,8 +183,7 @@ class CategoryController extends Controller
         }
         $category->delete();
 
-        return redirect()->route('backend.category.index')
-            ->with('msg', __('app.crud.deleted',['attribute'=>'Brand']));
+        return js_response(null , __('app.crud.deleted',['attribute'=>'Category']));
     }
 
     public function status(Request $request)
@@ -186,7 +197,7 @@ class CategoryController extends Controller
     public function appendCategories(Request $request)
     {
         $getCategories = Category::query()
-                ->with('subcategories')
+                ->with('sub_categories')
                 ->where([
                     'section_id' => $request->section_id,
                     'parent_id' => 0, 'status' => 1

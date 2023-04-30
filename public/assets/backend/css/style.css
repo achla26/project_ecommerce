@@ -4,3 +4,14 @@
     right: 0;
     z-index: 9999;
 }
+a{
+    text-decoration: none;
+    color: inherit;
+}
+.paginate ul li {
+    cursor: pointer;
+}
+.paginate ul li .active{
+    color: #fff;
+    background: #6169d0;
+}

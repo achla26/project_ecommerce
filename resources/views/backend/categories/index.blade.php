@@ -27,12 +27,10 @@
                     <div id="app">
                     <div class="col-12">
                         <custom-table 
-                        :columns='tableColumns' 
-                        :per-page = "perPage"
-                        :items = "items"
-                        {{-- :update-status = "updateStatus" --}}
-                        update-link = "{{route('backend.category.edit', '__')}}"
-                        :module = "module"
+                            :columns='tableColumns'
+                            update-link = "{{route('backend.category.edit', '__')}}"
+                            delete-link = "{{ route('backend.category.destroy', '__') }}"
+                            :module = "module"
                         />
                     </div> <!-- container -->
                 </div> <!-- container -->

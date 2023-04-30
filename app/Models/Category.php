@@ -32,7 +32,7 @@ class Category extends Model
         $this->attributes['slug'] = Str::slug($value);
     }
 
-    public function subcategories(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function sub_categories(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
     	return $this->hasMany('App\Models\Category','parent_id')->where('status','active');
     }
@@ -42,7 +42,7 @@ class Category extends Model
     	return $this->belongsTo('App\Models\Section','section_id')->select('id','name');
     }
 
-    public function parentcategory(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function parent_category(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
     	return $this->belongsTo('App\Models\Category','parent_id')->select('id','name');
     }
