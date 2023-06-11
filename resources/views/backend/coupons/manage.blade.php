@@ -77,7 +77,7 @@
                                                   <optgroup label="{{ $section['name'] }}"></optgroup>
                                                   @foreach($section['categories'] as $category)
                                                     <option value="{{ $category['id'] }}" {{ isset($coupon->categories) ? in_array($category['id'],(json_decode($coupon->categories))) ? 'selected':'' : ''}}>&nbsp;&nbsp;&nbsp;--&nbsp;&nbsp;{{ $category['name']}}</option>
-                                                    @foreach($category['subcategories'] as $subcategory)
+                                                    @foreach($category['sub_categories'] as $subcategory)
                                                       <option value="{{ $subcategory['id'] }}" {{ isset($coupon->categories) ?  in_array($subcategory['id'],(json_decode($coupon->categories))) ? 'selected':'' : ''}}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;{{ $subcategory['name']}}</option>
                                                     @endforeach
                                                   @endforeach

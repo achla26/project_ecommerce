@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Cart;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Cookie;
 class CartController extends Controller
 {
      /**
@@ -17,7 +17,10 @@ class CartController extends Controller
     public function index(Request $request)
     {
         if(auth()->check()){
-            $carts = Cart::query()->where('user_id',auth()->user()->id)->get();
+            $carts = Cart::query()
+            ->where('user_id',auth()->user()->id)
+            ->orWhere('ip',$request->ip())
+            ->get();
         }
         else{
             $carts = Cart::query()->where('ip',$request->ip())->get();
@@ -43,20 +46,42 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        $user_id = 0;
+        // session()->put('cart', []);
+        // $cart = session()->get('cart');
+
+        // // // session()->flush();
+        
+        // $cart[] = [
+        //     'product_id' => $request->product_id,
+        //     'product_varient_id' => $request->product_varient_id,
+        //     'qty' => $request->qty
+        // ];
+
+        // session()->put('cart');
+        // dd(session()->get('cart'));
+
+        // session()->put('cart');        
+
+        // dd(session()->get('cart'));
+
         if(auth()->check()){
             $user_id = auth()->user()->id;
+
+            Cart::updateOrCreate([
+                'user_id' => $user_id,
+                'product_id' => $request->product_id,
+                'product_varient_id' => $request->product_varient_id,
+                'ip' => $request->ip(),
+            ],
+            [
+                'qty' => $request->qty,
+                'product_id' => $request->product_id,
+                'product_varient_id' => $request->product_varient_id,
+            ]);
+
+            return redirect()->route('cart.index')
+                ->withSuccess(__('app.crud.added',['attribute'=>'Product']));
         }
-
-        Cart::updateOrCreate([
-            'user_id' => $user_id,
-            'ip' => $request->ip(),
-            'product_id' => $request->product_id,
-            'product_varient_id' => $request->product_varient_id,
-        ],['qty' => $request->qty]);
-
-        return redirect()->route('cart.index')
-        ->withSuccess(__('app.crud.added',['attribute'=>'Product']));
     }
 
     /**

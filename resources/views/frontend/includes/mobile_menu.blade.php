@@ -17,9 +17,9 @@
                                 <ul class="sub-menu">
                                     @foreach ($section->categories as $category)
                                     <li><a href="shop-left-sidebar-col-3.html">{{ $category->name ?? ''}}</a>
-                                        @if (isset($category->subcategories) && !empty($category->subcategories))
+                                        @if (isset($category->sub_categories) && !empty($category->sub_categories))
                                             <ul class="sub-menu">
-                                                @foreach ($category->subcategories as $sub_category)
+                                                @foreach ($category->sub_categories as $sub_category)
                                                 <li><a href="shop-left-sidebar-col-3.html">{{ $sub_category->name ?? ''}}</a>
                                                 </li>
                                                 @endforeach

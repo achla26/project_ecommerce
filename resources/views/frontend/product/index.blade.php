@@ -1,6 +1,6 @@
 @extends('frontend.layout')
 @php
-    $product = detail($product->id , $set_varient );
+    $product = detail($product->id);
 @endphp
 @section('title' , $product['name'])
 @section('meta_title' , $product['meta_title'])

@@ -203,7 +203,7 @@ class ProductController extends Controller
         $taxes = Tax::all();
         $product_images = ProductImage::where('product_id',$product->id)->get();
         $product_varients = ProductVarient::where('product_id',$product->id)->get();
-        $getCategories = Category::with('subcategories')->where(['section_id'=>$product->section_id,'parent_id'=>0,'status'=>1])->get();
+        $getCategories = Category::with('sub_categories')->where(['section_id'=>$product->section_id,'parent_id'=>0,'status'=>1])->get();
         return view('backend.products.manage',compact('product','attributes','attribute_sets','sections','categories','brands','taxes','getCategories','product_images','product_varients'));
     }
   
@@ -366,7 +366,7 @@ class ProductController extends Controller
     }
 
     public function appendCategories(Request $request){
-        $getCategories = Category::with('subcategories')->where(['section_id'=>$request->section_id,'parent_id'=>0,'status'=>1])->get();
+        $getCategories = Category::with('sub_categories')->where(['section_id'=>$request->section_id,'parent_id'=>0,'status'=>1])->get();
         return view('backend.products.append_product_category',compact('getCategories'));
     }
 

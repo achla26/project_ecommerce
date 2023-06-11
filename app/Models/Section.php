@@ -25,7 +25,7 @@ class Section extends Model
     }
     public function categories(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-    	return $this->hasMany('App\Models\Category','section_id')->where(['parent_id'=>'ROOT','status'=>'active'])->with('subcategories');
+    	return $this->hasMany('App\Models\Category','section_id')->where(['parent_id'=>'ROOT','status'=>'active'])->with('sub_categories');
     }
 
     public function products(): \Illuminate\Database\Eloquent\Relations\HasMany

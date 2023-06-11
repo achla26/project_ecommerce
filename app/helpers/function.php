@@ -46,34 +46,7 @@ function detail($id , $set_varient=""){
             $attribute =  Attribute::find($attribute);
             $product['display_varient'][$attribute->attribute_set->name]= $attribute->id;
         }
-    }
-    if($product['is_discount'] == "yes") {
-        $product['discount_price'] = $product['unit_mrp'] - $product['unit_price'];
-        $product['discount_percentage'] = round(($product['discount_price']/$product['unit_mrp']) * 100);
-
-        if($product['discount']['type'] == "flat") {
-            $product['discount_show'] = price($product['discount_price']).' off';
-        }
-        else {
-            $product['discount_show'] = $product['discount_percentage'].'% off';
-        }
-        
-        if($product['discount']['category'] == 'time_bound') {
-            $cur_time = strtotime(date('Y-m-d H:i:s'));
-
-            if(!($cur_time >= strtotime($product['discount']['start_dttm']) && $cur_time <= strtotime($product['discount']['end_dttm'])))
-            {
-                $product['unit_price'] = $product['unit_mrp'];
-                $product['unit_mrp'] = "";
-            }  
-        }
-    }
-    else{
-        $product['unit_price'] = $product['unit_mrp'] ;
-        $product['unit_mrp'] = "";
-    }
-    
-    
+    }    
     return $product;
 }
 
@@ -84,6 +57,7 @@ function uuid(){
 function addToCart($slug ="" ){
 
 }
+
 
 function encode($data){
     return Crypt::encryptString($data);
