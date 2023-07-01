@@ -29,6 +29,6 @@ class Cart extends Model
 
     public function getSingleItemTotalAttribute()
     {
-        return price($this->qty * detail($this->product->id)['unit_price']);
+        return price($this->qty * product($this->product->id)['unit_price']);
     }
 }

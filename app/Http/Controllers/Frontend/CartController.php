@@ -46,41 +46,33 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        // session()->put('cart', []);
-        // $cart = session()->get('cart');
-
-        // // // session()->flush();
+        if (session()->has('cart')) {
+            $cart = session()->get('cart');
+            foreach ($cart as $item) {
+                if(isset($cart[$request->product_id][$request->varient_id])){
+                    $cart[$request->product_id][$request->varient_id] = $cart[$request->product_id][$request->varient_id]+$request->qty;
+                }else{
+                    $cart[$request->product_id][$request->varient_id] = (int)$request->qty;
+                }                
+            }            
+        }
+        else{
+            $cart[$request->product_id][$request->varient_id] = (int)$request->qty;       
+        }
+        session()->put('cart',$cart);
         
-        // $cart[] = [
-        //     'product_id' => $request->product_id,
-        //     'product_varient_id' => $request->product_varient_id,
-        //     'qty' => $request->qty
-        // ];
-
-        // session()->put('cart');
-        // dd(session()->get('cart'));
-
-        // session()->put('cart');        
-
-        // dd(session()->get('cart'));
-
         if(auth()->check()){
-            $user_id = auth()->user()->id;
-
-            Cart::updateOrCreate([
-                'user_id' => $user_id,
-                'product_id' => $request->product_id,
-                'product_varient_id' => $request->product_varient_id,
-                'ip' => $request->ip(),
-            ],
-            [
-                'qty' => $request->qty,
-                'product_id' => $request->product_id,
-                'product_varient_id' => $request->product_varient_id,
-            ]);
-
-            return redirect()->route('cart.index')
-                ->withSuccess(__('app.crud.added',['attribute'=>'Product']));
+            if (session()->has('cart')) {
+                $cart = session()->get('cart');
+                foreach ($cart as $key => $item) {
+                    Cart::create([
+                        'product_id'=>'',
+                        'product_varient_id'=>'',
+                        'qty'=>'',
+                        'user_id'=>auth()->id()
+                    ]);
+                }
+            }
         }
     }
 

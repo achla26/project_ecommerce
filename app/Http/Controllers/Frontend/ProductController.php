@@ -28,4 +28,17 @@ class ProductController extends Controller
         }
         return view('frontend.product.index',compact('product' ,'set_varient'));
     }
+
+    public function varient(Request $request){
+        // \DB::enableQueryLog();
+        $varient  = ProductVarient::query()->where('product_id',$request->product_id)->whereJsonContains('attribute_id' ,$request->options)->first();
+        // echo $varient->id;
+        // dd(\DB::getQueryLog());
+        if($varient){
+            $product = product($request->product_id , $varient->id);
+            return js_response($product);
+        }
+
+        return js_response(null , '', false);
+    }
 }

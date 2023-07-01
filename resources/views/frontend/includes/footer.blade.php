@@ -448,18 +448,13 @@
 
 
 <!-- Vendor JS -->
-<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js" ></script>
 <script src="{{asset('assets/frontend/js/vendor/popper.min.js')}}"></script>
 <script src="{{asset('assets/frontend/js/vendor/bootstrap.min.js')}}"></script>
 <script src="{{asset('assets/frontend/js/vendor/jquery-migrate-3.3.0.min.js')}}"></script>
 <script src="{{asset('assets/frontend/js/vendor/modernizr-3.11.2.min.js')}}"></script>
-<script>
-    $.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-    });
-</script>
+
+@include('frontend.script')
 @yield('script')
 @yield('script_file')
 <!--Plugins JS-->

@@ -10,9 +10,6 @@ class Product extends Model
 {
     use HasFactory;
     protected $guarded = [];
-    protected $appends= [
-        'varient_name',
-    ];
 
     public function setSlugAttribute(){
         $this->attributes['slug'] = Str::slug($this->name );
@@ -45,25 +42,6 @@ class Product extends Model
     {
         $attribute =  Attribute::find($id);
         return $get_attribute[$attribute->attribute_set->name]= $attribute->name;
-    }
-
-
-    public function getVarientNameAttribute()
-    {
-        $get_product =  $attributes = [];
-        
-        foreach(collect($this->varients)->pluck('attribute_id')->toArray() as $varient){
-                                    
-            $attributes[] = json_decode($varient);
-        }
-        $attributes= array_unique(call_user_func_array('array_merge', $attributes));
-       
-        foreach($attributes as $attribute){
-            $attribute =  Attribute::find($attribute);
-            $get_product[$attribute->attribute_set->name][$attribute->id]= $attribute->name;
-        }
-
-        return $get_product;
     }
 
 }

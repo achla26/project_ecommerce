@@ -20,16 +20,14 @@ use \App\Http\Controllers\Frontend\Auth\RegisterController;
 */
 
 Route::get('/', [IndexController::class, 'index'])->name('index');
-// Route::get('product/{slug}/{color?}/{size?}', [ProductController::class, 'show'])->name('product');
 Route::get('product/{slug}', [ProductController::class, 'show'])->name('product');
+Route::post('product-varient', [ProductController::class, 'varient'])->name('product.varient');
 Route::resource('cart', CartController::class);
 
 // Auth::routes();
 
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
-
 Route::post('login', [LoginController::class, 'login'])->name('login');
-
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
   // Password Reset Routes...

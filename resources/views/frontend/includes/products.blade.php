@@ -30,7 +30,7 @@
                             <div class="row">
                                 @foreach ($section->products as $product)
                                 @php
-                                    $product = detail($product->id);
+                                    $product = product($product->id);
                                 @endphp
                                 <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 mb-6  ec-product-content" data-animation="fadeIn">
                                     <div class="ec-product-inner">
@@ -43,7 +43,7 @@
                                                             src="{{ asset('storage/' . $product['images'][0]['name']) }}" alt="Product" />
                                                     @endif
                                                 </a>
-                                                <span class="percentage">{{ $product['discount_show']}}</span>
+                                                {{-- <span class="percentage">{{ $product['discount_show']}}</span> --}}
                                                 <a href="#" class="quickview" data-link-action="quickview"
                                                     title="Quick view" data-bs-toggle="modal"
                                                     data-bs-target="#ec_quickview_modal"><i class="fa-solid fa-eye"></i></a>
