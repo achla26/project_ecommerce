@@ -63,15 +63,12 @@ class CartController extends Controller
         
         if(auth()->check()){
             if (session()->has('cart')) {
-                $cart = session()->get('cart');
-                foreach ($cart as $key => $item) {
-                    Cart::create([
-                        'product_id'=>'',
-                        'product_varient_id'=>'',
-                        'qty'=>'',
-                        'user_id'=>auth()->id()
-                    ]);
-                }
+                Cart::updateOrCreate([
+                    'product_id'=>$request->product_id,
+                    'product_varient_id'=>$request->varient_id,
+                    'user_id'=>auth()->id()
+                ],
+                ['qty'=>$request->qty,]);
             }
         }
     }
