@@ -261,7 +261,7 @@
         function removeCartItem(id){
             $.ajax({
                 type: "POST",
-                url: "{{route('coupon.remove')}}",
+                url: "{{route('cart.destroy')}}",
                 data: {
                     id
                 },

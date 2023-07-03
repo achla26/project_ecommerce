@@ -132,7 +132,8 @@ class CartController extends Controller
             session()->forget("cart.$id[0]");
         }
         else{
-            Cart::find($id)->delete();
+            $cart = Cart::find($id);
+            $cart->delete();
         }
         return js_response(null, 'Item Removed from Cart successfully');
     }

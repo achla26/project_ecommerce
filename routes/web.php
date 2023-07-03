@@ -23,7 +23,10 @@ use \App\Http\Controllers\Frontend\Auth\RegisterController;
 Route::get('/', [IndexController::class, 'index'])->name('index');
 Route::get('product/{slug}', [ProductController::class, 'show'])->name('product');
 Route::post('product-varient', [ProductController::class, 'varient'])->name('product.varient');
-Route::resource('cart', CartController::class);
+Route::get('cart', [CartController::class, 'index'])->name('cart.index');
+Route::post('cart', [CartController::class, 'store'])->name('cart.store');
+Route::post('cart/destroy', [CartController::class, 'destroy'])->name('cart.destroy');
+Route::post('cart/update', [CartController::class, 'update'])->name('cart.update');
 
 Route::post('apply-coupon', [CouponController::class, 'store'])->name('coupon.apply');
 Route::post('remove-coupon', [CouponController::class, 'destroy'])->name('coupon.remove');
