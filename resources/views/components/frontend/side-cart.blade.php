@@ -11,7 +11,7 @@
             <ul class="eccart-pro-items">
                 @foreach ($cartItems as $item)
                 @php
-                    $product = product($item['product_id']);
+                    $product = js_product($item['product_id']);
                 @endphp
                     <li>
                         <a href="product-left-sidebar.html" class="sidekka_pro_img"><img

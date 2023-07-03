@@ -15,7 +15,7 @@ function price($price){
     return $currency->symbol .' '.round($price * $currency->exchange_rate_def);
 }
 
-function product($id , $set_varient=0){
+function js_product($id , $set_varient=0){
     $product = collect(Product::with(['category', 'section', 'varients', 'images' , 'discount'])->find($id))->toArray();  
     
     if(count(varients($id)) > 0){
@@ -87,16 +87,18 @@ function js_response($result = null, $message = '', $success = true, $status_cod
 function js_cart(){
     if(auth()->check()){
         $cart_items = collect(Cart::query()->where('user_id',auth()->id())->latest()->get())->toArray();
-    }
+    }   
     else{
         if (session()->has('cart')) {
             $cart = session()->get('cart');
             foreach ($cart as $product_id => $items) {           
-                foreach($items as $varient_id => $item){
+                foreach($items as $varient_id => $qty){
                     $cart_items[] = [
+                        'id' => $product_id.'-'.$varient_id,
                         'product_id'  => $product_id,
                         'product_varient_id'  => $varient_id,
-                        'qty'  => $item,
+                        'qty'  => $qty,
+                        'single_item_total' => $qty * js_product($product_id)['unit_price']
                     ];
                 }
             }

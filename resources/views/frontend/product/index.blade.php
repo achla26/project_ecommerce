@@ -1,6 +1,6 @@
 @extends('frontend.layout')
 @php
-    $product = product($product->id);
+    $product = js_product($product->id);
 @endphp
 @section('title', $product['name'])
 @section('meta_title', $product['meta_title'])

@@ -30,7 +30,7 @@
                             <div class="row">
                                 @foreach ($section->products as $product)
                                 @php
-                                    $product = product($product->id);
+                                    $product = js_product($product->id);
                                 @endphp
                                 <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 mb-6  ec-product-content" data-animation="fadeIn">
                                     <div class="ec-product-inner">

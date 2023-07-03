@@ -52,7 +52,7 @@
                                             <tbody>
                                                 @foreach ($carts as $cart)
                                                 @php
-                                                    $product = product($cart->product_id , $cart->product_varient_id);
+                                                    $product = js_product($cart['product_id'] , $cart['product_varient_id']);
                                                 @endphp
                                                 
                                                     <tr>
@@ -102,12 +102,12 @@
                                                             style="text-align: center;">
                                                             <div class="cart-qty-plus-minus">
                                                                 <input class="cart-plus-minus" type="text"
-                                                                    name="cartqtybutton" value="{{$cart->qty}}" />
+                                                                    name="cartqtybutton" value="{{$cart['qty']}}" />
                                                             </div>
                                                         </td>
-                                                        <td data-label="Total" class="ec-cart-pro-subtotal">{{$cart->single_item_total}}</td>
+                                                        <td data-label="Total" class="ec-cart-pro-subtotal">{{$cart['single_item_total']}}</td>
                                                         <td data-label="Remove" class="ec-cart-pro-remove">
-                                                            <a href="#"><i class="ecicon eci-trash-o"></i></a>
+                                                            <a href="javascript:void(0)" onclick="removeCartItem('{{$cart['id']}}')"><i class="ecicon eci-trash-o"></i></a>
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -199,9 +199,9 @@
                                             <form class="ec-cart-coupan-form" name="ec-cart-coupan-form" method="post"
                                                 action="#">
                                                 <input class="ec-coupan" type="text" required=""
-                                                    placeholder="Enter Your Coupan Code" name="ec-coupan" value="">
-                                                <button class="ec-coupan-btn button btn-primary" type="submit"
-                                                    name="subscribe" value="">Apply</button>
+                                                    placeholder="Enter Your Coupan Code" name="coupon_code" id="coupon_code" value="">
+                                                <button class="ec-coupan-btn button btn-primary" type="button"
+                                                    name="subscribe" value="" onclick="addCoupon(80)">Apply</button>
                                             </form>
                                         </div>
                                         <div class="ec-cart-summary-total">
@@ -220,4 +220,54 @@
         </div>
     </section>
 
-    @endsection
+@endsection
+
+@section('script')
+    <script>
+        function addCoupon(sub_total) {
+            let coupon_code = $("#coupon_code").val();
+            $.ajax({
+                type: "POST",
+                url: "{{route('coupon.apply')}}",
+                data: {
+                    sub_total,
+                    coupon_code
+                },
+                success: function(response) {
+                    
+                }
+            });
+        }
+
+        function removeCartCouponApply() {
+            $.ajax({
+                type: "POST",
+                url: "{{route('coupon.remove')}}",
+                data: {},
+                success: function(response) {
+                    let jsonData = JSON.parse(response);
+                    if (jsonData.success) {
+                        notifier.notify('success', jsonData.message);
+                    } else {
+                        notifier.notify('error', jsonData.message);
+                    }
+                    setTimeout(function() {
+                        location.reload();
+                    }, 300);
+                }
+            });
+        }
+
+        function removeCartItem(id){
+            $.ajax({
+                type: "POST",
+                url: "{{route('coupon.remove')}}",
+                data: {
+                    id
+                },
+                success: function(response) {;
+                }
+        });
+        }
+    </script>
+@endsection

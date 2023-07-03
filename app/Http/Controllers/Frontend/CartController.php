@@ -16,15 +16,7 @@ class CartController extends Controller
      */
     public function index(Request $request)
     {
-        if(auth()->check()){
-            $carts = Cart::query()
-            ->where('user_id',auth()->user()->id)
-            ->orWhere('ip',$request->ip())
-            ->get();
-        }
-        else{
-            $carts = Cart::query()->where('ip',$request->ip())->get();
-        }
+        $carts = js_cart();
         return view('frontend.cart.index', compact('carts'));
     }
 
@@ -46,21 +38,21 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        if (session()->has('cart')) {
-            $cart = session()->get('cart');
-            foreach ($cart as $item) {
-                if(isset($cart[$request->product_id][$request->varient_id])){
-                    $cart[$request->product_id][$request->varient_id] = $cart[$request->product_id][$request->varient_id]+$request->qty;
-                }else{
-                    $cart[$request->product_id][$request->varient_id] = (int)$request->qty;
-                }                
-            }            
-        }
-        else{
-            $cart[$request->product_id][$request->varient_id] = (int)$request->qty;       
-        }
-        session()->put('cart',$cart);
-        
+        // if (session()->has('cart')) {
+        //     if(session()->has("cart.$request->product_id.$request->varient_id")){
+        //         $qty = session()->get("cart.$request->product_id.$request->varient_id");
+        //         $qty = $qty+$request->qty;
+        //         session()->put("cart.$request->product_id.$request->varient_id" , $qty);
+        //     }else{
+        //         session()->put("cart.$request->product_id.$request->varient_id" , $request->qty);
+        //     }
+        // }
+        // else{
+        //     session()->put("cart.$request->product_id.$request->varient_id" , $request->qty);
+        // }
+
+        // dd(session()->get('cart'));
+
         if(auth()->check()){
             if (session()->has('cart')) {
                 Cart::updateOrCreate([
@@ -71,6 +63,24 @@ class CartController extends Controller
                 ['qty'=>$request->qty,]);
             }
         }
+        else{
+            if (session()->has('cart')) {
+                $cart = session()->get('cart');
+                foreach ($cart as $item) {
+                    if(isset($cart[$request->product_id][$request->varient_id])){
+                        $cart[$request->product_id][$request->varient_id] = $cart[$request->product_id][$request->varient_id]+$request->qty;
+                    }else{
+                        $cart[$request->product_id][$request->varient_id] = (int)$request->qty;
+                    }                
+                }            
+            }
+            else{
+                $cart[$request->product_id][$request->varient_id] = (int)$request->qty;       
+            }
+            session()->put('cart',$cart);
+        }
+        
+        
     }
 
     /**
@@ -104,21 +114,7 @@ class CartController extends Controller
      */
     public function update(Request $request, Cart $cart)
     {
-        $data = $request->validate([
-            'name'=>'required|min:3|unique:carts,name,'.$request->input('id'),
-            'image'=>"mimes:jpeg,jpg,png"
-        ]);
-
-
-        if($request->hasfile('image')){
-            $image =$request->file('image')->store( 'uploads/carts', 'public');
-            $data['image'] = $image;
-        }
-
-        $cart->update($data);
-
-        return redirect()->route('backend.cart.index')
-            ->with('msg', __('app.crud.updated',['attribute'=>'Cart']));
+        
     }
 
     /**
@@ -127,17 +123,18 @@ class CartController extends Controller
      * @param  \App\Models\Cart  $cart
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Cart $cart)
+    public function destroy(Request $request)
     {
-        if (!empty($cart->image)) {
-            if (\Storage::disk('public')->exists($cart->image)) {
-                \Storage::disk('public')->delete($cart->image);
-            }
-        }
-        $cart->delete();
+        $id = $request->id;
 
-        return redirect()->route('backend.cart.index')
-            ->with('msg', __('app.crud.deleted',['attribute'=>'Cart']));
+        if(session()->has('cart')){
+            $id = explode('-' ,$id);
+            session()->forget("cart.$id[0]");
+        }
+        else{
+            Cart::find($id)->delete();
+        }
+        return js_response(null, 'Item Removed from Cart successfully');
     }
 
 }

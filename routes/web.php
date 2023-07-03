@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Frontend\ProductController;
 use \App\Http\Controllers\Frontend\IndexController;
 use \App\Http\Controllers\Frontend\CartController;
+use \App\Http\Controllers\Frontend\CouponController;
 use \App\Http\Controllers\Frontend\Auth\LoginController;
 use \App\Http\Controllers\Frontend\Auth\ForgotPasswordController;
 use \App\Http\Controllers\Frontend\Auth\ResetPasswordController;
@@ -23,6 +24,9 @@ Route::get('/', [IndexController::class, 'index'])->name('index');
 Route::get('product/{slug}', [ProductController::class, 'show'])->name('product');
 Route::post('product-varient', [ProductController::class, 'varient'])->name('product.varient');
 Route::resource('cart', CartController::class);
+
+Route::post('apply-coupon', [CouponController::class, 'store'])->name('coupon.apply');
+Route::post('remove-coupon', [CouponController::class, 'destroy'])->name('coupon.remove');
 
 // Auth::routes();
 
