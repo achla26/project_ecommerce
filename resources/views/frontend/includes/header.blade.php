@@ -84,4 +84,4 @@
     </header>
     <!-- Header End  -->
     
-    <x-frontend.side-cart :cartItems ="js_cart()"/>
+    <x-frontend.side-cart />

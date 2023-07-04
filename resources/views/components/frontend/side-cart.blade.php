@@ -9,20 +9,21 @@
             </div>
             
             <ul class="eccart-pro-items">
-                @foreach ($cartItems as $item)
+                @foreach (js_cart() as $cart)
                 @php
-                    $product = js_product($item['product_id']);
+                    $product = js_product($cart['product_id'] , $cart['product_varient_id']);
                 @endphp
                     <li>
                         <a href="product-left-sidebar.html" class="sidekka_pro_img"><img
-                                src="{{asset('assets/frontend/product-image/6_1.jpg')}}" alt="product"></a>
+                            src="{{ asset('storage/' . $product['images'][0]['name']) }}" alt="{{ $product['name']}}" /></a>
+                            
                         <div class="ec-pro-content">
-                            <a href="product-left-sidebar.html" class="cart_pro_title">T-shirt For Women</a>
-                            <span class="cart-price"><span>$76.00</span> x 1</span>
+                            <a href="product-left-sidebar.html" class="cart_pro_title">{{ $product['name']}}</a>
+                            <span class="cart-price"><span>{{price($product['unit_price'])}}</span> x {{$cart['qty']}}</span>
                             <div class="qty-plus-minus">
-                                <input class="qty-input" type="text" name="ec_qtybtn" value="1" />
+                                <input class="qty-input" type="text" name="ec_qtybtn" value="{{$cart['qty']}}" />
                             </div>
-                            <a href="javascript:void(0)" class="remove">×</a>
+                            <a href="javascript:void(0)" class="remove"  onclick="removeCartItem('{{$cart['id']}}')">×</a>
                         </div>
                     </li>
                 @endforeach
@@ -48,7 +49,7 @@
                 </table>
             </div>
             <div class="cart_btn">
-                <a href="cart.html" class="btn btn-primary">View Cart</a>
+                <a href="{{route('cart.index')}}" class="btn btn-primary">View Cart</a>
                 <a href="checkout.html" class="btn btn-secondary">Checkout</a>
             </div>
         </div>

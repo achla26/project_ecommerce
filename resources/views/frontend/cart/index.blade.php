@@ -95,9 +95,8 @@
                                                                     @endif
                                                         </td>
                                                         <td data-label="Price" class="ec-cart-pro-price"><span class="new-price">{{price($product['unit_price'])}}</span>
-                                                            @if (!empty($product['unit_mrp']))
-                                                                <span class="old-price"><s>{{price($product['unit_mrp'])}}</s></span>
-                                                            @endif</td>
+                                                                {{-- <span class="old-price"><s>{{price($product['unit_mrp'])}}</s></span> --}}
+                                                            </td>
                                                         <td data-label="Quantity" class="ec-cart-pro-qty"
                                                             style="text-align: center;">
                                                             <div class="cart-qty-plus-minus">
