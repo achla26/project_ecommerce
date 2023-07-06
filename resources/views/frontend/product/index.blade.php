@@ -29,7 +29,7 @@
         }
     </style>
 @endsection
-
+@dd($product)
 @section('content')
 
 

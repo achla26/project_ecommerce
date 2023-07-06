@@ -122,10 +122,11 @@ class ProductController extends Controller
         $product = Product::create($data);
         
         if(isset($images) && !empty($images)){
-            foreach($images as $image){
+            foreach($images as $key => $image){
                 ProductImage::create([
                     'name'=>$image->store( 'uploads/products', 'public'),
-                    'product_id'=>$product->id
+                    'product_id'=>$product->id,
+                    'main'=>$request->main[$key],
                 ]);
             }            
         }    
@@ -254,7 +255,7 @@ class ProductController extends Controller
             $discount_end_dttm = $request->discount_end_dttm;
         }
         
-        $data = $request->except('images','attribute_set_id','tax_value','tax_id','tax_type','discount','varient_attribute_id','varient_price','varient_mrp','varient_sku','varient_qty','varient_image','attribute_id','discount_category','discount_value','discount_type','discount_start_dttm','discount_end_dttm');
+        $data = $request->except('images','attribute_set_id','tax_value','tax_id','tax_type','discount','varient_attribute_id','varient_price','varient_mrp','varient_sku','varient_qty','varient_image','attribute_id','discount_category','discount_value','discount_type','discount_start_dttm','discount_end_dttm','main');
 
         $data['slug'] =Str::slug($request->name, '_');
         
@@ -270,10 +271,11 @@ class ProductController extends Controller
         $product->update($data);
     
         if(isset($images) && !empty($images)){
-            foreach($images as $image){
+            foreach($images as $key => $image){
                 ProductImage::create([
                     'name'=>$image->store( 'uploads/products', 'public'),
-                    'product_id'=>$product->id
+                    'product_id'=>$product->id,
+                    'main'=>$request->main[$key],
                 ]);
             }            
         }    
@@ -372,7 +374,7 @@ class ProductController extends Controller
 
     public function appendImageDiv(Request $request){
         $counter = rand(0000,9999);
-        return view('backend.categories.product_images',compact('counter'));
+        return view('components.backend.product_images',compact('counter'));
     }
 
     public function removeImage(ProductImage $image){

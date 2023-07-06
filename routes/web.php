@@ -5,20 +5,12 @@ use \App\Http\Controllers\Frontend\ProductController;
 use \App\Http\Controllers\Frontend\IndexController;
 use \App\Http\Controllers\Frontend\CartController;
 use \App\Http\Controllers\Frontend\CouponController;
+use \App\Http\Controllers\Frontend\UserController;
 use \App\Http\Controllers\Frontend\Auth\LoginController;
 use \App\Http\Controllers\Frontend\Auth\ForgotPasswordController;
 use \App\Http\Controllers\Frontend\Auth\ResetPasswordController;
 use \App\Http\Controllers\Frontend\Auth\RegisterController;
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+
 
 Route::get('/', [IndexController::class, 'index'])->name('index');
 Route::get('product/{slug}', [ProductController::class, 'show'])->name('product');
@@ -27,6 +19,11 @@ Route::get('cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('cart', [CartController::class, 'store'])->name('cart.store');
 Route::post('cart/destroy', [CartController::class, 'destroy'])->name('cart.destroy');
 Route::post('cart/update', [CartController::class, 'update'])->name('cart.update');
+
+Route::prefix('user')->as('user')->group(function () {
+  Route::get('profile', [UserController::class, 'profile'])->name('profile');
+  Route::get('order-history', [UserController::class, 'orderHistory'])->name('order-history');
+});
 
 Route::post('apply-coupon', [CouponController::class, 'store'])->name('coupon.apply');
 Route::post('remove-coupon', [CouponController::class, 'destroy'])->name('coupon.remove');
