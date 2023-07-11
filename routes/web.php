@@ -15,15 +15,22 @@ use \App\Http\Controllers\Frontend\Auth\RegisterController;
 Route::get('/', [IndexController::class, 'index'])->name('index');
 Route::get('product/{slug}', [ProductController::class, 'show'])->name('product');
 Route::post('product-varient', [ProductController::class, 'varient'])->name('product.varient');
-Route::get('cart', [CartController::class, 'index'])->name('cart.index');
-Route::post('cart', [CartController::class, 'store'])->name('cart.store');
-Route::post('cart/destroy', [CartController::class, 'destroy'])->name('cart.destroy');
-Route::post('cart/update', [CartController::class, 'update'])->name('cart.update');
+
 
 Route::prefix('user')->as('user.')->group(function () {
   Route::get('profile', [UserController::class, 'profile'])->name('profile');
   Route::post('update-profile', [UserController::class, 'updateProfile'])->name('update-profile');
   Route::get('order-history', [UserController::class, 'orderHistory'])->name('order-history');
+});
+
+
+Route::prefix('cart')->as('cart.')->group(function () {
+  Route::get('/', [CartController::class, 'index'])->name('index');
+  Route::post('/', [CartController::class, 'store'])->name('store');
+  Route::post('/destroy', [CartController::class, 'destroy'])->name('destroy');
+  Route::post('/update', [CartController::class, 'update'])->name('update');
+  Route::post('/coupon/add', [CartController::class, 'couponAdd'])->name('coupon.add');
+  Route::post('/coupon/remove', [CartController::class, 'couponRemove'])->name('coupon.remove');
 });
 
 Route::post('apply-coupon', [CouponController::class, 'store'])->name('coupon.apply');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 
 use App\Models\Cart;
+use App\Models\Coupon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 class CartController extends Controller
@@ -54,14 +55,12 @@ class CartController extends Controller
         // dd(session()->get('cart'));
 
         if(auth()->check()){
-            if (session()->has('cart')) {
-                Cart::updateOrCreate([
-                    'product_id'=>$request->product_id,
-                    'product_varient_id'=>$request->varient_id,
-                    'user_id'=>auth()->id()
-                ],
-                ['qty'=>$request->qty,]);
-            }
+            Cart::updateOrCreate([
+                'product_id'=>$request->product_id,
+                'product_varient_id'=>$request->varient_id,
+                'user_id'=>auth()->id()
+            ],
+            ['qty'=>$request->qty]);
         }
         else{
             if (session()->has('cart')) {
@@ -79,8 +78,8 @@ class CartController extends Controller
             }
             session()->put('cart',$cart);
         }
-        
-        
+
+        return js_response(null,__('app.cart.added'));
     }
 
     /**
@@ -127,15 +126,22 @@ class CartController extends Controller
     {
         $id = $request->id;
 
-        if(session()->has('cart')){
-            $id = explode('-' ,$id);
-            session()->forget("cart.$id[0]");
-        }
-        else{
+        if(auth()->check()){
             $cart = Cart::find($id);
             $cart->delete();
         }
-        return js_response(null, 'Item Removed from Cart successfully');
+        else{
+            if(session()->has('cart')){
+                $id = explode('-' ,$id);
+                session()->forget("cart.$id[0]");
+            }
+        }
+        
+        return js_response(null,session()->flash('message',__('app.cart.deleted')));
+    }
+
+    public function couponAdd(Request $request){
+        $coupon = Coupon::where('coupon_code',$request->code)->first();
     }
 
 }

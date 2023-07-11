@@ -50,7 +50,7 @@
                                                 <div class="ec-pro-actions">
                                                     <a href="compare.html" class="ec-btn-group compare"
                                                         title="Compare"><i class="fa-solid fa-code-compare"></i></a>
-                                                    <button title="Add To Cart" class="add-to-cart"><i class="fa-solid fa-cart-plus"></i> Add To Cart</button>
+                                                    <button title="Add To Cart" type="button" onclick="addToCart('{{$product['id']}}')" class="add-to-cart"><i class="fa-solid fa-cart-plus"></i> Add To Cart</button>
                                                     <a class="ec-btn-group wishlist" title="Wishlist"><i class="fa-solid fa-heart"></i></a>
                                                 </div>
                                             </div>

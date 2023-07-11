@@ -135,6 +135,9 @@
                             <div class="ec-sb-title">
                                 <h3 class="ec-sidebar-title">Summary</h3>
                             </div>
+                            @php
+                                $cost = js_cart_cost_calculate();
+                            @endphp
                             @if (js_setting('shipping_type') == 'area_wise')
                                 <div class="ec-sb-block-content">
                                     <h4 class="ec-ship-title">Estimate Shipping</h4>
@@ -184,7 +187,7 @@
                                     <div class="ec-cart-summary">
                                         <div>
                                             <span class="text-left">Sub-Total</span>
-                                            <span class="text-right">$80.00</span>
+                                            <span class="text-right">{{$cost['sub_total']}}</span>
                                         </div>
                                         <div>
                                             <span class="text-left">Delivery Charges</span>
@@ -200,12 +203,12 @@
                                                 <input class="ec-coupan" type="text" required=""
                                                     placeholder="Enter Your Coupan Code" name="coupon_code" id="coupon_code" value="">
                                                 <button class="ec-coupan-btn button btn-primary" type="button"
-                                                    name="subscribe" value="" onclick="addCoupon(80)">Apply</button>
+                                                    name="subscribe" value="" onclick="addCoupon(this)">Apply</button>
                                             </form>
                                         </div>
                                         <div class="ec-cart-summary-total">
                                             <span class="text-left">Total Amount</span>
-                                            <span class="text-right">$80.00</span>
+                                            <span class="text-right">{{$cost['sub_total']}}</span>
                                         </div>
                                     </div>
 
@@ -257,16 +260,6 @@
             });
         }
 
-        function removeCartItem(id){
-            $.ajax({
-                type: "POST",
-                url: "{{route('cart.destroy')}}",
-                data: {
-                    id
-                },
-                success: function(response) {;
-                }
-        });
-        }
+       
     </script>
 @endsection

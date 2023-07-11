@@ -114,15 +114,17 @@ function js_setting($key){
 
 
 function js_cart_cost_calculate(){
+    $cost = [];
     $sub_total =0;
     $cart_items = Cart::query()->where('user_id',auth()->id())->get();
 
     if(count($cart_items) > 0){
         foreach ($cart_items as $key => $cart_item) {
-            
-            $product = product($cart_item->product_id , $cart_item->product_varient_id);
-
-            $sub_total = $sub_total+$product['unit_price'] * $cart_item->qty;
+            $product = js_product($cart_item->product_id , $cart_item->product_varient_id);
+            $sub_total = price($sub_total+$product['unit_price'] * $cart_item->qty);
         }
     }
+    $cost['sub_total'] =$sub_total;
+    $cost['total'] =$sub_total;
+    return $cost;
 }

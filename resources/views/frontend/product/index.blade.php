@@ -29,7 +29,7 @@
         }
     </style>
 @endsection
-@dd($product)
+{{-- @dd($product) --}}
 @section('content')
 
 
@@ -168,13 +168,13 @@
                                             <form action="{{ route('cart.store') }}" method="post">
                                                 @csrf
                                                 <div class="qty-plus-minus">
-                                                    <input class="qty-input" type="text" name="qty" id="qty"
+                                                    <input class="qty-input" type="text" name="qty" id="qty{{$product['id']}}"
                                                         value="1" />
                                                 </div>
                                                 <div class="ec-single-cart ">
                                                     <input type="hidden" name="product_id" id="product_id"
                                                         value="{{ $product['id'] }}">
-                                                    <input type="hidden" name="product_varient_id" id="product_varient_id"
+                                                    <input type="hidden" name="product_varient_id" id="product_varient_id{{$product['id']}}"
                                                         value="{{ $product['varient_id'] }}">
                                                     <button class="btn btn-primary" id="add_to_cart" type="button" onclick="addToCart('{{$product['id']}}')">Add To Cart</button>
                                                 </div>

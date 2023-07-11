@@ -73,9 +73,7 @@ CREATE TABLE `carts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `carts` (`id`, `product_id`, `user_id`, `ip`, `product_varient_id`, `qty`, `created_at`, `updated_at`) VALUES
-(14,	1,	1,	NULL,	3,	1,	'2023-07-01 05:50:23',	'2023-07-01 05:50:23'),
-(15,	1,	1,	NULL,	1,	1,	'2023-07-01 05:59:54',	'2023-07-01 05:59:54'),
-(16,	1,	10,	NULL,	3,	1,	'2023-07-03 05:40:00',	'2023-07-03 05:40:00');
+(30,	1,	1,	NULL,	0,	1,	'2023-07-11 06:12:11',	'2023-07-11 06:12:11');
 
 DROP TABLE IF EXISTS `categories`;
 CREATE TABLE `categories` (
@@ -385,7 +383,6 @@ CREATE TABLE `product_images` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `product_images` (`id`, `name`, `product_id`, `main`, `created_at`, `updated_at`) VALUES
-(1,	'uploads/products/ERDdK0yTad39M21FA4XNCwZvHAx7YfRlksKI5hqS.jpg',	1,	0,	'2023-02-14 08:37:25',	'2023-02-14 08:37:25'),
 (2,	'uploads/products/ERDdK0yTad39M21FA4XNCwZvHAx7YfRlksKI5hqS.jpg',	2,	0,	'2023-02-14 08:37:25',	'2023-02-14 08:37:25'),
 (3,	'uploads/products/kNRPhVGFYBtlentiz0xRp8hHFTD59hcB0VXT8sUD.jpg',	1,	1,	'2023-07-04 05:51:31',	'2023-07-04 05:51:31');
 
@@ -446,7 +443,55 @@ INSERT INTO `product_varients` (`id`, `price`, `mrp`, `qty`, `sku`, `attribute_i
 (13,	400,	450,	10,	'PRO1',	'[]',	1,	0,	'2023-07-04 06:42:22',	'2023-07-04 06:42:22'),
 (14,	300,	360,	10,	'PRO1',	'[]',	1,	0,	'2023-07-04 06:42:22',	'2023-07-04 06:42:22'),
 (15,	300,	350,	10,	'PRO1',	'[]',	1,	0,	'2023-07-04 06:42:22',	'2023-07-04 06:42:22'),
-(16,	300,	340,	10,	'PRO1',	'[]',	1,	0,	'2023-07-04 06:42:22',	'2023-07-04 06:42:22');
+(16,	300,	340,	10,	'PRO1',	'[]',	1,	0,	'2023-07-04 06:42:22',	'2023-07-04 06:42:22'),
+(17,	400,	450,	10,	'PRO1',	'[]',	1,	0,	'2023-07-10 06:14:09',	'2023-07-10 06:14:09'),
+(18,	300,	360,	10,	'PRO1',	'[]',	1,	0,	'2023-07-10 06:14:09',	'2023-07-10 06:14:09'),
+(19,	300,	350,	10,	'PRO1',	'[]',	1,	0,	'2023-07-10 06:14:09',	'2023-07-10 06:14:09'),
+(20,	300,	340,	10,	'PRO1',	'[]',	1,	0,	'2023-07-10 06:14:09',	'2023-07-10 06:14:09'),
+(21,	400,	450,	10,	'PRO1',	'[]',	1,	0,	'2023-07-10 06:14:09',	'2023-07-10 06:14:09'),
+(22,	300,	360,	10,	'PRO1',	'[]',	1,	0,	'2023-07-10 06:14:09',	'2023-07-10 06:14:09'),
+(23,	300,	350,	10,	'PRO1',	'[]',	1,	0,	'2023-07-10 06:14:09',	'2023-07-10 06:14:09'),
+(24,	300,	340,	10,	'PRO1',	'[]',	1,	0,	'2023-07-10 06:14:09',	'2023-07-10 06:14:09'),
+(25,	400,	450,	10,	'PRO1',	'[]',	1,	0,	'2023-07-10 06:14:09',	'2023-07-10 06:14:09'),
+(26,	300,	360,	10,	'PRO1',	'[]',	1,	0,	'2023-07-10 06:14:09',	'2023-07-10 06:14:09'),
+(27,	300,	350,	10,	'PRO1',	'[]',	1,	0,	'2023-07-10 06:14:09',	'2023-07-10 06:14:09'),
+(28,	300,	340,	10,	'PRO1',	'[]',	1,	0,	'2023-07-10 06:14:09',	'2023-07-10 06:14:09'),
+(29,	400,	450,	10,	'PRO1',	'[]',	1,	0,	'2023-07-10 06:14:09',	'2023-07-10 06:14:09'),
+(30,	300,	360,	10,	'PRO1',	'[]',	1,	0,	'2023-07-10 06:14:09',	'2023-07-10 06:14:09'),
+(31,	300,	350,	10,	'PRO1',	'[]',	1,	0,	'2023-07-10 06:14:09',	'2023-07-10 06:14:09'),
+(32,	300,	340,	10,	'PRO1',	'[]',	1,	0,	'2023-07-10 06:14:09',	'2023-07-10 06:14:09'),
+(33,	400,	450,	10,	'PRO1',	'[]',	1,	0,	'2023-07-11 02:00:10',	'2023-07-11 02:00:10'),
+(34,	300,	360,	10,	'PRO1',	'[]',	1,	0,	'2023-07-11 02:00:10',	'2023-07-11 02:00:10'),
+(35,	300,	350,	10,	'PRO1',	'[]',	1,	0,	'2023-07-11 02:00:10',	'2023-07-11 02:00:10'),
+(36,	300,	340,	10,	'PRO1',	'[]',	1,	0,	'2023-07-11 02:00:10',	'2023-07-11 02:00:10'),
+(37,	400,	450,	10,	'PRO1',	'[]',	1,	0,	'2023-07-11 02:00:10',	'2023-07-11 02:00:10'),
+(38,	300,	360,	10,	'PRO1',	'[]',	1,	0,	'2023-07-11 02:00:10',	'2023-07-11 02:00:10'),
+(39,	300,	350,	10,	'PRO1',	'[]',	1,	0,	'2023-07-11 02:00:10',	'2023-07-11 02:00:10'),
+(40,	300,	340,	10,	'PRO1',	'[]',	1,	0,	'2023-07-11 02:00:10',	'2023-07-11 02:00:10'),
+(41,	400,	450,	10,	'PRO1',	'[]',	1,	0,	'2023-07-11 02:00:10',	'2023-07-11 02:00:10'),
+(42,	300,	360,	10,	'PRO1',	'[]',	1,	0,	'2023-07-11 02:00:10',	'2023-07-11 02:00:10'),
+(43,	300,	350,	10,	'PRO1',	'[]',	1,	0,	'2023-07-11 02:00:10',	'2023-07-11 02:00:10'),
+(44,	300,	340,	10,	'PRO1',	'[]',	1,	0,	'2023-07-11 02:00:10',	'2023-07-11 02:00:10'),
+(45,	400,	450,	10,	'PRO1',	'[]',	1,	0,	'2023-07-11 02:00:10',	'2023-07-11 02:00:10'),
+(46,	300,	360,	10,	'PRO1',	'[]',	1,	0,	'2023-07-11 02:00:10',	'2023-07-11 02:00:10'),
+(47,	300,	350,	10,	'PRO1',	'[]',	1,	0,	'2023-07-11 02:00:10',	'2023-07-11 02:00:10'),
+(48,	300,	340,	10,	'PRO1',	'[]',	1,	0,	'2023-07-11 02:00:10',	'2023-07-11 02:00:10'),
+(49,	400,	450,	10,	'PRO1',	'[]',	1,	0,	'2023-07-11 02:00:10',	'2023-07-11 02:00:10'),
+(50,	300,	360,	10,	'PRO1',	'[]',	1,	0,	'2023-07-11 02:00:10',	'2023-07-11 02:00:10'),
+(51,	300,	350,	10,	'PRO1',	'[]',	1,	0,	'2023-07-11 02:00:10',	'2023-07-11 02:00:10'),
+(52,	300,	340,	10,	'PRO1',	'[]',	1,	0,	'2023-07-11 02:00:10',	'2023-07-11 02:00:10'),
+(53,	400,	450,	10,	'PRO1',	'[]',	1,	0,	'2023-07-11 02:00:10',	'2023-07-11 02:00:10'),
+(54,	300,	360,	10,	'PRO1',	'[]',	1,	0,	'2023-07-11 02:00:10',	'2023-07-11 02:00:10'),
+(55,	300,	350,	10,	'PRO1',	'[]',	1,	0,	'2023-07-11 02:00:10',	'2023-07-11 02:00:10'),
+(56,	300,	340,	10,	'PRO1',	'[]',	1,	0,	'2023-07-11 02:00:10',	'2023-07-11 02:00:10'),
+(57,	400,	450,	10,	'PRO1',	'[]',	1,	0,	'2023-07-11 02:00:10',	'2023-07-11 02:00:10'),
+(58,	300,	360,	10,	'PRO1',	'[]',	1,	0,	'2023-07-11 02:00:10',	'2023-07-11 02:00:10'),
+(59,	300,	350,	10,	'PRO1',	'[]',	1,	0,	'2023-07-11 02:00:10',	'2023-07-11 02:00:10'),
+(60,	300,	340,	10,	'PRO1',	'[]',	1,	0,	'2023-07-11 02:00:10',	'2023-07-11 02:00:10'),
+(61,	400,	450,	10,	'PRO1',	'[]',	1,	0,	'2023-07-11 02:00:10',	'2023-07-11 02:00:10'),
+(62,	300,	360,	10,	'PRO1',	'[]',	1,	0,	'2023-07-11 02:00:10',	'2023-07-11 02:00:10'),
+(63,	300,	350,	10,	'PRO1',	'[]',	1,	0,	'2023-07-11 02:00:10',	'2023-07-11 02:00:10'),
+(64,	300,	340,	10,	'PRO1',	'[]',	1,	0,	'2023-07-11 02:00:10',	'2023-07-11 02:00:10');
 
 DROP TABLE IF EXISTS `products`;
 CREATE TABLE `products` (
@@ -717,7 +762,9 @@ CREATE TABLE `users` (
   `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mobile_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` enum('active','deactive') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `profile` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -726,10 +773,10 @@ CREATE TABLE `users` (
   UNIQUE KEY `users_email_unique` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `users` (`id`, `fname`, `lname`, `email`, `email_verified_at`, `password`, `status`, `remember_token`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1,	'admin',	'admin',	'admin@gmail.com',	NULL,	'$2a$04$lKbJw/dfAWXObEOUehWxi.3ChaDFYklT./NMTOIcwdWtn7zQWJc56',	'active',	NULL,	'2023-01-15 08:32:39',	'2023-04-27 12:02:56',	NULL),
-(9,	'vendor',	'vendor',	'vendor@gmail.com',	NULL,	'$2y$10$NX5pIaFpigLdVS.eyazERO1PuS3BYmlXaRNdt73CRy4OoCDdVMpn.',	'active',	NULL,	'2023-04-27 10:13:31',	'2023-04-28 09:02:59',	NULL),
-(10,	'test',	'test',	'user@gmail.com',	NULL,	'$2y$10$NX5pIaFpigLdVS.eyazERO1PuS3BYmlXaRNdt73CRy4OoCDdVMpn.',	'active',	NULL,	'2023-04-27 11:37:48',	'2023-04-28 09:06:31',	NULL);
+INSERT INTO `users` (`id`, `fname`, `lname`, `email`, `email_verified_at`, `password`, `mobile_number`, `status`, `profile`, `remember_token`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1,	'admin1',	'admin',	'admin@gmail.com',	NULL,	'$2a$04$lKbJw/dfAWXObEOUehWxi.3ChaDFYklT./NMTOIcwdWtn7zQWJc56',	'07985985985',	'active',	'uploads/user/MxkfTRI0B311c3L82wipdEYR12vvmMwgRKxTnqZe.png',	'dWHoX6zlmpWGR6tAGuuMf8fkMR1i9ID19buQpAokhWXkw3cot2bbrqeLj4KA',	'2023-01-15 08:32:39',	'2023-07-11 02:58:08',	NULL),
+(9,	'vendor',	'vendor',	'vendor@gmail.com',	NULL,	'$2y$10$NX5pIaFpigLdVS.eyazERO1PuS3BYmlXaRNdt73CRy4OoCDdVMpn.',	NULL,	'active',	'',	NULL,	'2023-04-27 10:13:31',	'2023-04-28 09:02:59',	NULL),
+(10,	'test',	'test',	'user@gmail.com',	NULL,	'$2y$10$NX5pIaFpigLdVS.eyazERO1PuS3BYmlXaRNdt73CRy4OoCDdVMpn.',	NULL,	'active',	'',	NULL,	'2023-04-27 11:37:48',	'2023-04-28 09:06:31',	NULL);
 
 DROP TABLE IF EXISTS `wishlists`;
 CREATE TABLE `wishlists` (
@@ -740,4 +787,4 @@ CREATE TABLE `wishlists` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
--- 2023-07-06 07:18:02
+-- 2023-07-11 12:15:18

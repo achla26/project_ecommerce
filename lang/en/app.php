@@ -14,5 +14,10 @@ return [
     ],
     'msg'=>[
         'logout'=>'logout successfully'
+    ],
+    'cart'=>[
+        'added' => 'Item addedd successfully to the cart',
+        'deleted' => 'Item deleted successfully from the cart',
+        'updated' => 'Item addedd successfully to the cart',
     ]
 ];

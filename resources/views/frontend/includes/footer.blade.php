@@ -474,12 +474,13 @@
 
 <!-- Vendor JS -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 <script src="{{ asset('assets/frontend/js/vendor/popper.min.js') }}"></script>
 <script src="{{ asset('assets/frontend/js/vendor/bootstrap.min.js') }}"></script>
 <script src="{{ asset('assets/frontend/js/vendor/jquery-migrate-3.3.0.min.js') }}"></script>
 <script src="{{ asset('assets/frontend/js/vendor/modernizr-3.11.2.min.js') }}"></script>
 
-@include('frontend.script')
+
 @yield('script')
 @yield('script_file')
 <!--Plugins JS-->
@@ -511,6 +512,14 @@
     notification.push();
 </script>
 @endif 
+<script>
+    function toaster(type , msg) {
+        var notifier = new Notifier();
+        var notification = notifier.notify(type, msg);
+        notification.push();
+    } 
+</script>
+@include('frontend.script')
 </body>
 
 </html>
