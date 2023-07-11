@@ -16,9 +16,11 @@
                 <div class="row">
                     <div class="col-sm-12 col-lg-3 ec-footer-contact">
                         <div class="ec-footer-widget">
-                            <div class="ec-footer-logo"><a href="#"><img src="{{asset('assets/frontend/images/logo/footer-logo.png')}}"
-                                        alt=""><img class="dark-footer-logo" src="{{asset('assets/frontend/images/logo/dark-logo.png')}}"
-                                        alt="Site Logo" style="display: none;" /></a></div>
+                            <div class="ec-footer-logo"><a href="#"><img
+                                        src="{{ asset('assets/frontend/images/logo/footer-logo.png') }}"
+                                        alt=""><img class="dark-footer-logo"
+                                        src="{{ asset('assets/frontend/images/logo/dark-logo.png') }}" alt="Site Logo"
+                                        style="display: none;" /></a></div>
                             <h4 class="ec-footer-heading">Contact us</h4>
                             <div class="ec-footer-links">
                                 <ul class="align-items-center">
@@ -105,10 +107,14 @@
                         <div class="footer-bottom-social">
                             <span class="social-text text-upper">Follow us on:</span>
                             <ul class="mb-0">
-                                <li class="list-inline-item"><a class="hdr-facebook" href="#"><i class="ecicon eci-facebook"></i></a></li>
-                                <li class="list-inline-item"><a class="hdr-twitter" href="#"><i class="ecicon eci-twitter"></i></a></li>
-                                <li class="list-inline-item"><a class="hdr-instagram" href="#"><i class="ecicon eci-instagram"></i></a></li>
-                                <li class="list-inline-item"><a class="hdr-linkedin" href="#"><i class="ecicon eci-linkedin"></i></a></li>
+                                <li class="list-inline-item"><a class="hdr-facebook" href="#"><i
+                                            class="ecicon eci-facebook"></i></a></li>
+                                <li class="list-inline-item"><a class="hdr-twitter" href="#"><i
+                                            class="ecicon eci-twitter"></i></a></li>
+                                <li class="list-inline-item"><a class="hdr-instagram" href="#"><i
+                                            class="ecicon eci-instagram"></i></a></li>
+                                <li class="list-inline-item"><a class="hdr-linkedin" href="#"><i
+                                            class="ecicon eci-linkedin"></i></a></li>
                             </ul>
                         </div>
                     </div>
@@ -125,7 +131,7 @@
                     <div class="col footer-bottom-right">
                         <div class="footer-bottom-payment d-flex justify-content-end">
                             <div class="payment-link">
-                                <img src="{{asset('assets/frontend/images/icons/payment.png')}}" alt="">
+                                <img src="{{ asset('assets/frontend/images/icons/payment.png') }}" alt="">
                             </div>
 
                         </div>
@@ -149,42 +155,53 @@
                         <!-- Swiper -->
                         <div class="qty-product-cover">
                             <div class="qty-slide">
-                                <img class="img-responsive" src="{{asset('assets/frontend/images/product-image/3_1.jpg')}}" alt="">
+                                <img class="img-responsive"
+                                    src="{{ asset('assets/frontend/images/product-image/3_1.jpg') }}" alt="">
                             </div>
                             <div class="qty-slide">
-                                <img class="img-responsive" src="{{asset('assets/frontend/images/product-image/3_2.jpg')}}" alt="">
+                                <img class="img-responsive"
+                                    src="{{ asset('assets/frontend/images/product-image/3_2.jpg') }}" alt="">
                             </div>
                             <div class="qty-slide">
-                                <img class="img-responsive" src="{{asset('assets/frontend/images/product-image/3_3.jpg')}}" alt="">
+                                <img class="img-responsive"
+                                    src="{{ asset('assets/frontend/images/product-image/3_3.jpg') }}" alt="">
                             </div>
                             <div class="qty-slide">
-                                <img class="img-responsive" src="{{asset('assets/frontend/images/product-image/3_4.jpg')}}" alt="">
+                                <img class="img-responsive"
+                                    src="{{ asset('assets/frontend/images/product-image/3_4.jpg') }}" alt="">
                             </div>
                             <div class="qty-slide">
-                                <img class="img-responsive" src="{{asset('assets/frontend/images/product-image/3_5.jpg')}}" alt="">
+                                <img class="img-responsive"
+                                    src="{{ asset('assets/frontend/images/product-image/3_5.jpg') }}" alt="">
                             </div>
                         </div>
                         <div class="qty-nav-thumb">
                             <div class="qty-slide">
-                                <img class="img-responsive" src="{{asset('assets/frontend/images/product-image/3_1.jpg')}}" alt="">
+                                <img class="img-responsive"
+                                    src="{{ asset('assets/frontend/images/product-image/3_1.jpg') }}" alt="">
                             </div>
                             <div class="qty-slide">
-                                <img class="img-responsive" src="{{asset('assets/frontend/images/product-image/3_2.jpg')}}" alt="">
+                                <img class="img-responsive"
+                                    src="{{ asset('assets/frontend/images/product-image/3_2.jpg') }}" alt="">
                             </div>
                             <div class="qty-slide">
-                                <img class="img-responsive" src="{{asset('assets/frontend/images/product-image/3_3.jpg')}}" alt="">
+                                <img class="img-responsive"
+                                    src="{{ asset('assets/frontend/images/product-image/3_3.jpg') }}" alt="">
                             </div>
                             <div class="qty-slide">
-                                <img class="img-responsive" src="{{asset('assets/frontend/images/product-image/3_4.jpg')}}" alt="">
+                                <img class="img-responsive"
+                                    src="{{ asset('assets/frontend/images/product-image/3_4.jpg') }}" alt="">
                             </div>
                             <div class="qty-slide">
-                                <img class="img-responsive" src="{{asset('assets/frontend/images/product-image/3_5.jpg')}}" alt="">
+                                <img class="img-responsive"
+                                    src="{{ asset('assets/frontend/images/product-image/3_5.jpg') }}" alt="">
                             </div>
                         </div>
                     </div>
                     <div class="col-md-7 col-sm-12 col-xs-12">
                         <div class="quickview-pro-content">
-                            <h5 class="ec-quick-title"><a href="product-left-sidebar.html">Handbag leather purse for women</a>
+                            <h5 class="ec-quick-title"><a href="product-left-sidebar.html">Handbag leather purse for
+                                    women</a>
                             </h5>
                             <div class="ec-quickview-rating">
                                 <i class="ecicon eci-star fill"></i>
@@ -223,7 +240,8 @@
                                                     data-tooltip="Small">S</a></li>
                                             <li><a href="#" class="ec-opt-sz" data-tooltip="Medium">M</a></li>
                                             <li><a href="#" class="ec-opt-sz" data-tooltip="Large">X</a></li>
-                                            <li><a href="#" class="ec-opt-sz" data-tooltip="Extra Large">XL</a></li>
+                                            <li><a href="#" class="ec-opt-sz" data-tooltip="Extra Large">XL</a>
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>
@@ -233,7 +251,8 @@
                                     <input class="qty-input" type="text" name="ec_qtybtn" value="1" />
                                 </div>
                                 <div class="ec-quickview-cart ">
-                                    <button class="btn btn-primary"><img src="{{asset('assets/frontend/images/icons/cart.svg')}}"
+                                    <button class="btn btn-primary"><img
+                                            src="{{ asset('assets/frontend/images/icons/cart.svg') }}"
                                             class="svg_img pro_svg" alt="" /> Add To Cart</button>
                                 </div>
                             </div>
@@ -274,24 +293,28 @@
         <div class="ec-nav-panel">
             <div class="ec-nav-panel-icons">
                 <a href="#ec-mobile-menu" class="navbar-toggler-btn ec-header-btn ec-side-toggle"><img
-                        src="{{asset('assets/frontend/images/icons/menu.svg')}}" class="svg_img header_svg" alt="icon" /></a>
+                        src="{{ asset('assets/frontend/images/icons/menu.svg') }}" class="svg_img header_svg"
+                        alt="icon" /></a>
             </div>
             <div class="ec-nav-panel-icons">
                 <a href="#ec-side-cart" class="toggle-cart ec-header-btn ec-side-toggle"><img
-                        src="{{asset('assets/frontend/images/icons/cart.svg')}}" class="svg_img header_svg" alt="icon" /><span
-                        class="ec-cart-noti ec-header-count cart-count-lable">3</span></a>
+                        src="{{ asset('assets/frontend/images/icons/cart.svg') }}" class="svg_img header_svg"
+                        alt="icon" /><span class="ec-cart-noti ec-header-count cart-count-lable">3</span></a>
             </div>
             <div class="ec-nav-panel-icons">
-                <a href="index.html" class="ec-header-btn"><img src="{{asset('assets/frontend/images/icons/home.svg')}}"
-                        class="svg_img header_svg" alt="icon" /></a>
+                <a href="index.html" class="ec-header-btn"><img
+                        src="{{ asset('assets/frontend/images/icons/home.svg') }}" class="svg_img header_svg"
+                        alt="icon" /></a>
             </div>
             <div class="ec-nav-panel-icons">
-                <a href="wishlist.html" class="ec-header-btn"><img src="{{asset('assets/frontend/images/icons/wishlist.svg')}}"
-                        class="svg_img header_svg" alt="icon" /><span class="ec-cart-noti">4</span></a>
+                <a href="wishlist.html" class="ec-header-btn"><img
+                        src="{{ asset('assets/frontend/images/icons/wishlist.svg') }}" class="svg_img header_svg"
+                        alt="icon" /><span class="ec-cart-noti">4</span></a>
             </div>
             <div class="ec-nav-panel-icons">
-                <a href="login.html" class="ec-header-btn"><img src="{{asset('assets/frontend/images/icons/user.svg')}}"
-                        class="svg_img header_svg" alt="icon" /></a>
+                <a href="login.html" class="ec-header-btn"><img
+                        src="{{ asset('assets/frontend/images/icons/user.svg') }}" class="svg_img header_svg"
+                        alt="icon" /></a>
             </div>
 
         </div>
@@ -314,7 +337,8 @@
 <!-- Cart Floating Button -->
 <div class="ec-cart-float">
     <a href="#ec-side-cart" class="ec-header-btn ec-side-toggle">
-        <div class="header-icon"><img src="{{asset('assets/frontend/images/icons/cart.svg')}}" class="svg_img header_svg" alt="cart" />
+        <div class="header-icon"><img src="{{ asset('assets/frontend/images/icons/cart.svg') }}"
+                class="svg_img header_svg" alt="cart" />
         </div>
         <span class="ec-cart-count cart-count-lable">3</span>
     </a>
@@ -340,8 +364,8 @@
                         <div class="d-flex bd-highlight">
                             <!-- Profile Picture -->
                             <div class="ec-img-cont">
-                                <img src="{{asset('assets/frontend/images/whatsapp/profile_01.jpg')}}" class="ec-user-img"
-                                    alt="Profile image">
+                                <img src="{{ asset('assets/frontend/images/whatsapp/profile_01.jpg') }}"
+                                    class="ec-user-img" alt="Profile image">
                                 <span class="ec-status-icon"></span>
                             </div>
                             <!-- Display Name & Last Seen -->
@@ -364,8 +388,8 @@
                         <div class="d-flex bd-highlight">
                             <!-- Profile Picture -->
                             <div class="ec-img-cont">
-                                <img src="{{asset('assets/frontend/images/whatsapp/profile_02.jpg')}}" class="ec-user-img"
-                                    alt="Profile image">
+                                <img src="{{ asset('assets/frontend/images/whatsapp/profile_02.jpg') }}"
+                                    class="ec-user-img" alt="Profile image">
                                 <span class="ec-status-icon ec-online"></span>
                             </div>
                             <!-- Display Name & Last Seen -->
@@ -388,8 +412,8 @@
                         <div class="d-flex bd-highlight">
                             <!-- Profile Picture -->
                             <div class="ec-img-cont">
-                                <img src="{{asset('assets/frontend/images/whatsapp/profile_03.jpg')}}" class="ec-user-img"
-                                    alt="Profile image">
+                                <img src="{{ asset('assets/frontend/images/whatsapp/profile_03.jpg') }}"
+                                    class="ec-user-img" alt="Profile image">
                                 <span class="ec-status-icon ec-offline"></span>
                             </div>
                             <!-- Display Name & Last Seen -->
@@ -412,8 +436,8 @@
                         <div class="d-flex bd-highlight">
                             <!-- Profile Picture -->
                             <div class="ec-img-cont">
-                                <img src="{{asset('assets/frontend/images/whatsapp/profile_04.jpg')}}" class="ec-user-img"
-                                    alt="Profile image">
+                                <img src="{{ asset('assets/frontend/images/whatsapp/profile_04.jpg') }}"
+                                    class="ec-user-img" alt="Profile image">
                                 <span class="ec-status-icon ec-offline"></span>
                             </div>
                             <!-- Display Name & Last Seen -->
@@ -437,7 +461,8 @@
     <div class="ec-right-bottom">
         <div class="ec-box">
             <div class="ec-button rotateBackward">
-                <img class="whatsapp" src="{{asset('assets/frontend/images/common/whatsapp.png')}}" alt="whatsapp icon">
+                <img class="whatsapp" src="{{ asset('assets/frontend/images/common/whatsapp.png') }}"
+                    alt="whatsapp icon">
             </div>
         </div>
     </div>
@@ -448,28 +473,44 @@
 
 
 <!-- Vendor JS -->
-<script src="https://code.jquery.com/jquery-3.6.4.min.js" ></script>
-<script src="{{asset('assets/frontend/js/vendor/popper.min.js')}}"></script>
-<script src="{{asset('assets/frontend/js/vendor/bootstrap.min.js')}}"></script>
-<script src="{{asset('assets/frontend/js/vendor/jquery-migrate-3.3.0.min.js')}}"></script>
-<script src="{{asset('assets/frontend/js/vendor/modernizr-3.11.2.min.js')}}"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="{{ asset('assets/frontend/js/vendor/popper.min.js') }}"></script>
+<script src="{{ asset('assets/frontend/js/vendor/bootstrap.min.js') }}"></script>
+<script src="{{ asset('assets/frontend/js/vendor/jquery-migrate-3.3.0.min.js') }}"></script>
+<script src="{{ asset('assets/frontend/js/vendor/modernizr-3.11.2.min.js') }}"></script>
 
 @include('frontend.script')
 @yield('script')
 @yield('script_file')
 <!--Plugins JS-->
-<script src="{{asset('assets/frontend/js/plugins/swiper-bundle.min.js')}}"></script>
-<script src="{{asset('assets/frontend/js/plugins/countdownTimer.min.js')}}"></script>
-<script src="{{asset('assets/frontend/js/plugins/scrollup.js')}}"></script>
-<script src="{{asset('assets/frontend/js/plugins/jquery.zoom.min.js')}}"></script>
-<script src="{{asset('assets/frontend/js/plugins/slick.min.js')}}"></script>
-<script src="{{asset('assets/frontend/js/plugins/infiniteslidev2.js')}}"></script>
-<script src="{{asset('assets/frontend/js/vendor/jquery.magnific-popup.min.js')}}"></script>
-<script src="{{asset('assets/frontend/js/plugins/jquery.sticky-sidebar.js')}}"></script>
+<script src="{{ asset('assets/frontend/js/plugins/swiper-bundle.min.js') }}"></script>
+<script src="{{ asset('assets/frontend/js/plugins/countdownTimer.min.js') }}"></script>
+<script src="{{ asset('assets/frontend/js/plugins/scrollup.js') }}"></script>
+<script src="{{ asset('assets/frontend/js/plugins/jquery.zoom.min.js') }}"></script>
+<script src="{{ asset('assets/frontend/js/plugins/slick.min.js') }}"></script>
+<script src="{{ asset('assets/frontend/js/plugins/infiniteslidev2.js') }}"></script>
+<script src="{{ asset('assets/frontend/js/vendor/jquery.magnific-popup.min.js') }}"></script>
+<script src="{{ asset('assets/frontend/js/plugins/jquery.sticky-sidebar.js') }}"></script>
 
-<script src="{{asset('assets/frontend/js/vendor/index.js')}}"></script>
-<script src="{{asset('assets/frontend/js/main.js')}}"></script>
+<script src="{{ asset('assets/frontend/js/vendor/index.js') }}"></script>
+<script src="{{ asset('assets/frontend/js/main.js') }}"></script>
+<script src="{{ asset('assets/frontend/js/toast.min.js') }}"></script>
 
+@if(Session::has('message'))
+<script>
+    var notifier = new Notifier();
+    var notification = notifier.notify("success", "{{Session::get('message')}}");
+    notification.push();
+</script>
+@endif
 
+@if($errors->any())
+<script>
+    var notifier = new Notifier();
+    var notification = notifier.notify("error", "{!! implode('', $errors->all('<div>:message</div>')) !!}");
+    notification.push();
+</script>
+@endif 
 </body>
+
 </html>

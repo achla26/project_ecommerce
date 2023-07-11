@@ -20,8 +20,9 @@ Route::post('cart', [CartController::class, 'store'])->name('cart.store');
 Route::post('cart/destroy', [CartController::class, 'destroy'])->name('cart.destroy');
 Route::post('cart/update', [CartController::class, 'update'])->name('cart.update');
 
-Route::prefix('user')->as('user')->group(function () {
+Route::prefix('user')->as('user.')->group(function () {
   Route::get('profile', [UserController::class, 'profile'])->name('profile');
+  Route::post('update-profile', [UserController::class, 'updateProfile'])->name('update-profile');
   Route::get('order-history', [UserController::class, 'orderHistory'])->name('order-history');
 });
 

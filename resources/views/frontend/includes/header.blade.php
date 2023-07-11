@@ -33,6 +33,7 @@
     <link rel="stylesheet" href="{{asset('assets/frontend/css/demo1.css')}}" />
     <link rel="stylesheet" href="{{asset('assets/frontend/css/style.css')}}" />
     <link rel="stylesheet" href="{{asset('assets/frontend/css/responsive.css')}}" />
+    <link rel="stylesheet" href="{{asset('assets/frontend/css/toast.min.css')}}" />
      @yield('css')
      
  </head>
