@@ -302,7 +302,7 @@
                         alt="icon" /><span class="ec-cart-noti ec-header-count cart-count-lable">3</span></a>
             </div>
             <div class="ec-nav-panel-icons">
-                <a href="index.html" class="ec-header-btn"><img
+                <a href="{{route('index')}}" class="ec-header-btn"><img
                         src="{{ asset('assets/frontend/images/icons/home.svg') }}" class="svg_img header_svg"
                         alt="icon" /></a>
             </div>

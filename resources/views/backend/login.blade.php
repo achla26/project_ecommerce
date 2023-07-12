@@ -31,7 +31,7 @@
 
                             <!-- Logo -->
                             <div class="card-header pt-4 pb-4 text-center bg-primary">
-                                <a href="index.html">
+                                <a href="{{route('index')}}">
                                     <span><img src="{{asset('assets/backend/images/logo.png')}}" alt="logo" height="22"></span>
                                 </a>
                             </div>

@@ -44,10 +44,14 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($products as $product)
+                                                @foreach ($products as $product) 
                                                 <tr>
                                                     <td>{{$product->id}}</td>
-                                                    <td><img src="{{asset('storage/'.$product->image)}}" style="height:50px;width:60px;"></td>
+                                                    <td>
+                                                        @if (isset($product['thumbnail']) && !empty($product['thumbnail']))
+                                                            <img class="main-image"
+                                                                src="{{ asset('storage/' . $product['thumbnail']) }}" style="height:50px;width:60px;" alt="Product" />
+                                                        @endif 
                                                     <td>{{$product->name}}</td>
                                                     <td>
                                                         <div id="update-status{{$product->id}}">

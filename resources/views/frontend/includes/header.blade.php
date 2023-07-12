@@ -55,7 +55,7 @@
                     <!-- Ec Header Logo Start -->
                     <div class="col">
                         <div class="header-logo">
-                            <a href="index.html"><img src="{{asset('assets/frontend/logo/logo.png')}}" alt="Site Logo" /><img
+                            <a href="{{route('index')}}"><img src="{{asset('assets/frontend/logo/logo.png')}}" alt="Site Logo" /><img
                                     class="dark-logo" src="{{asset('assets/frontend/logo/dark-logo.png')}}" alt="Site Logo"
                                     style="display: none;" /></a>
                         </div>

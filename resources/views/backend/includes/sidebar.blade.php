@@ -1,7 +1,7 @@
 <div class="leftside-menu">
 
     <!-- Logo Light -->
-    <a href="index.html" class="logo logo-light">
+    <a href="{{route('index')}}" class="logo logo-light">
         <span class="logo-lg">
             <img src="{{asset('assets/backend/images/logo.png')}}" alt="logo" height="22">
         </span>
@@ -11,7 +11,7 @@
     </a>
 
     <!-- Logo Dark -->
-    <a href="index.html" class="logo logo-dark">
+    <a href="{{route('index')}}" class="logo logo-dark">
         <span class="logo-lg">
             <img src="{{asset('assets/backend/images/logo-dark.png')}}" alt="dark logo" height="22">
         </span>

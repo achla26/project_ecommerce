@@ -5,7 +5,7 @@
                 <!-- Ec Header Logo Start -->
                 <div class="align-self-center">
                     <div class="header-logo">
-                        <a href="index.html"><img src="{{asset('storage/'.$content['system_logo'])}}" alt="Site Logo" /><img
+                        <a href="{{route('index')}}"><img src="{{asset('storage/'.$content['system_logo'])}}" alt="Site Logo" /><img
                                 class="dark-logo" src="{{asset('storage/'.$content['system_logo'])}}" alt="Site Logo"
                                 style="display: none;" /></a>
                     </div>

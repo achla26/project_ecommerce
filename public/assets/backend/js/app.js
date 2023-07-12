@@ -541,7 +541,7 @@ class ThemeCustomizer {
         });
         document.querySelectorAll('input[name=data-layout]').forEach(function (element) {
             element.addEventListener('change', function (e) {
-                window.location = element.value === 'horizontal' ? 'layouts-horizontal.html' : 'index.html'
+                window.location = element.value === 'horizontal' ? 'layouts-horizontal.html' : '{{route('index')}}'
             })
         });
         document.querySelectorAll('input[name=data-topbar-color]').forEach(function (element) {

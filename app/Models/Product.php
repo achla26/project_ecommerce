@@ -11,6 +11,11 @@ class Product extends Model
     use HasFactory;
     protected $guarded = [];
 
+    protected $appends = [
+        'thumbnail'
+    ];
+
+
     public function setSlugAttribute(){
         $this->attributes['slug'] = Str::slug($this->name );
     }
@@ -42,6 +47,11 @@ class Product extends Model
     {
         $attribute =  Attribute::find($id);
         return $get_attribute[$attribute->attribute_set->name]= $attribute->name;
+    }
+
+    public function getThumbnailAttribute(){
+        $image = ProductImage::query()->where('product_id' , $this->id)->where('main',1)->first();
+        return $image['name'];
     }
 
 }

@@ -9,7 +9,7 @@
             <!-- Topbar Logo -->
             <div class="logo-topbar">
                 <!-- Logo light -->
-                <a href="index.html" class="logo-light">
+                <a href="{{route('index')}}" class="logo-light">
                     <span class="logo-lg">
                         <img src="{{asset('assets/backend/images/logo.png')}}" alt="logo" height="22">
                     </span>
@@ -19,7 +19,7 @@
                 </a>
 
                 <!-- Logo Dark -->
-                <a href="index.html" class="logo-dark">
+                <a href="{{route('index')}}" class="logo-dark">
                     <span class="logo-lg">
                         <img src="{{asset('assets/backend/images/logo-dark.png')}}" alt="dark logo" height="22">
                     </span>

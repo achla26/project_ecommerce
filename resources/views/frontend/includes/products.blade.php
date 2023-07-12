@@ -36,11 +36,10 @@
                                     <div class="ec-product-inner">
                                         <div class="ec-pro-image-outer">
                                             <div class="ec-pro-image">
-                                               
                                                 <a href="{{route('product',$product['slug'])}}" class="image">
-                                                    @if (isset($product['images']) && !empty($product['images']))
+                                                    @if (isset($product['thumbnail']) && !empty($product['thumbnail']))
                                                         <img class="main-image"
-                                                            src="{{ asset('storage/' . $product['images'][0]['name']) }}" alt="Product" />
+                                                            src="{{ asset('storage/' . $product['thumbnail']) }}" alt="Product" />
                                                     @endif
                                                 </a>
                                                 {{-- <span class="percentage">{{ $product['discount_show']}}</span> --}}
