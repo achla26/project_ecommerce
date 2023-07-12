@@ -77,11 +77,10 @@
             url: "{{ route('coupon.destroy') }}",
             data: {},
             success: function(response) {
-                let jsonData = JSON.parse(response);
-                if (jsonData.success) {
-                    notifier.notify('success', jsonData.message);
+                if (response.success) {
+                    toaster('success' , response.message)
                 } else {
-                    notifier.notify('error', jsonData.message);
+                    toaster('error' , response.message)
                 }
                 setTimeout(function() {
                     location.reload();

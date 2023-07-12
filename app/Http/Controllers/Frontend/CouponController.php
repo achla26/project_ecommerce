@@ -38,7 +38,7 @@ class CouponController extends Controller
                                 $coupon_amt =  $sub_total * $coupon->amount/ 100;
                             }
                             $coupon['coupon_amount'] = $coupon_amt;
-                            $coupon['coupon_name'] = $coupon->code;
+                            $coupon['coupon_name'] = $coupon->coupon_code;
                             session()->put('coupon' , $coupon);
 
                             return js_response(null, "Coupon Applied Successfully");
@@ -57,7 +57,8 @@ class CouponController extends Controller
 
     }
 
-    public function destory(){
+    public function destroy(){
         session()->forget('coupon');
+        return js_response(null, "Coupon Removed Successfully");
     }
 }

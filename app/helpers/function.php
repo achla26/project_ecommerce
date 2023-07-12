@@ -125,6 +125,7 @@ function js_cart_cost_calculate(){
         }
     }
     $cost['sub_total'] =$sub_total;
+    $cost['coupon'] =session()->get('coupon');
     $cost['total'] =$sub_total;
     return $cost;
 }
