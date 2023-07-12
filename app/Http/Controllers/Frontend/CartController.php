@@ -139,9 +139,4 @@ class CartController extends Controller
         
         return js_response(null,session()->flash('message',__('app.cart.deleted')));
     }
-
-    public function couponAdd(Request $request){
-        $coupon = Coupon::where('coupon_code',$request->code)->first();
-    }
-
 }

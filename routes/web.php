@@ -28,9 +28,12 @@ Route::prefix('cart')->as('cart.')->group(function () {
   Route::get('/', [CartController::class, 'index'])->name('index');
   Route::post('/', [CartController::class, 'store'])->name('store');
   Route::post('/destroy', [CartController::class, 'destroy'])->name('destroy');
-  Route::post('/update', [CartController::class, 'update'])->name('update');
-  Route::post('/coupon/add', [CartController::class, 'couponAdd'])->name('coupon.add');
-  Route::post('/coupon/remove', [CartController::class, 'couponRemove'])->name('coupon.remove');
+  Route::post('/update', [CartController::class, 'update'])->name('update'); 
+});
+
+Route::prefix('coupon')->as('coupon.')->group(function () { 
+  Route::post('/', [CouponController::class, 'store'])->name('add');
+  Route::post('/destroy', [CouponController::class, 'destroy'])->name('destroy'); 
 });
 
 Route::post('apply-coupon', [CouponController::class, 'store'])->name('coupon.apply');

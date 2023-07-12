@@ -200,8 +200,8 @@
                                         <div class="ec-cart-coupan-content">
                                             <form class="ec-cart-coupan-form" name="ec-cart-coupan-form" method="post"
                                                 action="#">
-                                                <input class="ec-coupan" type="text" required=""
-                                                    placeholder="Enter Your Coupan Code" name="coupon_code" id="coupon_code" value="">
+                                                <input class="ec-coupan" type="text" required=""  placeholder="Enter Your Coupan Code" name="coupon_code" id="coupon_code" >
+                                                <input class="hidden"  id="sub_total" value="{{$cost['sub_total']}}">
                                                 <button class="ec-coupan-btn button btn-primary" type="button"
                                                     name="subscribe" value="" onclick="addCoupon(this)">Apply</button>
                                             </form>
@@ -226,40 +226,6 @@
 
 @section('script')
     <script>
-        function addCoupon(sub_total) {
-            let coupon_code = $("#coupon_code").val();
-            $.ajax({
-                type: "POST",
-                url: "{{route('coupon.apply')}}",
-                data: {
-                    sub_total,
-                    coupon_code
-                },
-                success: function(response) {
-                    
-                }
-            });
-        }
-
-        function removeCartCouponApply() {
-            $.ajax({
-                type: "POST",
-                url: "{{route('coupon.remove')}}",
-                data: {},
-                success: function(response) {
-                    let jsonData = JSON.parse(response);
-                    if (jsonData.success) {
-                        notifier.notify('success', jsonData.message);
-                    } else {
-                        notifier.notify('error', jsonData.message);
-                    }
-                    setTimeout(function() {
-                        location.reload();
-                    }, 300);
-                }
-            });
-        }
-
-       
+        
     </script>
 @endsection
