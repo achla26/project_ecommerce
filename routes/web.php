@@ -6,6 +6,8 @@ use \App\Http\Controllers\Frontend\IndexController;
 use \App\Http\Controllers\Frontend\CartController;
 use \App\Http\Controllers\Frontend\CouponController;
 use \App\Http\Controllers\Frontend\UserController;
+use \App\Http\Controllers\Frontend\AddressController;
+use \App\Http\Controllers\Frontend\AjaxController;
 use \App\Http\Controllers\Frontend\Auth\LoginController;
 use \App\Http\Controllers\Frontend\Auth\ForgotPasswordController;
 use \App\Http\Controllers\Frontend\Auth\ResetPasswordController;
@@ -21,9 +23,13 @@ Route::prefix('user')->as('user.')->group(function () {
   Route::get('profile', [UserController::class, 'profile'])->name('profile');
   Route::post('update-profile', [UserController::class, 'updateProfile'])->name('update-profile');
   Route::get('order-history', [UserController::class, 'orderHistory'])->name('order-history');
+
+  Route::resource('address', AddressController::class);
+  
 });
 
-
+Route::post('get-states', [AjaxController::class, 'getStates'])->name('get-states');
+  Route::post('get-cities', [AjaxController::class, 'getCities'])->name('get-cities');
 Route::prefix('cart')->as('cart.')->group(function () {
   Route::get('/', [CartController::class, 'index'])->name('index');
   Route::post('/', [CartController::class, 'store'])->name('store');

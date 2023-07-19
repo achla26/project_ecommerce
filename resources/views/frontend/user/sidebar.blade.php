@@ -5,7 +5,8 @@
             <div class="ec-vendor-block">
                 <div class="ec-vendor-block-items">
                     <ul>
-                        <li><a href="user-profile.html">User Profile</a></li>
+                        <li><a href="{{route('user.profile')}}">User Profile</a></li>
+                        <li><a href="{{route('user.address.index')}}">Address</a></li>
                         <li><a href="user-history.html">History</a></li>
                         <li><a href="wishlist.html">Wishlist</a></li>
                         <li><a href="cart.html">Cart</a></li>

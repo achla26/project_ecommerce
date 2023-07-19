@@ -95,7 +95,7 @@
                                     </div>
                                 </div>
                                 <div class="ec-vendor-upload-detail">
-                                    
+                                    <div class="row">
                                         <div class="col-md-6 space-t-15">
                                             <label class="form-label">First name</label>
                                             <input type="text" name="fname" value="{{ auth()->user()->fname}}" class="form-control">
@@ -117,7 +117,7 @@
                                             <a href="#" class="btn btn-lg btn-secondary qty_close"
                                                 data-bs-dismiss="modal" aria-label="Close">Close</a>
                                         </div>
-                                    
+                                    </div>
                                 </div>
                             </form>
                         </div>
