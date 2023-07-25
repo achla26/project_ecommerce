@@ -35,7 +35,11 @@
     <link rel="stylesheet" href="{{asset('assets/frontend/css/responsive.css')}}" />
     <link rel="stylesheet" href="{{asset('assets/frontend/css/toast.min.css')}}" />
      @yield('css')
-     
+     <style>
+        input[type='checkbox']{
+            height: 15px !important;
+        }
+    </style>
  </head>
  <body>
      {{-- <div id="ec-overlay"><span class="loader_img"></span></div> --}}

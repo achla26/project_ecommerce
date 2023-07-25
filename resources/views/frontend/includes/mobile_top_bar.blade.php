@@ -31,9 +31,16 @@
                         <div class="ec-header-user dropdown">
                             <button class="dropdown-toggle" data-bs-toggle="dropdown"><i class="fa-regular fa-user"></i></button>
                             <ul class="dropdown-menu dropdown-menu-right">
-                                <li><a class="dropdown-item" href="register.html">Register</a></li>
-                                <li><a class="dropdown-item" href="checkout.html">Checkout</a></li>
-                                <li><a class="dropdown-item" href="login.html">Login</a></li>
+                                @if (auth()->check())
+                                    <li><a class="dropdown-item" href="{{route('checkout.index')}}">Checkout</a></li>
+                                    <li><a class="dropdown-item" href="{{route('logout')}}">Logout</a></li>
+                                @else
+                                    <li><a class="dropdown-item" href="{{route('register')}}">Register</a></li>
+                                    <li><a class="dropdown-item" href="{{route('login')}}">Login</a></li>
+                                @endif
+                                
+                                
+                                
                             </ul>
                         </div>
                         <!-- Header User End -->

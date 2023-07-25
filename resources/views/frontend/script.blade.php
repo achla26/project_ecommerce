@@ -20,8 +20,8 @@
             dataType: 'json',
             success: function(response) {
                 if (response.success) {
-                    toaster('success', response.message)
-                    location.reload();
+                 //   toaster('success', response.message)
+                    // location.reload();
                 }
             },
             error: function(response) {}
