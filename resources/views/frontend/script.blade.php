@@ -88,4 +88,33 @@
             }
         });
     }
+
+    function getStates() {
+            let country_id = document.querySelector("#country_id").value;
+            $.ajax({
+                type: "POST",
+                url: "{{ route('get-states') }}",
+                data: {
+                    country_id
+                },
+                success: function(response) {
+                    $("#state_wrapper").html(response)
+                }
+            });
+        }
+
+        function getCities() {
+            let country_id = document.querySelector("#country_id").value;
+            let state_id = document.querySelector("#state_id").value;
+            $.ajax({
+                type: "POST",
+                url: "{{ route('get-cities') }}",
+                data: {
+                    country_id , state_id
+                },
+                success: function(response) {
+                    $("#city_wrapper").html(response)
+                }
+            });
+        }
 </script>

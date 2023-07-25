@@ -168,7 +168,17 @@
             <li class="side-nav-item">
                 <a href="{{route('backend.slider.index')}}" class="side-nav-link">
                     <i class="uil-calender"></i>
-                    <span> Slider </span>
+                    <span> Sliders </span>
+                </a>
+            </li>
+            @endcan
+
+            @can('banner_show')
+
+            <li class="side-nav-item">
+                <a href="{{route('backend.banner.index')}}" class="side-nav-link">
+                    <i class="uil-calender"></i>
+                    <span> Banners </span>
                 </a>
             </li>
             @endcan

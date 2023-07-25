@@ -16,6 +16,7 @@ use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Backend\SliderController;
+use App\Http\Controllers\Backend\BannerController;
 use App\Http\Controllers\Backend\RoleController;
 use App\Http\Controllers\Backend\PermissionController;
 
@@ -57,6 +58,9 @@ Route::group(['middleware'=>'admin'],function(){
 
         Route::resource('slider', SliderController::class);
         Route::post('slider/status',[SliderController::class,'status'])->name('slider.status');
+
+        Route::resource('banner', BannerController::class);
+        Route::post('banner/status',[BannerController::class,'status'])->name('banner.status');
 
         Route::resource('city', CityController::class);
         Route::post('city/status',[CityController::class,'status'])->name('city.status');

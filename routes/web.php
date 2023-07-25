@@ -8,6 +8,7 @@ use \App\Http\Controllers\Frontend\CouponController;
 use \App\Http\Controllers\Frontend\UserController;
 use \App\Http\Controllers\Frontend\AddressController;
 use \App\Http\Controllers\Frontend\AjaxController;
+use \App\Http\Controllers\Frontend\CheckoutController;
 use \App\Http\Controllers\Frontend\Auth\LoginController;
 use \App\Http\Controllers\Frontend\Auth\ForgotPasswordController;
 use \App\Http\Controllers\Frontend\Auth\ResetPasswordController;
@@ -25,7 +26,10 @@ Route::prefix('user')->as('user.')->group(function () {
   Route::get('order-history', [UserController::class, 'orderHistory'])->name('order-history');
 
   Route::resource('address', AddressController::class);
-  
+ 
+});
+Route::prefix('checkout')->as('checkout.')->group(function () {
+  Route::get('/', [CheckoutController::class, 'index'])->name('index');
 });
 
 Route::post('get-states', [AjaxController::class, 'getStates'])->name('get-states');

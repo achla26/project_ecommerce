@@ -3,6 +3,7 @@ use App\Models\Category;
 use App\Models\Currency;
 use App\Models\Cart;
 use App\Models\Product;
+use App\Models\Country;
 use App\Models\Setting;
 use App\Models\ProductVarient;
 use App\Models\Attribute;
@@ -128,4 +129,8 @@ function js_cart_cost_calculate(){
     $cost['coupon'] =session()->get('coupon');
     $cost['total'] =$sub_total;
     return $cost;
+}
+
+function js_countries(){
+    return Country::all() ?? [];
 }
