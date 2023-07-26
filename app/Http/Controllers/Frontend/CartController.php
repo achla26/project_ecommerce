@@ -64,22 +64,33 @@ class CartController extends Controller
         }
         else{
             if (session()->has('cart')) {
-                $cart = session()->get('cart');
-                foreach ($cart as $item) {
-                    if(isset($cart[$request->product_id][$request->varient_id])){
-                        $cart[$request->product_id][$request->varient_id] = $cart[$request->product_id][$request->varient_id]+$request->qty;
-                    }else{
-                        $cart[$request->product_id][$request->varient_id] = (int)$request->qty;
-                    }                
-                }            
+                if(!empty(session()->get('cart')))
+                {
+                    $cart = session()->get('cart');
+                    foreach ($cart as $item) {
+                        if(isset($cart[$request->product_id][$request->varient_id])){
+                            $cart[$request->product_id][$request->varient_id] = $cart[$request->product_id][$request->varient_id]+$request->qty;
+                        }else{
+                            $cart[$request->product_id][$request->varient_id] = (int)$request->qty;
+                        }                
+                    }           
+                } 
+                else{
+                    $cart[$request->product_id][$request->varient_id] = (int)$request->qty;       
+                }
             }
             else{
                 $cart[$request->product_id][$request->varient_id] = (int)$request->qty;       
             }
+            
             session()->put('cart',$cart);
+            $cart  = session()->get('cart');
+            $data['total_items'] = count($cart);
+            $data['side_cart'] = view('components.frontend.side-cart')->render(); 
+
         }
 
-        return js_response(null,__('app.cart.added'));
+         return js_response($data,__('app.cart.added'));
     }
 
     /**
@@ -136,7 +147,9 @@ class CartController extends Controller
                 session()->forget("cart.$id[0]");
             }
         }
+        $data['total_items'] = count(session()->get('cart'));
+        $data['side_cart'] = view('components.frontend.side-cart')->render(); 
         
-        return js_response(null,session()->flash('message',__('app.cart.deleted')));
+        return js_response($data,__('app.cart.deleted'));
     }
 }

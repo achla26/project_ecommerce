@@ -88,5 +88,7 @@
         <!-- ekka mobile Menu End -->
     </header>
     <!-- Header End  -->
+    <div id="side-cart">
+        <x-frontend.side-cart />
+    </div>
     
-    <x-frontend.side-cart />

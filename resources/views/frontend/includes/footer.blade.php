@@ -299,7 +299,7 @@
             <div class="ec-nav-panel-icons">
                 <a href="#ec-side-cart" class="toggle-cart ec-header-btn ec-side-toggle"><img
                         src="{{ asset('assets/frontend/images/icons/cart.svg') }}" class="svg_img header_svg"
-                        alt="icon" /><span class="ec-cart-noti ec-header-count cart-count-lable">3</span></a>
+                        alt="icon" /><span class="ec-cart-noti ec-header-count cart-count-lable">{{count(js_cart())}}</span></a>
             </div>
             <div class="ec-nav-panel-icons">
                 <a href="{{route('index')}}" class="ec-header-btn"><img
@@ -340,7 +340,7 @@
         <div class="header-icon"><img src="{{ asset('assets/frontend/images/icons/cart.svg') }}"
                 class="svg_img header_svg" alt="cart" />
         </div>
-        <span class="ec-cart-count cart-count-lable">3</span>
+        <span class="ec-cart-count cart-count-lable">{{count(js_cart())}}</span>
     </a>
 </div>
 <!-- Cart Floating Button end -->

@@ -20,7 +20,9 @@
             dataType: 'json',
             success: function(response) {
                 if (response.success) {
-                 //   toaster('success', response.message)
+                    $(".cart-count-lable").html(response.result.total_items); 
+                    $("#side-cart").html(response.result.side_cart)
+                    toaster('success', response.message)
                     // location.reload();
                 }
             },
@@ -37,7 +39,9 @@
             },
             success: function(response) {
                 if (response.success) {
-                    location.reload();
+                    toaster('success', response.message)
+                    $("#side-cart").html(response.result.side_cart)
+                    $(".cart-count-lable").html(response.result.total_items); 
                 }
             }
         });

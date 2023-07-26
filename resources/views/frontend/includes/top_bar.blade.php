@@ -83,7 +83,7 @@
                     <!-- Header Cart Start -->
                     <a href="#ec-side-cart" class="ec-header-btn ec-side-toggle">
                         <div class="header-icon"><i class="fa-solid fa-bag-shopping"></i></div>
-                        <span class="ec-header-count cart-count-lable">3</span>
+                        <span class="ec-header-count cart-count-lable">{{count(js_cart())}}</span>
                     </a>
                     <!-- Header Cart End -->
                     <a href="javascript:void(0)" class="ec-header-btn ec-sidebar-toggle">
