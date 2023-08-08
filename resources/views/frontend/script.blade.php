@@ -22,8 +22,9 @@
                 if (response.success) {
                     $(".cart-count-lable").html(response.result.total_items); 
                     $("#side-cart").html(response.result.side_cart)
+                    $("#cart-wrapper").html(response.result.cart_items); 
+                    $("#cart-summery-wrapper").html(response.result.cart_summery); 
                     toaster('success', response.message)
-                    // location.reload();
                 }
             },
             error: function(response) {}
@@ -42,6 +43,8 @@
                     toaster('success', response.message)
                     $("#side-cart").html(response.result.side_cart)
                     $(".cart-count-lable").html(response.result.total_items); 
+                    $("#cart-wrapper").html(response.result.cart_items);
+                    $("#cart-summery-wrapper").html(response.result.cart_summery);  
                 }
             }
         });
@@ -94,31 +97,64 @@
     }
 
     function getStates() {
-            let country_id = document.querySelector("#country_id").value;
-            $.ajax({
-                type: "POST",
-                url: "{{ route('get-states') }}",
-                data: {
-                    country_id
-                },
-                success: function(response) {
-                    $("#state_wrapper").html(response)
-                }
-            });
-        }
+        let country_id = document.querySelector("#country_id").value;
+        $.ajax({
+            type: "POST",
+            url: "{{ route('get-states') }}",
+            data: {
+                country_id
+            },
+            success: function(response) {
+                $("#state_id").find('option').remove();
+                $("#state_id").append(response)
+            }
+        });
+    }
 
-        function getCities() {
-            let country_id = document.querySelector("#country_id").value;
-            let state_id = document.querySelector("#state_id").value;
-            $.ajax({
-                type: "POST",
-                url: "{{ route('get-cities') }}",
-                data: {
-                    country_id , state_id
-                },
-                success: function(response) {
-                    $("#city_wrapper").html(response)
-                }
-            });
-        }
+    function getCities() {
+        let country_id = document.querySelector("#country_id").value;
+        let state_id = document.querySelector("#state_id").value;
+        $.ajax({
+            type: "POST",
+            url: "{{ route('get-cities') }}",
+            data: {
+                country_id , state_id
+            },
+            success: function(response) {
+                $("#city_id").find('option').remove();
+                $("#city_id").append(response)
+            }
+        });
+    }
+
+    function getShippingStates() {
+        let country_id = document.querySelector("#shipping_country_id").value;
+        $.ajax({
+            type: "POST",
+            url: "{{ route('get-states') }}",
+            data: {
+                country_id
+            },
+            success: function(response) {
+                $("#shipping_state_id").find('option').remove();
+                $("#shipping_state_id").append(response)
+            }
+        });
+    }
+
+    function getShippingCities() {
+        let country_id = document.querySelector("#shipping_country_id").value;
+        let state_id = document.querySelector("#shipping_state_id").value;
+        $.ajax({
+            type: "POST",
+            url: "{{ route('get-cities') }}",
+            data: {
+                country_id , state_id
+            },
+            success: function(response) {
+                $("#shipping_city_id").find('option').remove();
+                $("#shipping_city_id").append(response)
+            }
+        });
+    }
 </script>

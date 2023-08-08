@@ -30,6 +30,7 @@ Route::prefix('user')->as('user.')->group(function () {
 });
 Route::prefix('checkout')->as('checkout.')->group(function () {
   Route::get('/', [CheckoutController::class, 'index'])->name('index');
+  Route::post('order', [CheckoutController::class, 'order'])->name('order');
 });
 
 Route::post('get-states', [AjaxController::class, 'getStates'])->name('get-states');

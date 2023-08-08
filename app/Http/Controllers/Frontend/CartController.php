@@ -16,9 +16,8 @@ class CartController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {
-        $carts = js_cart();
-        return view('frontend.cart.index', compact('carts'));
+    { 
+        return view('frontend.cart.index');
     }
 
     /**
@@ -83,11 +82,8 @@ class CartController extends Controller
                 $cart[$request->product_id][$request->varient_id] = (int)$request->qty;       
             }
             
-            session()->put('cart',$cart);
-            $cart  = session()->get('cart');
-            $data['total_items'] = count($cart);
-            $data['side_cart'] = view('components.frontend.side-cart')->render(); 
-
+            session()->put('cart',$cart); 
+            $data = $this->cartUpdated();
         }
 
          return js_response($data,__('app.cart.added'));
@@ -147,9 +143,18 @@ class CartController extends Controller
                 session()->forget("cart.$id[0]");
             }
         }
-        $data['total_items'] = count(session()->get('cart'));
-        $data['side_cart'] = view('components.frontend.side-cart')->render(); 
+        
+        $data = $this->cartUpdated();
         
         return js_response($data,__('app.cart.deleted'));
+    }
+
+    public function cartUpdated(){
+        $data['total_items'] = count(session()->get('cart'));
+        $data['side_cart'] = view('components.frontend.side-cart')->render();
+        $data['cart_items'] = view('components.frontend.cart')->render(); 
+        $data['cart_summery'] = view('components.frontend.cart-summery')->render(); 
+
+        return $data;
     }
 }

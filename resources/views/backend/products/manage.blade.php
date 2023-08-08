@@ -1,6 +1,7 @@
 @extends('backend.layout')
-@section('title', 'Product')
+@section('title', 'Product') 
 @section('css')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sumoselect@3.4.9/sumoselect.min.css">
 @endsection
 @section('content')
     <div class="content">
@@ -78,13 +79,13 @@
                                     <!-- end col-->
                                     <div class="col-sm-9">
                                         <div class="tab-content" id="v-pills-tabContent">
-                                            @include('backend.products.tabs.info' , $product)
-                                            @include('backend.products.tabs.detail' , $product)
-                                            @include('backend.products.tabs.image' , $product)
-                                            @include('backend.products.tabs.price' , $product)
-                                            @include('backend.products.tabs.varient' , $product)
-                                            @include('backend.products.tabs.seo' , $product)
-                                            @include('backend.products.tabs.other' , $product)
+                                            @include('backend.products.tabs.info', $product)
+                                            @include('backend.products.tabs.detail', $product)
+                                            @include('backend.products.tabs.image', $product)
+                                            @include('backend.products.tabs.price', $product)
+                                            @include('backend.products.tabs.varient', $product)
+                                            @include('backend.products.tabs.seo', $product)
+                                            @include('backend.products.tabs.other', $product)
                                         </div>
                                         <!-- end tab-content-->
                                     </div>
@@ -116,21 +117,35 @@
 @section('script')
 
     <script>
-        function make_combinations() {
-            var fd = new FormData($('#form')[0]);
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('input[name="_token"]').attr('value')
-                }
+        function getProductAttributes() {
+            let attr = [];
+            let option_id = [];
+            attr = $('#attribute_ids').val();
+            $('.option_ids').each(function() {
+                option_id.push($(this).val());
             });
+        }
+
+
+        function makeCombinations() {
+
+            var varients = [];
+            let price = $("#unit_price").val();
+            let mrp = $("#unit_mrp").val();
+            let sku = $("#unit_sku").val(); 
+            let qty = $("#unit_qty").val(); 
+
+            $(`select[name="attribute_id[]"] option:selected`).each(function() {
+                varients.push($(this).val());
+            });   
+ 
+
             $.ajax({
-                url: "{{ route('backend.product.combination') }}",
-                data: fd,
+                url: "{{ route('backend.product.get-combinations') }}",
+                data: {
+                    varients , price ,mrp , sku ,qty
+                },
                 type: 'POST',
-                // dataType: 'json',
-                cache: false,
-                processData: false,
-                contentType: false,
                 success: function(response) {
                     $("#choice").html(response);
                 }
@@ -177,12 +192,12 @@
                     url: "{{ route('backend.product.append-image-div') }}",
                     data: {},
                     success: function(resp) {
-                        $("#append_product_img_div").append(resp);
+                        $("#varients_wrapper").append(resp);
                     },
                     error: function() {
                         alert("Error");
                     }
-                }); 
+                });
             });
         });
 
@@ -202,7 +217,7 @@
         }
         $('#section_id').change(function() {
             var section_id = $(this).val();
-            
+
             $.ajax({
                 type: 'post',
                 url: "{{ route('backend.product.append-categories') }}",
@@ -218,13 +233,39 @@
             });
         });
 
-        $("[name=shipping_type]").on("change", function (){
-        $(".flat_rate_shipping_div").hide();
 
-        if($(this).val() == 'flat_rate'){
-            $(".flat_rate_shipping_div").show();
+        function getAttributes() {
+            let attributes = $("#attribute_ids").val();
+            $.ajax({
+                type: 'post',
+                url: "{{ route('backend.product.get-varients') }}",
+                data: {
+                    attributes
+                },
+                success: function(resp) {
+                    $("#varients_wrapper").html(resp);
+
+                },
+                error: function() {
+                    alert("Error");
+                }
+            });
+
         }
+        $("[name=shipping_type]").on("change", function() {
+            $(".flat_rate_shipping_div").hide();
 
-    });
+            if ($(this).val() == 'flat_rate') {
+                $(".flat_rate_shipping_div").show();
+            }
+
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sumoselect@3.4.9/jquery.sumoselect.min.js"></script>
+    <script>
+        $(".select-multi").SumoSelect({
+            search: true,
+            searchText: 'Enter here.'
+        })
     </script>
 @endsection

@@ -67,6 +67,8 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
+        $is_varient= isset($request->is_varient) && !empty($request->is_varient) ? $request->is_varient : 'no'; 
+
         if(isset($request->images) && !empty($request->images) && $request->hasfile('images')){
             $images= $request->images;
         }
@@ -97,6 +99,7 @@ class ProductController extends Controller
         if(isset($request->varient_image) && !empty($request->varient_image) && $request->hasfile('varient_image')){
             $varient_image= $request->varient_image;
         }
+        
         if($request->is_discount == 'yes'){
             $discount_category = $request->discount_category;
             $discount_value = $request->discount_value;
@@ -105,7 +108,7 @@ class ProductController extends Controller
             $discount_end_dttm = $request->discount_end_dttm;
         }
         
-        $data = $request->except('images','attribute_set_id','tax_value','tax_id','tax_type','discount','varient_attribute_id','varient_price','varient_mrp','varient_sku','varient_qty','varient_image','attribute_id','discount_category','discount_value','discount_type','discount_start_dttm','discount_end_dttm');
+        $data = $request->except('images','attribute_set_id','tax_value','tax_id','tax_type','discount','varient_attribute_id','varient_price','varient_mrp','varient_sku','varient_qty','varient_image','attribute_id','discount_category','discount_value','discount_type','discount_start_dttm','discount_end_dttm','unit_qty');
 
         $data['slug'] =Str::slug($request->name, '_');
         $data['added_by'] =Auth::user()->id;
@@ -130,26 +133,37 @@ class ProductController extends Controller
                 ]);
             }            
         }    
-        if(isset($varient_attribute_id) && !empty($varient_attribute_id)){
-            foreach($varient_attribute_id  as $key => $attribute_id){
-                $attribute_id = explode('-',$attribute_id);
-                $product_varient = ProductVarient::create([
-                    'price'=>$varient_price[$key],
-                    'mrp'=>$varient_mrp[$key],
-                    'qty'=>$varient_qty[$key],
-                    'sku'=>$varient_sku[$key],
-                    'attribute_id'=> json_encode($attribute_id),
-                    'product_id'=>$product->id
-                ]); 
-                if(!empty($varient_image)){
-                    ProductVarientImage::create([
-                        'name'=>$varient_image->store( 'uploads/products', 'public'),
-                        'product_id'=>$product->id,
-                        'product_varient_id'=>$product_varient->id
-                    ]);
-                }
-            }   
-        }       
+        if($is_varient == 'yes'){
+            if(isset($varient_attribute_id) && !empty($varient_attribute_id)){
+                foreach($varient_attribute_id  as $key => $attribute_id){
+                    $attribute_id = explode('-',$attribute_id);
+                    $product_varient = ProductVarient::create([
+                        'price'=>$varient_price[$key],
+                        'mrp'=>$varient_mrp[$key],
+                        'qty'=>$varient_qty[$key],
+                        'sku'=>$varient_sku[$key],
+                        'attribute_id'=> json_encode($attribute_id),
+                        'product_id'=>$product->id
+                    ]); 
+                    if(!empty($varient_image)){
+                        ProductVarientImage::create([
+                            'name'=>$varient_image->store( 'uploads/products', 'public'),
+                            'product_id'=>$product->id,
+                            'product_varient_id'=>$product_varient->id
+                        ]);
+                    }
+                }   
+            }       
+        }else{
+            $product_varient = ProductVarient::create([
+                'price'=>$request->unit_price,
+                'mrp'=>$request->unit_mrp,
+                'qty'=>$request->qty ?? 1,
+                'sku'=>$request->sku,
+                'attribute_id'=> 0,
+                'product_id'=>$product->id
+            ]); 
+        }
         if(isset($tax_value) && !empty($tax_value)){
             foreach($tax_value  as $key => $tax){
                 if(!empty($tax_value[$key])){
@@ -216,7 +230,9 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Product $product)
-    {
+    { 
+        $is_varient= isset($request->is_varient) && !empty($request->is_varient) ? $request->is_varient : 'no'; 
+
         if(isset($request->images) && !empty($request->images) && $request->hasfile('images')){
             $images= $request->images;
         }
@@ -255,7 +271,7 @@ class ProductController extends Controller
             $discount_end_dttm = $request->discount_end_dttm;
         }
         
-        $data = $request->except('images','attribute_set_id','tax_value','tax_id','tax_type','discount','varient_attribute_id','varient_price','varient_mrp','varient_sku','varient_qty','varient_image','attribute_id','discount_category','discount_value','discount_type','discount_start_dttm','discount_end_dttm','main');
+        $data = $request->except('images','attribute_set_id','tax_value','tax_id','tax_type','discount','varient_attribute_id','varient_price','varient_mrp','varient_sku','varient_qty','varient_image','attribute_id','discount_category','discount_value','discount_type','discount_start_dttm','discount_end_dttm','main','unit_qty');
 
         $data['slug'] =Str::slug($request->name, '_');
         
@@ -279,27 +295,38 @@ class ProductController extends Controller
                 ]);
             }            
         }    
-        if(isset($varient_attribute_id) && !empty($varient_attribute_id)){
-            foreach($varient_attribute_id  as $key => $attribute_id){
-                $attribute_id = explode('-',$attribute_id);
-                array_pop($attribute_id);
-                $product_varient = ProductVarient::create([
-                    'price'=>$varient_price[$key],
-                    'mrp'=>$varient_mrp[$key],
-                    'qty'=>$varient_qty[$key],
-                    'sku'=>$varient_sku[$key],
-                    'attribute_id'=> json_encode($attribute_id),
-                    'product_id'=>$product->id
-                ]); 
-                if(!empty($varient_image)){
-                    ProductImage::create([
-                        'name'=>$varient_image->store( 'uploads/products', 'public'),
-                        'product_id'=>$product->id,
-                        'product_varient_id'=>$product_varient->id
-                    ]);
-                }
+        if($is_varient == 'yes'){
+            if(isset($varient_attribute_id) && !empty($varient_attribute_id)){
+                foreach($varient_attribute_id  as $key => $attribute_id){
+                    $attribute_id = explode('-',$attribute_id);
+                    array_pop($attribute_id);
+                    $product_varient = ProductVarient::create([
+                        'price'=>$varient_price[$key],
+                        'mrp'=>$varient_mrp[$key],
+                        'qty'=>$varient_qty[$key],
+                        'sku'=>$varient_sku[$key],
+                        'attribute_id'=> json_encode($attribute_id),
+                        'product_id'=>$product->id
+                    ]); 
+                    if(!empty($varient_image)){
+                        ProductImage::create([
+                            'name'=>$varient_image->store( 'uploads/products', 'public'),
+                            'product_id'=>$product->id,
+                            'product_varient_id'=>$product_varient->id
+                        ]);
+                    }
+                }   
             }   
-        }      
+        }   
+        else{
+            $product_varient = ProductVarient::updateOrCreate(['product_id'=>$product->id],[
+                'price'=>$request->unit_price,
+                'mrp'=>$request->unit_mrp,
+                'qty'=>$request->current_stock ?? 1,
+                'sku'=>$request->sku,
+                'attribute_id'=> 0,
+            ]); 
+        }
 
         
         return redirect()->route('backend.product.index')
@@ -331,25 +358,52 @@ class ProductController extends Controller
         return \Response::json(['status'=>true, 'msg'=>"__('app.status')"], 200);
     }
     
-
-    public function combination(Request $request){
-        
-        $attributes = $request->attribute_id;
-        $combos = $this->array_cartesian_product($attributes);
-
-        $price = $request->unit_price;
-        $mrp = $request->unit_mrp;
-        return view('components.backend.combination',compact('combos','price','mrp'));
+    public function getVarients(Request $request){ 
+        $data = $request->all(); 
+        $html = "";
+        if(isset($data['attributes']) && !empty($data['attributes'])){
+            $attributes = AttributeSet::query()->whereIn('id' ,  $data['attributes'])->get(); 
+            if($attributes){
+                foreach ($attributes as $attribute)
+                {
+                    $varients = \App\Models\Attribute::query()
+                        ->where('attribute_set_id', $attribute->id)
+                        ->get();
+                        if($varients){
+                            $html .=view('components.backend.varients',compact('attribute' , 'varients'));
+                        }
+                }
+            }
+        }
+        return $html;
     }
 
-    public function array_cartesian_product($arrays)
-    {
+
+    public function getCombinations(Request $request){ 
+        $varients =Attribute::query()->whereIn('id',$request->varients)->get();
+        $price = $request->price;
+        $mrp = $request->mrp;
+        $sku = $request->sku;
+        $qty = $request->qty;
+
+        foreach ($varients as $key => $varient) {
+            $options[$varient->attribute_set_id][] = $varient->id; 
+        }
+
+        $combos = $this->array_cartesian_product($options);  
+        return view('components.backend.combination',compact('combos' ,'mrp','qty','price','sku'));
+    }
+
+    function array_cartesian_product($arrays=[] ) {
         $result = array();
         $arrays = array_values($arrays);
         $sizeIn = sizeof($arrays);
         $size = $sizeIn > 0 ? 1 : 0;
         foreach ($arrays as $array){
-            $size = $size * sizeof($array);
+            if(is_array($array)){
+                $size = $size * sizeof($array);
+            }
+            
             for ($i = 0; $i < $size; $i ++)
             {
                 $result[$i] = array();
@@ -366,6 +420,7 @@ class ProductController extends Controller
         }
         return $result;
     }
+    
 
     public function appendCategories(Request $request){
         $getCategories = Category::with('sub_categories')->where(['section_id'=>$request->section_id,'parent_id'=>0,'status'=>1])->get();

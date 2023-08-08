@@ -2,17 +2,30 @@
     <div class="row">
         <h3 class="box-title">Product price + stock</h3>
         <div class="form-group mb-3 row">
+            <label class="col-md-3 col-from-label">Is Varient</label>
+            <div class="col-md-6">
+                <input type="checkbox"  value="yes" name="is_varient" >
+            </div>
+        </div>
+        <div class="form-group mb-3 row">
             <label class="col-md-3 col-from-label">Unit price <span class="text-danger">*</span></label>
             <div class="col-md-6">
-                <input type="number" min="0" value="{{ $product->unit_price ?? old('unit_price') }}"
+                <input type="number" min="0" value="{{ $product_varients[0]->price ?? old('unit_price') }}"
                     step="0.01" placeholder="Unit price" name="unit_price" class="form-control" id="unit_price">
             </div>
         </div>
         <div class="form-group mb-3 row">
             <label class="col-md-3 col-from-label">Unit Mrp <span class="text-danger">*</span></label>
             <div class="col-md-6">
-                <input type="number" id="unit_mrp" min="0" value="{{ $product->unit_mrp ?? old('unit_mrp') }}"
+                <input type="number" id="unit_mrp" min="0" value="{{ $product_varients[0]->mrp ?? old('unit_mrp') }}"
                     step="0.01" placeholder="Unit Mrp" name="unit_mrp" class="form-control">
+            </div>
+        </div>
+        <div class="form-group mb-3 row">
+            <label class="col-md-3 col-from-label">Unit Qty <span class="text-danger">*</span></label>
+            <div class="col-md-6">
+                <input type="number" id="unit_qty" min="0" value="{{ $product_varients[0]->qty ?? old('unit_qty') }}"
+                 placeholder="Unit Qty" name="unit_qty" class="form-control">
             </div>
         </div>
         <div class="form-group mb-3 row">
@@ -28,7 +41,7 @@
             <div class="form-group mb-3 row">
                 <label class="col-md-3 col-from-label">Quantity <span class="text-danger">*</span></label>
                 <div class="col-md-6">
-                    <input type="number" min="0" value="{{ $product->current_stock ?? old('current_stock') }}"
+                    <input type="number" min="0" value="{{ $product_varients[0]->qty ?? old('current_stock') }}"
                         step="1" placeholder="Quantity" name="current_stock" class="form-control" value="">
                 </div>
             </div>

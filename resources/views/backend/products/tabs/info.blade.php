@@ -12,7 +12,7 @@
             <div class="form-group mb-3 row">
                 <label class="col-md-3 col-from-label">SKU<span class="text-danger">*</span></label>
                 <div class="col-md-8">
-                    <input type="text" class="form-control" id="sku" name="sku" placeholder="SKU"
+                    <input type="text" class="form-control" id="unit_sku" name="sku" placeholder="SKU"
                         value="{{ $product->sku ?? old('sku') }}">
                 </div>
             </div>
@@ -29,7 +29,7 @@
                     </select>
                 </div>
             </div>
-            <div class="form-group mb-3 row">
+            <div class="form-group  row">
                 <label class="col-md-3 col-from-label">Category<span class="text-danger">*</span></label>
                 <div class="col-sm-8">
                     <div id="appendCategoriesLevel">
@@ -53,14 +53,14 @@
                 </div>
             </div>
             <div class="form-group mb-3 row">
-                <label class="col-md-3 col-from-label">Minimum Purchase Qty
+                <label class="col-md-3 col-from-label">Maximum Purchase Qty
                     <span class="text-danger">*</span></label>
                 <div class="col-md-8">
                     <input type="number" class="form-control" name="max_purchase_qty"
                         value="{{ $product->max_purchase_qty ?? old('max_purchase_qty') }}" min="1"
                         value="">
                 </div>
-            </div>
+            </div> 
             <div class="form-group mb-3 row">
                 <label class="col-md-3 col-from-label">Barcode</label>
                 <div class="col-md-8">

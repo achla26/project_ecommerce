@@ -2,41 +2,40 @@
     <div class="row">
         <div class="col-lg-12">
             <h3 class="box-title">Product Attributes</h3>
-            @foreach ($attribute_sets as $attribute_set)
-                <div class="form-group mb-3 row gutters-5">
-                    <div class="col-md-3">
-                        <p>{{ $attribute_set->name }}</p>
-                        <input type="hidden" class="form-control" name="attribute_set_id[]"
-                            value="{{ $attribute_set->id }}">
-                    </div>
-                    @php
-                        if (isset($product_varients)) {
-                            $product_attribute = [];
-                            foreach (
-                                collect($product_varients)
-                                    ->pluck('attribute_id')
-                                    ->toArray()
-                                as $varient
-                            ) {
-                                $product_attribute[] = json_decode($varient);
-                            }
+            
+            <div class="col-md-8">
+                <label for="">Select Varients</label>
+                <select class="form-control  select-multi product-attribute" multiple="multiple" name="attribute_ids[]"
+                    style="width: 100%;" id="attribute_ids" onchange="getAttributes()">
+                    @foreach ($attribute_sets as $attribute_set)
+                        <option value="{{ $attribute_set->id }}"
+                            {{ isset($product_attribute) && in_array($attribute['id'], $product_attribute) ? 'selected' : '' }}>
+                            {{ $attribute_set->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+
+            <div class="form-group mb-3 row gutters-5" id="varients_wrapper"> 
+
+                @php
+                    if (isset($product_varients) && $product->is_varient == 'yes') {
+                        $product_attribute = [];
+                        foreach (
+                            collect($product_varients)
+                                ->pluck('attribute_id')
+                                ->toArray()
+                            as $varient
+                        ) {
+                            $product_attribute[] = json_decode($varient);
+                        }
+                        if ($product_attribute > 0) {
                             $product_attribute = array_unique(call_user_func_array('array_merge', $product_attribute));
                         }
-                    @endphp
-                    <div class="col-md-8">
-                        <select class="form-control  select-multi" multiple="multiple"
-                            name="attribute_id[{{ $attribute_set->id }}][]" style="width: 100%;"
-                            onchange="make_combinations()">
-                            <option value="">-Select-</option>
-                            @foreach (collect($attributes)->where('attribute_set_id', $attribute_set->id)->toArray() as $attribute)
-                                <option value="{{ $attribute['id'] }}"
-                                    {{ isset($product_attribute) && in_array($attribute['id'], $product_attribute) ? 'selected' : '' }}>
-                                    {{ $attribute['name'] }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-            @endforeach
+                    }
+                @endphp
+
+            </div>
             <div>
                 <p>Choose the attributes of this product and then input values
                     of each attribute</p>
@@ -72,7 +71,7 @@
                     </tr>
                 </thead>
                 <tbody id="choice">
-                    @if (isset($product_varients))
+                    @if (isset($product_varients) && $product->is_varient == 'yes')
                         <x-backend.combination :productVarients=$product_varients manage="1" />
                         {{-- @foreach (collect($product_varients) as $product_varient)
                         <tr id="variation_row_{{$product_varient->id}}">

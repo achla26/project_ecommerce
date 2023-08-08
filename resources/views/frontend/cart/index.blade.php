@@ -3,7 +3,6 @@
 
 
 @section('content')
-
     <!-- Ec breadcrumb start -->
     <div class="sticky-header-next-sec  ec-breadcrumb section-space-mb">
         <div class="container">
@@ -16,7 +15,7 @@
                         <div class="col-md-6 col-sm-12">
                             <!-- ec-breadcrumb-list start -->
                             <ul class="ec-breadcrumb-list">
-                                <li class="ec-breadcrumb-item"><a href="{{ route('index')}}">Home</a></li>
+                                <li class="ec-breadcrumb-item"><a href="{{ route('index') }}">Home</a></li>
                                 <li class="ec-breadcrumb-item active">Cart</li>
                             </ul>
                             <!-- ec-breadcrumb-list end -->
@@ -49,67 +48,8 @@
                                                     <th></th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                                @foreach ($carts as $cart)
-                                                @php
-                                                    $product = js_product($cart['product_id'] , $cart['product_varient_id']);
-                                                @endphp
-                                                
-                                                    <tr>
-                                                        <td data-label="Product" class="ec-cart-pro-name"><a
-                                                                href="product-left-sidebar.html">
-                                                                <img
-                                                                    class="ec-cart-pro-img mr-4"
-                                                                    src="{{ asset('storage/' . $product['images'][0]['name']) }}" alt="{{ $product['name']}}" />{{ $product['name']}}
-                                                                </a>
-                                                                    @if (!empty($product['varient_name']) && isset($product['varient_name']['size']))
-
-                                                                        <div class="ec-pro-variation">
-                                                                            <div class="ec-pro-variation-inner ec-pro-variation-size">
-                                                                                <div class="ec-pro-variation-content">
-                                                                                    <ul>
-                                                                                        @foreach ($product['varient_name']['size'] as $key =>$size)
-                                                                                            @if ($key == $product['display_varient']['size'])
-                                                                                            <li class="align-items-center d-flex ">Size : <a href="javascript:void()" class="ec-opt-sz">{{$size}}</a>
-                                                                                                </li>
-                                                                                            @endif
-                                                                                        @endforeach
-                                                                                    </ul>
-                                                                                </div>
-                                                                            </div>
-                                                                    @endif
-
-                                                                    @if (!empty($product['varient_name']) && isset($product['varient_name']['color']))
-                                                                        <div class="ec-pro-variation-inner ec-pro-variation-color">
-                                                                            <div class="ec-pro-variation-content">
-                                                                                <ul >
-                                                                                    @foreach ($product['varient_name']['color'] as $key =>$color)
-                                                                                        @if ($key == $product['display_varient']['color'])
-                                                                                            <li class="align-items-center d-flex ">Color : <span style="background-color:{{$color}}"></span></li>
-                                                                                        @endif
-
-                                                                                    @endforeach
-                                                                                </ul>
-                                                                            </div>
-                                                                        </div>
-                                                                    @endif
-                                                        </td>
-                                                        <td data-label="Price" class="ec-cart-pro-price"><span class="new-price">{{price($product['unit_price'])}}</span>
-                                                                {{-- <span class="old-price"><s>{{price($product['unit_mrp'])}}</s></span> --}}
-                                                            </td>
-                                                        <td data-label="Quantity" class="ec-cart-pro-qty"
-                                                            style="text-align: center;">
-                                                            <div class="cart-qty-plus-minus">
-                                                                <input class="cart-plus-minus" type="text"
-                                                                    name="cartqtybutton" value="{{$cart['qty']}}" />
-                                                            </div>
-                                                        </td>
-                                                        <td data-label="Total" class="ec-cart-pro-subtotal">{{$cart['single_item_total']}}</td>
-                                                        <td data-label="Remove" class="ec-cart-pro-remove">
-                                                            <a href="javascript:void(0)" onclick="removeCartItem('{{$cart['id']}}')"><i class="ecicon eci-trash-o"></i></a>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
+                                            <tbody id="cart-wrapper"> 
+                                                <x-frontend.cart /> 
                                             </tbody>
                                         </table>
                                     </div>
@@ -117,7 +57,9 @@
                                         <div class="col-lg-12">
                                             <div class="ec-cart-update-bottom">
                                                 <a href="#">Continue Shopping</a>
-                                                <button class="btn btn-primary">Check Out</button>
+                                                @if (!empty(js_cart()))
+                                                    <button class="btn btn-primary">Check Out</button>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -135,9 +77,7 @@
                             <div class="ec-sb-title">
                                 <h3 class="ec-sidebar-title">Summary</h3>
                             </div>
-                            @php
-                                $cost = js_cart_cost_calculate();
-                            @endphp
+                            
                             @if (js_setting('shipping_type') == 'area_wise')
                                 <div class="ec-sb-block-content">
                                     <h4 class="ec-ship-title">Estimate Shipping</h4>
@@ -181,47 +121,9 @@
                                     </div>
                                 </div>
                             @endif
-                            
-                            <div class="ec-sb-block-content">
-                                <div class="ec-cart-summary-bottom">
-                                    <div class="ec-cart-summary">
-                                        <div>
-                                            <span class="text-left">Sub-Total</span>
-                                            <span class="text-right">{{$cost['sub_total']}}</span>
-                                        </div>
-                                        <div>
-                                            <span class="text-left">Delivery Charges</span>
-                                            <span class="text-right">$80.00</span>
-                                        </div>
-                                        @if (session()->has('coupon'))  
-                                            <div>
-                                                <span class="text-left">Coupan Discount</span>
-                                                <span class="text-right">{{price($cost['coupon']['coupon_amount'])}}
-                                                <a class="text-danger" href="javascript:void(0)" onclick="removeCartCouponApply()">X</a>
-                                                </span>
-                                            </div>
-                                        @else
-                                            <div>
-                                                <span class="text-left">Coupan Discount</span>
-                                                <span class="text-right"><a class="ec-cart-coupan">Apply Coupan</a></span>
-                                            </div>
-                                        @endif
-                                        <div class="ec-cart-coupan-content">
-                                            <form class="ec-cart-coupan-form" name="ec-cart-coupan-form" method="post"
-                                                action="#">
-                                                <input class="ec-coupan" type="text" required=""  placeholder="Enter Your Coupan Code" name="coupon_code" id="coupon_code" >
-                                                <input type="hidden"  id="sub_total" value="{{$cost['sub_total']}}">
-                                                <button class="ec-coupan-btn button btn-primary" type="button"
-                                                    name="subscribe" value="" onclick="addCoupon(this)">Apply</button>
-                                            </form>
-                                        </div>
-                                        <div class="ec-cart-summary-total">
-                                            <span class="text-left">Total Amount</span>
-                                            <span class="text-right">{{$cost['sub_total']}}</span>
-                                        </div>
-                                    </div>
 
-                                </div>
+                            <div class="ec-sb-block-content" id="cart-summery-wrapper"> 
+                                <x-frontend.cart-summery/>
                             </div>
                         </div>
                         <!-- Sidebar Summary Block -->
@@ -230,11 +132,8 @@
             </div>
         </div>
     </section>
-
 @endsection
 
 @section('script')
-    <script>
-        
-    </script>
+    <script></script>
 @endsection

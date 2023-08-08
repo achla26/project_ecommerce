@@ -71,7 +71,8 @@ Route::group(['middleware'=>'admin'],function(){
 
         Route::resource('product', ProductController::class);
         Route::post('product/status',[ProductController::class,'status'])->name('product.status');
-        Route::post('product/combinations',[ProductController::class,'combination'])->name('product.combination');
+        Route::post('product/get-varients',[ProductController::class,'getVarients'])->name('product.get-varients');
+        Route::post('product/get-combinations',[ProductController::class,'getCombinations'])->name('product.get-combinations');
         Route::post('product/append-categories',[ProductController::class,'appendCategories'])->name('product.append-categories');
 
         Route::resource('attribute-set', AttributeSetController::class);
