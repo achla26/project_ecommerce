@@ -2,6 +2,19 @@
 @section('title', 'Product') 
 @section('css')
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sumoselect@3.4.9/sumoselect.min.css">
+<script src="https://cdn.tiny.cloud/1/0nsgay2x7ks322wvrjxj1wf3bpyozxbe2i40uz6edz52pdiu/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+</head>
+<body>
+  <textarea>
+    Welcome to TinyMCE!
+  </textarea>
+  <script>
+    tinymce.init({
+      selector: '.textarea',
+      plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+      toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+    });
+  </script>
 @endsection
 @section('content')
     <div class="content">
@@ -18,7 +31,7 @@
             <!-- end page title -->
             <form id="form" method="post"
                 action="{{ isset($product->id) ? route('backend.product.update', $product->id) : route('backend.product.store') }}"
-                enctype="multipart/form-data">
+                enctype="multipart/form-data" novalidate>
                 @csrf
                 <input type="hidden" name="id" value="{{ $product->id ?? '' }}">
                 @if (isset($product->id))
@@ -38,6 +51,12 @@
                                                 <i class="mdi mdi-home-variant d-md-none d-block"></i>
                                                 <span class="d-none d-md-block">General</span>
                                             </a>
+                                            <a class="nav-link" id="v-pills-desc-tab" data-bs-toggle="pill"
+                                                href="#v-pills-desc" role="tab" aria-controls="v-pills-desc"
+                                                aria-selected="false">
+                                                <i class="mdi mdi-desc-outline d-md-none d-block"></i>
+                                                <span class="d-none d-md-block">Description</span>
+                                            </a>
                                             <a class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill"
                                                 href="#v-pills-profile" role="tab" aria-controls="v-pills-profile"
                                                 aria-selected="false">
@@ -52,16 +71,11 @@
                                             </a>
                                             <a class="nav-link" id="v-pills-combination-tab" data-bs-toggle="pill"
                                                 href="#v-pills-combination" role="tab"
-                                                aria-controls="v-pills-combination" aria-selected="false">
+                                                aria-controls="v-pills-combination" aria-selected="false" style="display: {{(isset($product->type)  && $product->type == 'varient') ? "" :  "none" }} ;">
                                                 <i class="mdi mdi-combination-outline d-md-none d-block"></i>
                                                 <span class="d-none d-md-block">Varients</span>
                                             </a>
-                                            <a class="nav-link" id="v-pills-desc-tab" data-bs-toggle="pill"
-                                                href="#v-pills-desc" role="tab" aria-controls="v-pills-desc"
-                                                aria-selected="false">
-                                                <i class="mdi mdi-desc-outline d-md-none d-block"></i>
-                                                <span class="d-none d-md-block">Description</span>
-                                            </a>
+                                            
                                             <a class="nav-link" id="v-pills-seo-tab" data-bs-toggle="pill"
                                                 href="#v-pills-seo" role="tab" aria-controls="v-pills-seo"
                                                 aria-selected="false">
@@ -171,13 +185,8 @@
             }
         });
     </script>
-    <script src="https://cdn.ckeditor.com/4.16.1/standard/ckeditor.js"></script>
+    
     <script>
-        CKEDITOR.replace('long_desc');
-        CKEDITOR.replace('terms');
-        CKEDITOR.replace('technical_specification');
-        CKEDITOR.replace('warranty');
-
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -192,7 +201,7 @@
                     url: "{{ route('backend.product.append-image-div') }}",
                     data: {},
                     success: function(resp) {
-                        $("#varients_wrapper").append(resp);
+                        $("#append_product_img_div").append(resp);
                     },
                     error: function() {
                         alert("Error");
@@ -215,6 +224,7 @@
                 reader.readAsDataURL(file);
             }
         }
+
         $('#section_id').change(function() {
             var section_id = $(this).val();
 
@@ -252,6 +262,7 @@
             });
 
         }
+
         $("[name=shipping_type]").on("change", function() {
             $(".flat_rate_shipping_div").hide();
 
@@ -260,6 +271,28 @@
             }
 
         });
+
+        function addMoreTab(){
+            $.ajax({
+                type: 'post',
+                url: "{{ route('backend.product.append-accordion-div') }}",
+                data: {},
+                success: function(resp) {
+                    $("#accordionFlushExample   ").append(resp);
+                },
+                error: function() {
+                    alert("Error");
+                }
+            });
+        }
+
+        function getProductType(event){
+            if(event.value == 'simple'){
+                $("#v-pills-combination-tab").hide();
+            }else{
+                $("#v-pills-combination-tab").show();
+            }
+        }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/sumoselect@3.4.9/jquery.sumoselect.min.js"></script>
     <script>

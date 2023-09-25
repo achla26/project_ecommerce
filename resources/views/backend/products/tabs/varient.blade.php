@@ -2,24 +2,25 @@
     <div class="row">
         <div class="col-lg-12">
             <h3 class="box-title">Product Attributes</h3>
-            
+            @php
+                $product_attribute = isset($product_varients) ? json_decode($product_varients[0]->attribute_set_ids) : [] ;
+                
+            @endphp
             <div class="col-md-8">
                 <label for="">Select Varients</label>
-                <select class="form-control  select-multi product-attribute" multiple="multiple" name="attribute_ids[]"
+                <select class="form-control  select-multi product-attribute" multiple="multiple" name="attribute_set_ids[]"
                     style="width: 100%;" id="attribute_ids" onchange="getAttributes()">
                     @foreach ($attribute_sets as $attribute_set)
                         <option value="{{ $attribute_set->id }}"
-                            {{ isset($product_attribute) && in_array($attribute['id'], $product_attribute) ? 'selected' : '' }}>
+                            {{ !empty($product_attribute) && in_array($attribute_set->id, $product_attribute) ? 'selected' : '' }}>
                             {{ $attribute_set->name }}</option>
                     @endforeach
                 </select>
             </div>
 
-
             <div class="form-group mb-3 row gutters-5" id="varients_wrapper"> 
-
                 @php
-                    if (isset($product_varients) && $product->is_varient == 'yes') {
+                    if (isset($product_varients) && $product->type == 'yes') {
                         $product_attribute = [];
                         foreach (
                             collect($product_varients)
@@ -71,36 +72,8 @@
                     </tr>
                 </thead>
                 <tbody id="choice">
-                    @if (isset($product_varients) && $product->is_varient == 'yes')
-                        <x-backend.combination :productVarients=$product_varients manage="1" />
-                        {{-- @foreach (collect($product_varients) as $product_varient)
-                        <tr id="variation_row_{{$product_varient->id}}">
-                            <td>
-                                @foreach (json_decode($product_varient->attribute_id) as $item)
-                                    @php
-                                        $attribute = \App\Models\Attribute::find($item);
-                                        echo $attribute->name;
-                                    @endphp
-                                @endforeach
-                            </td>
-                            <td>
-                                <input type="hidden"  name="varient_attribute_id[]"  min="0" step="0.01" class="form-control"  value="{{implode("-",json_decode($product_varient->attribute_id))}}">
-                                <input type="number"  name="varient_price[]"  min="0" step="0.01" class="form-control"  value="{{$product_varient->price}}">
-                            </td>
-                            <td>
-                                <input type="number"  name="varient_mrp[]"  min="0" step="0.01" class="form-control"  value="{{$product_varient->mrp}}">
-                            </td>
-                            <td>
-                                <input type="text" name="varient_sku[]" value="{{$product_varient->sku}}" class="form-control">
-                            </td>
-                            <td>
-                                <input type="number"  name="varient_qty[]" value="{{$product_varient->qty}}" min="0" step="1" class="form-control" >
-                            </td>
-                            <td class="footable-last-visible">
-                                <a href="{{route('backend.product.remove-varient',$product_varient->id)}}" class="btn btn-danger btn-xs"  onclick ="confirm('Are You Sure?');" >Remove</a>
-                            </td>
-                        </tr>
-                    @endforeach --}}
+                    @if (isset($product_varients) && $product->type == 'varient') 
+                        <x-backend.combination :combos="$product_varients" :manage="1"/>  
                     @endif
                 </tbody>
             </table>

@@ -85,10 +85,13 @@ Route::group(['middleware'=>'admin'],function(){
         Route::post('attribute/append-attribute-value',[AttributeController::class,'appendAttributeValue'])->name('attribute.append-attribute-value');
 
         Route::post('product/append-image-div',[ProductController::class,'appendImageDiv'])->name('product.append-image-div');
+        Route::post('product/append-accordion-div',[ProductController::class,'appendAccordionDiv'])->name('product.append-accordion-div');
 
         Route::get('product/remove-image/{image}',[ProductController::class,'removeImage'])->name('product.remove-image');
 
         Route::get('product/remove-varient/{varient}',[ProductController::class,'removeVarient'])->name('product.remove-varient');
+
+        Route::get('product/remove-accordion/{accordion}',[ProductController::class,'removeAccordion'])->name('product.remove-accordion');
 
         Route::resource('user', UserController::class);
         Route::post('user/status',[UserController::class,'status'])->name('user.status');

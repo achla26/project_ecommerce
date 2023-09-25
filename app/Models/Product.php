@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Attribute;
 use Illuminate\Support\Str;
+use Auth;
 class Product extends Model
 {
     use HasFactory;
@@ -15,14 +16,11 @@ class Product extends Model
         'thumbnail'
     ];
 
-
-    public function setSlugAttribute(){
-        $this->attributes['slug'] = Str::slug($this->name );
-    }
     
     public function category(){
     	return $this->belongsTo('App\Models\Category','category_id');
     }
+    
     public function subcategory(){
     	return $this->belongsTo('App\Models\Category','parent_id');
     }
@@ -39,6 +37,11 @@ class Product extends Model
     	return $this->hasMany('App\Models\productImage');
     }
 
+    public function tabs()
+    {
+        return $this->hasMany(ProductTab::class);
+    }
+
     public function discount(){
     	return $this->hasOne('App\Models\ProductDiscount');
     }
@@ -51,7 +54,21 @@ class Product extends Model
 
     public function getThumbnailAttribute(){
         $image = ProductImage::query()->where('product_id' , $this->id)->where('main',1)->first();
-        return $image['name'];
+        return $image['name'] ?? '';
     }
 
+
+    public function setNameAttribute($input)
+    {
+        if ($input) {
+            $this->attributes['name'] = $input; 
+            $this->role = Auth::user()->getRoleNames()->first();
+            $this->added_by = Auth::user()->id;
+
+            $this->attributes['slug'] = Str::slug($input);
+            if(empty($this->attributes['uuid'])){
+                $this->attributes['uuid'] = Str::uuid();
+            }
+        }
+    }
 }

@@ -59,16 +59,16 @@ function varients($product_id){
         foreach(collect($varients)->pluck('attribute_id')->toArray() as $varient){
             $attributes[] = json_decode($varient);
         }
-        $attributes= array_unique(call_user_func_array('array_merge', $attributes));
+        //$attributes= array_unique(call_user_func_array('array_merge', $attributes));
         
-        foreach($attributes as $attribute){
-            $attribute =  Attribute::find($attribute);
-            if($attribute){
-                $varient_data[$attribute->attribute_set->name][$attribute->id]= $attribute->name;
-            }
+        // foreach($attributes as $attribute){
+        //     $attribute =  Attribute::find($attribute);
+        //     if($attribute){
+        //         $varient_data[$attribute->attribute_set->name][$attribute->id]= $attribute->name;
+        //     }
             
-        }
-     return $varient_data;
+        // }
+     return $varient_data ?? [];
     }
 }
 

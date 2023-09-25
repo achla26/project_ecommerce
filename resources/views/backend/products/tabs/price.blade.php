@@ -1,12 +1,7 @@
 <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
     <div class="row">
         <h3 class="box-title">Product price + stock</h3>
-        <div class="form-group mb-3 row">
-            <label class="col-md-3 col-from-label">Is Varient</label>
-            <div class="col-md-6">
-                <input type="checkbox"  value="yes" name="is_varient" >
-            </div>
-        </div>
+ 
         <div class="form-group mb-3 row">
             <label class="col-md-3 col-from-label">Unit price <span class="text-danger">*</span></label>
             <div class="col-md-6">
@@ -48,9 +43,19 @@
         </div>
         <div class="form-group mb-3 row">
             <label class="col-md-3 col-from-label">
+                Qty Warning
+            </label>
+            <div class="col-md-6">
+                <input type="text" placeholder="Qty Warning"
+                    value="{{ $product->qty_warning ?? old('qty_warning') }}" name="qty_warning"
+                    class="form-control">
+            </div>
+        </div>
+        <div class="form-group mb-3 row">
+            <label class="col-md-3 col-from-label">
                 External link
             </label>
-            <div class="col-md-9">
+            <div class="col-md-6">
                 <input type="text" placeholder="External link"
                     value="{{ $product->external_link ?? old('external_link') }}" name="external_link"
                     class="form-control">
@@ -62,7 +67,7 @@
             <label class="col-md-3 col-from-label">
                 External link button text
             </label>
-            <div class="col-md-9">
+            <div class="col-md-6">
                 <input type="text" placeholder="External link button text"
                     value="{{ $product->external_link_btn ?? old('external_link_btn') }}" name="external_link_btn"
                     class="form-control">

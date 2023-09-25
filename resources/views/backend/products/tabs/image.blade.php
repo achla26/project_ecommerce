@@ -25,7 +25,7 @@
         </div>
         <div class="col-lg-12">
             <div class="form-group mb-3 row">
-                <label class="col-md-3 col-from-label">Video Link</label>
+                <label class="col-md-2 col-from-label">Video Link</label>
                 <div class="col-md-8">
                     <input type="text" class="form-control" name="video_link"
                         value="{{ $product->video_link ?? old('video_link') }}" placeholder="Video Link">
@@ -36,7 +36,7 @@
             </div>
         </div>
         <div class="form-group mb-3 row">
-            <label class="col-md-3 col-form-label" for="signinSrEmail">PDF
+            <label class="col-md-2 col-form-label" for="signinSrEmail">PDF
                 Specification</label>
             <div class="col-md-8">
                 <input type="file" name="pdf" class="form-control">

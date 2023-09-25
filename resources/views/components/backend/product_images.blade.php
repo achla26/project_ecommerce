@@ -2,7 +2,7 @@
     <div class="col-md-12 mb-3">
         <div class="row">
             <div class="col-md-4">
-                <input type="file" multiple class="form-control" id="files" name="images[]"
+                <input type="file" multiple class="form-control" id="files" name="images[name][]"
                     onchange="previewFile('#files','#product-preview-img{{ $image->id ?? $counter }}');">
             </div>
             <div class="col-md-3 text-center">
@@ -15,7 +15,7 @@
                 @endif
             </div>
             <div class="col-md-2 text-center">
-                <input type="radio" value="1" name="main[]">
+                <input type="radio" value="1" name="images[main][]">
             </div>
 
             <div class="col-md-2 mb-3 text-center">

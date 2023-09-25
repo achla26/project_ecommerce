@@ -18,10 +18,17 @@ use App\Models\Tax;
 use App\Models\ProductDiscount;
 use App\Models\Setting;
 use App\Models\ProductImage;
+use App\Models\ProductTab;
 use App\Models\ProductVarient;
 use App\Models\ProductVarientImage;
 use App\Http\Requests\ProductRequest;
 use Auth;
+
+
+use App\Interfaces\ProductInterface;
+use App\Services\ProductService;
+
+
 class ProductController extends Controller
 {
     function __construct()
@@ -65,138 +72,93 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ProductRequest $request)
+    public function store(ProductRequest $request )
     {
-        $is_varient= isset($request->is_varient) && !empty($request->is_varient) ? $request->is_varient : 'no'; 
+        $data = $request->all();
+ 
+        $product = Product::create([
+            'type' => $data['type'],
+            'name'=> $data['name'], 
+            'section_id' =>$data['section_id'],
+            'category_id' => $data['category_id'],
+            'brand_id'=>$data['brand_id'],
+            'unit'=>$data['unit'], 
+            'max_purchase_qty'=>$data['max_purchase_qty'],
+            'min_purchase_qty'=>$data['min_purchase_qty'],
+            'barcode'=>$data['barcode'],
+            'short_desc'=>$data['short_desc'],
+            'video_link'=>$data['video_link'],
+            'meta_title'=>$data['meta_title'],
+            'meta_description'=>$data['meta_description'],
+            'external_link'=>$data['external_link'],
+            'external_link_btn'=>$data['external_link_btn'],
+            'qty_warning'=>$data['qty_warning'],
+            'tax_id'=>$data['tax_id'],
+        ]);
 
-        if(isset($request->images) && !empty($request->images) && $request->hasfile('images')){
-            $images= $request->images;
-        }
-        if(isset($request->varient_attribute_id) && !empty($request->varient_attribute_id)){
-            $varient_attribute_id= $request->varient_attribute_id;
-        }
-        if(isset($request->varient_price) && !empty($request->varient_price)){
-            $varient_price= $request->varient_price;
-        }
-        if(isset($request->varient_mrp) && !empty($request->varient_mrp)){
-            $varient_mrp= $request->varient_mrp;
-        }
-        if(isset($request->varient_sku) && !empty($request->varient_sku)){
-            $varient_sku= $request->varient_sku;
-        }
-        if(isset($request->varient_qty) && !empty($request->varient_qty)){
-            $varient_qty= $request->varient_qty;
-        }
-        if(isset($request->tax_value) && !empty($request->tax_value)){
-            $tax_value= $request->tax_value;
-        }
-        if(isset($request->tax_type) && !empty($request->tax_type)){
-            $tax_type= $request->tax_type;
-        }
-        if(isset($request->tax_id) && !empty($request->tax_id)){
-            $tax_id= $request->tax_id;
-        }
-        if(isset($request->varient_image) && !empty($request->varient_image) && $request->hasfile('varient_image')){
-            $varient_image= $request->varient_image;
-        }
-        
-        if($request->is_discount == 'yes'){
-            $discount_category = $request->discount_category;
-            $discount_value = $request->discount_value;
-            $discount_type = $request->discount_type;
-            $discount_start_dttm = $request->discount_start_dttm;
-            $discount_end_dttm = $request->discount_end_dttm;
-        }
-        
-        $data = $request->except('images','attribute_set_id','tax_value','tax_id','tax_type','discount','varient_attribute_id','varient_price','varient_mrp','varient_sku','varient_qty','varient_image','attribute_id','discount_category','discount_value','discount_type','discount_start_dttm','discount_end_dttm','unit_qty');
-
-        $data['slug'] =Str::slug($request->name, '_');
-        $data['added_by'] =Auth::user()->id;
-        $data['role'] =Auth::user()->getRoleNames()->first();
-
-        if(isset($request->thumbnail) && !empty($request->thumbnail) && $request->hasfile('thumbnail')){
-            $thumbnail =$request->file('thumbnail')->store('uploads/products', 'public');
-            $data['thumbnail'] = $thumbnail;
-        } 
         if(isset($request->pdf) && !empty($request->pdf) && $request->hasfile('pdf')){
-            $pdf =$request->file('pdf')->store('uploads/products', 'public');
-            $data['pdf'] = $pdf;
+            $data['pdf'] = $request->file('pdf')->store('uploads/products', 'public');
         } 
-        $product = Product::create($data);
+
         
-        if(isset($images) && !empty($images)){
-            foreach($images as $key => $image){
-                ProductImage::create([
-                    'name'=>$image->store( 'uploads/products', 'public'),
-                    'product_id'=>$product->id,
-                    'main'=>$request->main[$key],
-                ]);
-            }            
-        }    
-        if($is_varient == 'yes'){
-            if(isset($varient_attribute_id) && !empty($varient_attribute_id)){
-                foreach($varient_attribute_id  as $key => $attribute_id){
-                    $attribute_id = explode('-',$attribute_id);
-                    $product_varient = ProductVarient::create([
-                        'price'=>$varient_price[$key],
-                        'mrp'=>$varient_mrp[$key],
-                        'qty'=>$varient_qty[$key],
-                        'sku'=>$varient_sku[$key],
-                        'attribute_id'=> json_encode($attribute_id),
-                        'product_id'=>$product->id
-                    ]); 
-                    if(!empty($varient_image)){
-                        ProductVarientImage::create([
-                            'name'=>$varient_image->store( 'uploads/products', 'public'),
-                            'product_id'=>$product->id,
-                            'product_varient_id'=>$product_varient->id
-                        ]);
-                    }
-                }   
-            }       
-        }else{
-            $product_varient = ProductVarient::create([
+        foreach ($request->tabs['name'] as  $key => $tabData) {   
+            $product->tabs()->create([
+                'name' => $request->tabs['name'][$key],
+                'description' => $request->tabs['description'][$key], 
+            ]);  
+        }
+       
+        if($request->images){
+            foreach($request->images['name'] as $key => $image){
+                    $product->images()->create([
+                        'name'=>$image->store( 'uploads/products', 'public'),
+                        'main' => $request->images['main'][$key] ?? 0, 
+                    ]);  
+                
+            }
+        }
+
+        if($data['type'] == 'simple'){
+            $product_varient = $product->varients()->create([
                 'price'=>$request->unit_price,
                 'mrp'=>$request->unit_mrp,
                 'qty'=>$request->qty ?? 1,
-                'sku'=>$request->sku,
-                'attribute_id'=> 0,
-                'product_id'=>$product->id
+                'sku'=>$request->sku,  
             ]); 
         }
-        if(isset($tax_value) && !empty($tax_value)){
-            foreach($tax_value  as $key => $tax){
-                if(!empty($tax_value[$key])){
-                    $product_tax = ProductTax::create([
-                        'tax_id'=>$tax_id[$key],
-                        'value'=>$tax_value[$key],
-                        'type'=>$tax_type[$key],
-                        'product_id'=>$product->id
-                    ]);
-                }    
-            }   
+
+        if($data['type'] == 'varient'){
+            if(isset($request->varient) && !empty($request->varient)){
+                foreach($request->varient['attribute_id']  as $key => $attribute_id){ 
+ 
+                    $product_varient = $product->varients()->create([
+                        'price'=>$request->varient['price'][$key],
+                        'mrp'=>$request->varient['mrp'][$key],
+                        'qty'=>$request->varient['qty'][$key],
+                        'sku'=>$request->varient['sku'][$key],
+                        'attribute_ids'=> $attribute_id , 
+                        'attribute_set_ids'=>json_encode(array_map('intval', $request->attribute_set_ids)), 
+                    ]); 
+                }   
+            }       
         }
+ 
         if($request->is_discount == 'yes'){
-            $product_discount = ProductDiscount::create([
-                'category'=>$discount_category,
-                'value'=>$discount_value,
-                'type'=>$discount_type,
-                'product_id'=>$product->id,
-                'start_dttm'=>$discount_start_dttm,
-                'end_dttm'=>$discount_end_dttm
+            $product_discount = $product->discount()->create([
+                'category'=>$request->discount_category,
+                'value'=>$request->discount_value,
+                'type'=>$request->discount_type, 
+                'start_dttm'=>$request->discount_start_dttm,
+                'end_dttm'=>$request->discount_end_dttm
             ]);                
         }
-     
+       
+
        return redirect()->route('backend.product.index')
                         ->with('success',__('app.added'));
+                        
     }
-  
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(Product $product)
     {
           
@@ -229,116 +191,94 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
-    { 
-        $is_varient= isset($request->is_varient) && !empty($request->is_varient) ? $request->is_varient : 'no'; 
 
-        if(isset($request->images) && !empty($request->images) && $request->hasfile('images')){
-            $images= $request->images;
-        }
-        if(isset($request->varient_attribute_id) && !empty($request->varient_attribute_id)){
-            $varient_attribute_id= $request->varient_attribute_id;
-        }
-        if(isset($request->varient_price) && !empty($request->varient_price)){
-            $varient_price= $request->varient_price;
-        }
-        if(isset($request->varient_mrp) && !empty($request->varient_mrp)){
-            $varient_mrp= $request->varient_mrp;
-        }
-        if(isset($request->varient_sku) && !empty($request->varient_sku)){
-            $varient_sku= $request->varient_sku;
-        }
-        if(isset($request->varient_qty) && !empty($request->varient_qty)){
-            $varient_qty= $request->varient_qty;
-        }
-        if(isset($request->tax_value) && !empty($request->tax_value)){
-            $tax_value= $request->tax_value;
-        }
-        if(isset($request->tax_type) && !empty($request->tax_type)){
-            $tax_type= $request->tax_type;
-        }
-        if(isset($request->tax_id) && !empty($request->tax_id)){
-            $tax_id= $request->tax_id;
-        }
-        if(isset($request->varient_image) && !empty($request->varient_image) && $request->hasfile('varient_image')){
-            $varient_image= $request->varient_image;
-        }
-        if($request->is_discount == 'yes'){
-            $discount_category = $request->discount_category;
-            $discount_value = $request->discount_value;
-            $discount_type = $request->discount_type;
-            $discount_start_dttm = $request->discount_start_dttm;
-            $discount_end_dttm = $request->discount_end_dttm;
-        }
-        
-        $data = $request->except('images','attribute_set_id','tax_value','tax_id','tax_type','discount','varient_attribute_id','varient_price','varient_mrp','varient_sku','varient_qty','varient_image','attribute_id','discount_category','discount_value','discount_type','discount_start_dttm','discount_end_dttm','main','unit_qty');
+    public function update(Request $request, Product $product){
+        $data = $request->all();
+ 
+        $product->update([
+            'type' => $data['type'],
+            'name'=> $data['name'], 
+            'section_id' =>$data['section_id'],
+            'category_id' => $data['category_id'],
+            'brand_id'=>$data['brand_id'],
+            'unit'=>$data['unit'], 
+            'max_purchase_qty'=>$data['max_purchase_qty'],
+            'min_purchase_qty'=>$data['min_purchase_qty'],
+            'barcode'=>$data['barcode'],
+            'short_desc'=>$data['short_desc'],
+            'video_link'=>$data['video_link'],
+            'meta_title'=>$data['meta_title'],
+            'meta_description'=>$data['meta_description'],
+            'external_link'=>$data['external_link'],
+            'external_link_btn'=>$data['external_link_btn'],
+            'qty_warning'=>$data['qty_warning'],
+            'tax_id'=>$data['tax_id'],
+        ]);
 
-        $data['slug'] =Str::slug($request->name, '_');
-        
-        if(isset($request->thumbnail) && !empty($request->thumbnail) && $request->hasfile('thumbnail')){
-            $thumbnail =$request->file('thumbnail')->store('uploads/products', 'public');
-            $data['thumbnail'] = $thumbnail;
-        } 
-    
         if(isset($request->pdf) && !empty($request->pdf) && $request->hasfile('pdf')){
-            $pdf =$request->file('pdf')->store('uploads/products', 'public');
-            $data['pdf'] = $pdf;
+            $data['pdf'] = $request->file('pdf')->store('uploads/products', 'public');
         } 
-        $product->update($data);
-    
-        if(isset($images) && !empty($images)){
-            foreach($images as $key => $image){
-                ProductImage::create([
-                    'name'=>$image->store( 'uploads/products', 'public'),
-                    'product_id'=>$product->id,
-                    'main'=>$request->main[$key],
-                ]);
-            }            
-        }    
-        if($is_varient == 'yes'){
-            if(isset($varient_attribute_id) && !empty($varient_attribute_id)){
-                foreach($varient_attribute_id  as $key => $attribute_id){
-                    $attribute_id = explode('-',$attribute_id);
-                    array_pop($attribute_id);
-                    $product_varient = ProductVarient::create([
-                        'price'=>$varient_price[$key],
-                        'mrp'=>$varient_mrp[$key],
-                        'qty'=>$varient_qty[$key],
-                        'sku'=>$varient_sku[$key],
-                        'attribute_id'=> json_encode($attribute_id),
-                        'product_id'=>$product->id
-                    ]); 
-                    if(!empty($varient_image)){
-                        ProductImage::create([
-                            'name'=>$varient_image->store( 'uploads/products', 'public'),
-                            'product_id'=>$product->id,
-                            'product_varient_id'=>$product_varient->id
-                        ]);
-                    }
-                }   
-            }   
-        }   
-        else{
-            $product_varient = ProductVarient::updateOrCreate(['product_id'=>$product->id],[
+
+        $product->varients()->delete();
+        $product->tabs()->delete();
+        $product->discount()->delete();
+
+        
+        foreach ($request->tabs['name'] ?? [] as  $key => $tabData) {   
+            $product->tabs()->create([
+                'name' => $request->tabs['name'][$key],
+                'description' => $request->tabs['description'][$key], 
+            ]);  
+        }
+       
+        if($request->images){
+            foreach($request->images['name'] as $key => $image){
+                    $product->images()->create([
+                        'name'=>$image->store( 'uploads/products', 'public'),
+                        'main' => $request->images['main'][$key] ?? 0, 
+                    ]);  
+            }
+        }
+
+        if($data['type'] == 'simple'){
+            $product_varient = $product->varients()->create([
                 'price'=>$request->unit_price,
                 'mrp'=>$request->unit_mrp,
-                'qty'=>$request->current_stock ?? 1,
-                'sku'=>$request->sku,
-                'attribute_id'=> 0,
+                'qty'=>$request->qty ?? 1,
+                'sku'=>$request->sku,  
             ]); 
         }
 
-        
-        return redirect()->route('backend.product.index')
-                        ->with('success',__('app.updated'));
+        if($data['type'] == 'varient'){
+            if(isset($request->varient) && !empty($request->varient)){
+                foreach($request->varient['attribute_id']  as $key => $attribute_id){ 
+ 
+                    $product_varient = $product->varients()->create([
+                        'price'=>$request->varient['price'][$key],
+                        'mrp'=>$request->varient['mrp'][$key],
+                        'qty'=>$request->varient['qty'][$key],
+                        'sku'=>$request->varient['sku'][$key],
+                        'attribute_ids'=> $attribute_id , 
+                        'attribute_set_ids'=>json_encode(array_map('intval', $request->attribute_set_ids)), 
+                    ]); 
+                }   
+            }       
+        }
+ 
+        if($request->is_discount == 'yes'){
+            $product_discount = $product->discount()->create([
+                'category'=>$request->discount_category,
+                'value'=>$request->discount_value,
+                'type'=>$request->discount_type, 
+                'start_dttm'=>$request->discount_start_dttm,
+                'end_dttm'=>$request->discount_end_dttm
+            ]);               
+        }
+
+        return redirect()->route('backend.product.index')->with('success',__('app.updated'));
+ 
     }
-  
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy(Product $product)
     {
         // Delete Category image from category_images folder if exists
@@ -432,6 +372,11 @@ class ProductController extends Controller
         return view('components.backend.product_images',compact('counter'));
     }
 
+    public function appendAccordionDiv(Request $request){
+        $counter = rand(0000,9999);
+        return view('components.backend.accordion-item',compact('counter'));
+    }
+
     public function removeImage(ProductImage $image){
         $product_id = $image->product_id;
         // Delete Category image from category_images folder if exists
@@ -454,4 +399,19 @@ class ProductController extends Controller
         return redirect()->route('backend.product.edit',$product_id)
                         ->with('success_msg',__('app.deleted'));
     }
+
+    public function removeAccordion(ProductTab $accordion){
+        $product_id = $accordion->product_id;
+    
+        $accordion->delete();
+    
+        return redirect()->route('backend.product.edit',$product_id)
+                        ->with('success_msg',__('app.deleted'));
+    }
 }
+
+
+// Usage:
+// $controller = new ProductController();
+// $service = new ProductService();
+// $controller->makePayment($service);

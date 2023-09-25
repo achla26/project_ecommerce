@@ -8,7 +8,6 @@
             <div class="col-3">
                 @if (isset($id) && !empty($id))
                     <a href="{{ route('backend.attribute.destroy',$id) }}" onclick="return confirm('Are you sure you want to delete this item')"class="btn btn-danger btn-sm action-icon"><i class="mdi mdi-delete"></i></a>
-                
                 @else               
                     <button type="button" class="btn btn-danger btn-sm" onclick="remove('#add_more_{{$rand ?? ''}}')"><i class="uil uil-trash-alt" ></i></button>
                 @endif

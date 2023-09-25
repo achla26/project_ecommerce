@@ -25,59 +25,68 @@ class ProductRequest extends FormRequest
     {
         $id = $this->input('id');
         return [
-            'name'=> $id ? 'required|min:3'.$id : 'required|min:3',
-            'images.*'=>"required",
+            'type' => 'required|string|in:simple,varient',
+            'name'=> $id ? 'required|string|min:3'.$id : 'required|string|min:3',
+            'slug' => "nullable|string|slugify|unique:products,slug,$id",
             'section_id' => 'required',
             'category_id' => 'nullable',
+            'brand_id'=>'nullable',    
+            'unit'=>'nullable',  
+            'max_purchase_qty'=>'required',
+            'min_purchase_qty'=>'required',  
+            'barcode'=>'nullable',
+            'short_desc'=>'required',
             'meta_title' => 'required',
             'meta_description' => 'required',
-            'meta_keywords' => 'required',
-            'brand'=>'nullable',
-            'model'=>'nullable',
-            'short_desc'=>'required',
-            'long_desc'=>'nullable',
-            'technical_specification'=>'nullable',
-            'uses'=>'nullable',
-            'warranty'=>'nullable',
-            'lead_time'=>'nullable',
-            'is_refundable'=>'nullable',
-            'is_promo'=>'nullable',
-            'is_featured'=>'nullable',
-            'is_discount'=>'nullable',
-            'is_trending'=>'nullable',
+             
+            'tabs.*name' => 'nullable|string',
+            'tabs.*description' => 'nullable|string', 
+            // 'tabs.*.product.status' => 'required|string|in:published,unpublished',
 
-            'terms'=>'nullable',
-            'reward_point'=>'nullable',
-            'reward_expiry'=>'nullable',
-            'barcode'=>'nullable',
-            'max_purchase_qty'=>'required',
+            'images.*name' => 'nullable|string',
+            'images.*main' => 'nullable|string', 
+            'video_link'=>'nullable',
             'pdf'=>'nullable',
 
-            'qty_warning'=>'nullable',
-            'stock_visibility_state'=>'nullable',
-            'cod'=>'nullable',
-            'estimate_shipping_day'=>'nullable',
             'external_link'=>'nullable',
             'external_link_btn'=>'nullable',
-            'unit'=>'nullable',
-            'video_link'=>'nullable',
+            'qty_warning'=>'nullable|numeric',
 
-            'thumbnail'=>'nullable',
-            'added_by'=>'nullable',
-            'role'=>'nullable',
-            'unit_price'=>'required',
-            'unit_mrp'=>'required',
             
-            'deal'=>'nullable',
-            'label'=>'nullable',
-            'current_stock'=>'nullable',
-            'todays_deal'=>'nullable',
 
-            'meta_title'=>'nullable',
-            'meta_description'=>'nullable',
-            'meta_keywords'=>'nullable',
-            'shipping_type'=>'nullable',
-            'flat_shipping_cost'=>'nullable',
+            // 'reward_point'=>'nullable',
+            // 'reward_expiry'=>'nullable',
+            
+
+            // 'is_refundable'=>'nullable',
+            // 'is_promo'=>'nullable',
+            // 'is_featured'=>'nullable',
+            // 'is_discount'=>'nullable',
+            // 'is_trending'=>'nullable',
+            
+            
+            
+            
+
+           
+            // 'stock_visibility_state'=>'nullable',
+            // 'cod'=>'nullable',
+            // 'estimate_shipping_day'=>'nullable',
+            
+            
+      
+            // 'unit_price'=>'required',
+            // 'unit_mrp'=>'required',
+            // 'deal'=>'nullable',
+            // 'label'=>'nullable',
+            // 'current_stock'=>'nullable',
+            // 'todays_deal'=>'nullable',
+
+            
+            // 'shipping_type'=>'nullable',
+            // 'flat_shipping_cost'=>'nullable',
+
+            'tax_id' => 'nullable',
 
         ];
     }

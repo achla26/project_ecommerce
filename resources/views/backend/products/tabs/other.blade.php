@@ -36,7 +36,7 @@
                             <div class="col-md-6">
                                 <input type="number" lang="en" min="0" value="0" step="0.01"
                                     placeholder="Shipping cost" name="flat_shipping_cost" class="form-control"
-                                    required="">
+                                    >
                             </div>
                         </div>
                     </div>
@@ -314,27 +314,20 @@
             <div class="card">
                 <div class="card-body">
                     <h3 class="box-title">Tax</h3>
-                    @foreach ($taxes as $tax)
+                    
                         <div class="form-group mb-3 row">
                             <div class="col-lg-12">
-                                <label class="col-md-6 col-from-label">{{ $tax->name }}</label>
+                                <label class="col-md-12 col-from-label"></label>
                             </div>
-                            <div class="col-md-6">
-                                <div class="input-group">
-                                    <input type="number" class="form-control" name="tax_value[]" value="">
-                                    <input type="hidden" class="form-control" name="tax_id[]"
-                                        value="{{ $tax->id }}">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <select class="form-control " name="tax_type[]">
-                                    <option value="">-Choose-</option>
-                                    <option value="1">Flat</option>
-                                    <option value="2">Percent</option>
-                                </select>
-                            </div>
+                            <div class="col-md-12">
+                                <select name="tax_id" class="form-select">
+                                    <option value="0">-Select-</option>
+                                    @foreach ($taxes as $tax)
+                                        <option value="{{ $tax->id }}">{{ $tax->name }}</option>
+                                    @endforeach
+                                </select> 
+                            </div> 
                         </div>
-                    @endforeach
                 </div>
             </div>
         </div>
