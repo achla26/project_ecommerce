@@ -139,8 +139,12 @@ class CartController extends Controller
         }
         else{
             if(session()->has('cart')){
-                $id = explode('-' ,$id);
-                session()->forget("cart.$id[0]");
+                $id = json_decode($id);
+
+                $cart = session()->get('cart');
+
+                unset($cart[$id[0]][$id[1]]);
+                session()->put('cart', $cart);
             }
         }
         
@@ -149,8 +153,9 @@ class CartController extends Controller
         return js_response($data,__('app.cart.deleted'));
     }
 
-    public function cartUpdated(){
-        $data['total_items'] = count(session()->get('cart'));
+    public function cartUpdated()
+    {
+        $data['total_items'] = count(head(session()->get('cart')));
         $data['side_cart'] = view('components.frontend.side-cart')->render();
         $data['cart_items'] = view('components.frontend.cart')->render(); 
         $data['cart_summery'] = view('components.frontend.cart-summery')->render(); 

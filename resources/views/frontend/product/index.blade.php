@@ -141,6 +141,7 @@
                                             </div>
                                         </div>
 
+
                                         @if (!empty($product['combinations']))
                                             <div class="ec-pro-variation">
                                                 @foreach ($product['combinations'] as $varient => $options)
@@ -152,7 +153,7 @@
                                                                     for="{{ $varient . $key }}">{{ $option }}</label>
                                                                 <input type="radio" class="product-varient"
                                                                     name="{{ $varient }}" value="{{ $key }}"
-                                                                    id="{{ $varient . $key }}" onchange="getVarient()"
+                                                                    id="{{ $varient . $key }}" onchange="getVarient('{{$product['id']}}')"
                                                                     {{ isset($product['selected_varients']) && in_array($key, $product['selected_varients']) ? 'checked' : '' }}>
                                                                 </label>
                                                             @endforeach
@@ -162,7 +163,6 @@
                                                 @endforeach
                                             </div>
                                         @endif
-
 
                                         <div class="ec-single-qty">
                                             <form action="{{ route('cart.store') }}" method="post">
@@ -175,7 +175,7 @@
                                                     <input type="hidden" name="product_id" id="product_id"
                                                         value="{{ $product['id'] }}">
                                                     <input type="hidden" name="product_varient_id" id="product_varient_id{{$product['id']}}"
-                                                        value="{{ $product['varient_id'] }}">
+                                                        value="{{ $product['varient']['id'] }}">
                                                     <button class="btn btn-primary" id="add_to_cart" type="button" onclick="addToCart('{{$product['id']}}')">Add To Cart</button>
                                                 </div>
                                             </form>
@@ -208,37 +208,21 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> 
                     <!--Single product content End -->
                     <!-- Single product tab start -->
                     <div class="ec-single-pro-tab">
                         <div class="ec-single-pro-tab-wrapper">
                             <div class="ec-single-pro-tab-nav">
                                 <ul class="nav nav-tabs">
-                                    @empty(!$product['long_desc'])
-                                        <li class="nav-item">
-                                            <a class="nav-link active" data-bs-toggle="tab"
-                                                data-bs-target="#ec-spt-nav-details" role="tablist">Detail</a>
-                                        </li>
-                                    @endempty
-                                    @empty(!$product['technical_specification'])
-                                        <li class="nav-item">
-                                            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#ec-spt-nav-info"
-                                                role="tablist">Technical Specification</a>
-                                        </li>
-                                    @endempty
-                                    @empty(!$product['uses'])
-                                        <li class="nav-item">
-                                            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#ec-spt-nav-uses"
-                                                role="tablist">Uses</a>
-                                        </li>
-                                    @endempty
-                                    @empty(!$product['warranty'])
-                                        <li class="nav-item">
-                                            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#ec-spt-nav-warranty"
-                                                role="tablist">Warranty</a>
-                                        </li>
-                                    @endempty
+                                    @if (!empty($product['tabs']))
+                                        @foreach ($product['tabs'] as $tab)
+                                            <li class="nav-item">
+                                                <a class="nav-link {{ $loop->iteration == 1  ? 'active' : '' }}" data-bs-toggle="tab"
+                                                    data-bs-target="#ec-spt-nav-{{$tab['slug']}}" role="tablist">{{$tab['name']}}</a>
+                                            </li>
+                                        @endforeach
+                                    @endif
                                     <li class="nav-item">
                                         <a class="nav-link" data-bs-toggle="tab" data-bs-target="#ec-spt-nav-review"
                                             role="tablist">Reviews</a>
@@ -246,34 +230,15 @@
                                 </ul>
                             </div>
                             <div class="tab-content  ec-single-pro-tab-content">
-                                @empty(!$product['long_desc'])
-                                    <div id="ec-spt-nav-details" class="tab-pane fade show active">
-                                        <div class="ec-single-pro-tab-desc">
-                                            {!! $product['long_desc'] !!}
+                                @if (!empty($product['tabs']))
+                                    @foreach ($product['tabs'] as $tab)
+                                        <div id="ec-spt-nav-{{$tab['slug'] }}" class="tab-pane fade {{ $loop->iteration == 1  ? 'show active' : '' }} ">
+                                            <div class="ec-single-pro-tab-desc">
+                                                {!! $tab['description'] !!}
+                                            </div>
                                         </div>
-                                    </div>
-                                @endempty
-                                @empty(!$product['technical_specification'])
-                                    <div id="ec-spt-nav-info" class="tab-pane fade">
-                                        <div class="ec-single-pro-tab-moreinfo">
-                                            {!! $product['technical_specification'] !!}
-                                        </div>
-                                    </div>
-                                @endempty
-                                @empty(!$product['uses'])
-                                    <div id="ec-spt-nav-uses" class="tab-pane fade">
-                                        <div class="ec-single-pro-tab-moreinfo">
-                                            {!! $product['uses'] !!}
-                                        </div>
-                                    </div>
-                                @endempty
-                                @empty(!$product['warranty'])
-                                    <div id="ec-spt-nav-warranty" class="tab-pane fade">
-                                        <div class="ec-single-pro-tab-moreinfo">
-                                            {!! $product['warranty'] !!}
-                                        </div>
-                                    </div>
-                                @endempty
+                                    @endforeach
+                                @endif
 
                                 <div id="ec-spt-nav-review" class="tab-pane fade">
                                     <div class="row">
@@ -375,26 +340,25 @@
 
 @section('script')
     <script>
-        function getVarient() {
+        function getVarient(pid) {
             let options = [];
             $('.product-varient:checked').each(function() {
                 options.push($(this).val());
             });
-
-            let product_id = "{{ $product['id'] }}";
+ 
             $.ajax({
                 url: "{{ route('product.varient') }}",
                 method: 'POST',
                 data: {
                     options,
-                    product_id
+                    product_id : pid
                 },
                 success: function(response) {
-                    if(response.success){
-                        $("#product_varient_id").val(response.result.varient_id);
-                        $("#add_to_cart").prop('disabled',false);
+                    if(response.success){ 
+                        $(`#product_varient_id${pid}`).val(response.result.varient.id);
+                        $(`#add_to_cart`).prop('disabled',false);
                     }else{
-                        $("#add_to_cart").prop('disabled',true);
+                        $(`#add_to_cart`).prop('disabled',true);
                     }
                 },
                 error: function(response) {}

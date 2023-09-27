@@ -30,9 +30,10 @@ class ProductController extends Controller
     }
 
     public function varient(Request $request){
-        
-        $varient  = ProductVarient::query()->where('product_id',$request->product_id)->whereJsonContains('attribute_id' ,$request->options)->first();
-        
+
+        $options =  array_map('intval', $request->options);
+
+        $varient  = ProductVarient::query()->where('product_id',$request->product_id)->whereJsonContains('attribute_ids' ,$options)->first(); 
         if($varient){
             $product = js_product($request->product_id , $varient->id);
             return js_response($product);
